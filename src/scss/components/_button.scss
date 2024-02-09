@@ -1,0 +1,19 @@
+.button {
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-normal);
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.56;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

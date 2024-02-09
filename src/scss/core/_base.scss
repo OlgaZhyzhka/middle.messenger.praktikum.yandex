@@ -1,0 +1,59 @@
+:root {
+  --white: #fff;
+  --red: #fb3640;
+  --yellow: #fdcf41;
+  --orange: #fda77f;
+  --green: #2cc069;
+  --light-green: #7bcbcf;
+  --blue: #002de3;
+  --light-blue: #375fff;
+  --purple: #879fff;
+  --light-purple: #d2d5f9;
+
+  --dark: #0f1828;
+  --dark1: #152033;
+  --dark2: #1b2b48;
+  --dark-blue: #001a83;
+  --grey: #a4a4a4;
+  --light-grey: #adb5bd;
+  --light-grey1: #ededed;
+  --light: #f7f7fc;
+
+  --body-bg: var(--white);
+  --color-text: var(--dark);
+  --color-heading: var(--dark1);
+  --color-secondary: var(--grey);
+  --color-disabled: var(--light-grey);
+  --color-error: var(--red);
+  --color-success: var(--green);
+  --color-warning: var(--yellow);
+
+  --border-radius: 10px;
+  --transition-duration: 0.25s;
+  --transition-easing: cubic-bezier(0.5, 0, 0.5, 1);
+
+  --font-family-base: 'Mulish', Helvetica, sans-serif;
+  --font-size-base: 16px;
+  --font-size-sm: 14px;
+  --line-height-base: 1.2;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  --modal-bg: rgba(0, 0, 0, 0.5);
+  --modal-z-index: 1000;
+
+  --z-index-1: 5;
+  --z-index-2: 10;
+  --z-index-3: 15;
+
+  --app-height: 100vh;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --body-bg: #1f161e;
+    --color-text: var(--light);
+    --color-heading: var(--light);
+    --color-link-hover: #f2f2f2;
+  }
+}

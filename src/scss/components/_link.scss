@@ -1,0 +1,15 @@
+.link {
+  color: var(--color-text);
+  transition: color var(--transition-duration) var(--transition-easing);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
