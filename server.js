@@ -15,7 +15,6 @@ const publicPath = resolve(__dirname, './dist');
 
 app.use(express.static(publicPath));
 
-
 app.get('*', (_, res) => {
   res.sendFile(resolve(publicPath, 'index.html'));
 });

@@ -1,8 +1,11 @@
 import { defineConfig } from 'vite';
 import { dirname, resolve } from 'path';
 import handlebars from 'vite-plugin-handlebars';
-
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { fileURLToPath } from 'url';
+
+import { pagesData } from './src/utils/pagesData.js';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const srcPath = resolve(__dirname, 'src');
@@ -10,22 +13,7 @@ const buildPath = resolve(__dirname, 'dist');
 const publicPath = resolve(__dirname, 'public');
 const partialsPath = resolve(__dirname, 'src/partials');
 
-const pageData = {
-  '/index.html': {
-    title: 'Chateo - simple messenger',
-  },
-  '/login.html': {
-    title: 'Chateo - simple messenger - welcome',
-  },
-  '/registration.html': {
-    title: 'Chateo - simple messenger - crate account',
-  },
-  '/chat-list.html': {
-    title: 'Chateo - simple messenger - start chatting',
-  },
-};
-
-const pages = Object.keys(pageData);
+const pages = Object.keys(pagesData);
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -33,8 +21,16 @@ export default defineConfig({
     handlebars({
       partialDirectory: partialsPath,
       context(pagePath) {
-        return pageData[pagePath];
+        return pagesData[pagePath];
       },
+    }),
+    viteStaticCopy({
+      targets: [
+        {
+          src: resolve(__dirname, './static') + '/[!.]*',
+          dest: './static',
+        },
+      ],
     }),
   ],
   root: srcPath,
@@ -42,11 +38,8 @@ export default defineConfig({
     sourceMap: false,
     outDir: buildPath,
     rollupOptions: {
-      input: [...pages.map((page) => `./src/${page}`)],
+      input: [...pages.map((page) => `./src${page}`)],
     },
-  },
-  optimizeDeps: {
-    include: ['dependency-name'],
   },
   resolve: {
     alias: {

@@ -5,24 +5,25 @@
   font-size: var(--font-size-base);
   font-optical-sizing: auto;
   font-style: normal;
+  background-color: var(--body-bg);
+  color: var(--color-text);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+a {
+  color: var(--color-link);
+}
+
+a:hover {
+  color: var(--color-link-hover);
+}
+
+@include headings {
   font-family: var(--font-family-base);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-base);
+  color: var(--color-heading);
 }
-a {
-  color: var(--base-color);
-}
-a:hover {
-  color: var(--color-muted);
-}
+
 ::selection {
   background-color: var(--light);
   color: var(--color-secondary);

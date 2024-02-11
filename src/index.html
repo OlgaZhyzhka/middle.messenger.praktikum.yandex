@@ -1,17 +1,17 @@
-<html lang='en'>
+<html lang="en">
+  {{> _head}}
 
-{{> _head}}
-
-<body>
-  <main id="app">
-    <h2>{{ title }}</h2>
-    <ul>
-      <li><a href="/login.html">Login page</a></li>
-      <li><a href="/registration.html">Registration page</a></li>
-      <li><a href="/chat-list.html">Chat list page</a></li>
-    </ul>
-  </main>
-  {{> _scripts }}
-</body>
-
+  <body>
+    <main id="app" class="wrapper">
+      <h2>{{ title }}</h2>
+      <ul>
+        <li><a href="/login.html" target="_blank">Login page</a></li>
+        <li><a href="/registration.html" target="_blank">Registration page</a></li>
+        <li><a href="/chat-list.html" target="_blank">Chat list page</a></li>
+        <li><a href="/404.html" target="_blank">404 page</a></li>
+        <li><a href="/500.html" target="_blank">500 page</a></li>
+      </ul>
+    </main>
+    {{> _scripts }}
+  </body>
 </html>

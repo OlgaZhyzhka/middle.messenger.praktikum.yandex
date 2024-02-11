@@ -4,3 +4,22 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.icon_sm {
+  width: 24px;
+  height: 24px;
+}
+
+.icon_base {
+  background-color: var(--color-text);
+}
+
+.icon_eye {
+  mask-image: url(../static/icons/eye.svg);
+  -webkit-mask-image: url(../static/icons/eye.svg);
+}
+
+.icon_eye-close {
+  mask-image: url(../static/icons/eye-close.svg);
+  -webkit-mask-image: url(../static/icons/eye-close.svg);
+}

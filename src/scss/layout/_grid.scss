@@ -1,22 +1,6 @@
-.is-sticky-footer {
-  display: flex;
-  flex-direction: column;
+html,
+body {
   min-height: var(--app-height);
-
-  .main {
-    flex: 1;
-  }
-}
-
-.container {
-  max-width: 100%;
-  margin: 0 auto;
-  padding-right: calc($gutter / 2) * 1px;
-  padding-left: calc($gutter / 2) * 1px;
-
-  @include create-mq($grid__bp-lg, 'min') {
-    max-width: $container-width-lg;
-  }
 }
 
 .d-flex {
