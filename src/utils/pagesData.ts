@@ -22,3 +22,4 @@ export const pagesData = {
     title: 'Chateo - simple messenger - profile',
   },
 };
+
