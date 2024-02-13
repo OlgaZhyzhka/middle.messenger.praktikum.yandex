@@ -1,0 +1,42 @@
+<form class="form form_horizontal">
+  <div class="card__info">
+    <div class="card__avatar">
+        <div class="card__upload upload">
+          <input class="upload__input" type="file" accept=".jpg, .jpeg, .png, .gif" />
+          <div class="upload__preview" style="display: none;"></div>
+          <img class="upload__icon" src="/icons/upload-avatar.svg" alt="upload icon">
+          <span class="upload__label">Upload avatar</span>
+        </div>
+    </div>
+    <ul class="card__list">
+      <li class="form__row is-error">
+        <input class="ui-input ui-input_sm" type="email" name="email" placeholder="Email" />
+        <span class="form__error">Please enter a valid email address</span>
+      </li>
+      <li class="form__row">
+        <input class="ui-input ui-input_sm" type="text" name="first_name" placeholder="First Name" />
+          <span class="form__error"></span>
+      </li>
+      <li class="form__row is-success">
+        <input class="ui-input ui-input_sm" type="text" name="login" placeholder="Login" />
+          <span class="form__error"></span>
+      </li>
+      <li class="form__row">
+        <input class="ui-input ui-input_sm" type="text" name="second_name" placeholder="Last Name" />
+          <span class="form__error"></span>
+      </li>
+      <li class="form__row">
+        <input class="ui-input ui-input_sm" type="tel" name="phone" pattern='\+7\s\([0-9]{3}\)\s[0-9]{3}-[0-9]{2}-[0-9]{2}' placeholder="Phone +7 (XXX) XXX-XX-XX" title="+7 (XXX) XXX-XX-XX" />
+          <span class="form__error"></span>
+      </li>
+        <li class="form__row">
+        <input class="ui-input ui-input_sm" type="text" name="display_name" placeholder="Chat Name" />
+          <span class="form__error"></span>
+      </li>
+    </ul>
+    <div class="card__footer">
+      {{> components/button label="Save" class="button button_primary button_md button_rounded"}}
+      <button class="button button_link">Reset</button>
+    </div>
+  </div>
+</form>

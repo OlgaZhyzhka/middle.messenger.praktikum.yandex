@@ -1,0 +1,47 @@
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.icon_sm {
+  width: 24px;
+  height: 24px;
+}
+
+.icon_base {
+  background-color: var(--color-text);
+}
+
+.icon_eye {
+  mask-image: url("../icons/eye.svg");
+}
+
+.icon_eye-close {
+  mask-image: url("../icons/eye-close.svg");
+}
+
+.icon_logout {
+  mask-image: url("../icons/logout.svg");
+}
+
+.icon_settings {
+  mask-image: url("../icons/settings.svg");
+}
+
+.icon_search {
+  mask-image: url("../icons/search.svg");
+}
+
+.icon_attach {
+  mask-image: url("../icons/attach.svg");
+}
+
+.icon_send {
+  mask-image: url("../icons/send.svg");
+}
+
+.icon_file {
+  mask-image: url("../icons/file.svg");
+}

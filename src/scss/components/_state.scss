@@ -1,0 +1,17 @@
+.is-fixed {
+  position: fixed;
+}
+
+.is-error {
+  .ui-input {
+    border-color: var(--color-error);
+    color: var(--color-error);
+  }
+}
+
+.is-success {
+  .ui-input {
+    border-color: var(--color-success);
+    color: var(--color-success);
+  }
+}

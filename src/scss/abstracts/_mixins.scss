@@ -1,0 +1,33 @@
+@use 'sass:math';
+
+@mixin create-mq($breakpoint, $min-or-max) {
+  @if  $breakpoint == 0 {
+    @content;
+  } @else {
+    @media screen and (#{$min-or-max}-width: ($breakpoint * 1px)) {
+      @content;
+    }
+  }
+}
+
+@mixin create-col-classes($modifier, $grid-cols, $breakpoint) {
+  @include create-mq($breakpoint, 'min') {
+    @for $i from 1 through $grid-cols {
+      .col#{$modifier}-#{$i} {
+        flex: 0 0 percentage(math.div($i, $grid-cols));
+        max-width: percentage(math.div($i, $grid-cols));
+      }
+    }
+  }
+}
+
+@mixin headings() {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @content;
+  }
+}

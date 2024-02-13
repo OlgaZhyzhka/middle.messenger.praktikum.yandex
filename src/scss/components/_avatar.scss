@@ -1,0 +1,41 @@
+:root {
+  --avatar-sm: 48px;
+  --avatar-lg: 130px;
+  --border-radius-avatar-sm: 16px;
+  --border-radius-avatar-lg: 4px;
+}
+
+.avatar {
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: var(--border-radius-avatar);
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  &__title {
+    display: block;
+    margin-top: torem(4px);
+    margin-bottom: 1rem;
+    font-size: torem(12px);
+  }
+
+  &_sm {
+    .avatar__image {
+      width: var(--avatar-sm);
+      height: var(--avatar-sm);
+      border-radius: var(--border-radius-avatar-sm);
+    }
+  }
+
+  &_lg {
+    .avatar__image {
+      height: var(--avatar-lg);
+      border-radius: var(--border-radius-avatar-lg);
+    }
+  }
+}

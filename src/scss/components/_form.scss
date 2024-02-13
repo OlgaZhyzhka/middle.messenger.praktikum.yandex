@@ -1,0 +1,68 @@
+.form {
+  &__row {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  &__wrapper {
+    position: relative;
+
+    .ui-input {
+      padding-right: torem(30px);
+    }
+
+    .button_icon {
+      position: absolute;
+      top: 50%;
+      right: 5px;
+      transform: translateY(-50%);
+    }
+  }
+
+  &__error {
+    position: absolute;
+    top: 100%;
+    left: 2px;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--letter-spacing-xs);
+    color: var(--color-error);
+  }
+
+  &__title {
+    margin-top: 1.5rem;
+    margin-bottom: torem(50px);
+    font-size: 1.5rem;
+  }
+
+  &__text {
+    display: block;
+    margin: 1.5rem 0;
+  }
+
+  &__footer {
+    margin-top: torem(32px);
+  }
+
+  &_horizontal {
+    .ui-input {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  &_auth {
+    .form__title,
+    .form__text {
+      text-align: center;
+    }
+
+    .form__footer .button {
+      width: 100%;
+    }
+
+    @include create-mq($grid__bp-md, 'min') {
+      width: 370px;
+    }
+  }
+}

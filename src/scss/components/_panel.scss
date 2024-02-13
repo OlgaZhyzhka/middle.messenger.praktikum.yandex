@@ -1,0 +1,9 @@
+.panel {
+  background: var(--body-bg);
+  box-shadow: var(--box-shadow);
+  z-index: var(--z-index-3);
+
+  @include create-mq($grid__bp-xl, 'min') {
+    border-right: var(--border-width) solid var(--light-grey1);
+  }
+}

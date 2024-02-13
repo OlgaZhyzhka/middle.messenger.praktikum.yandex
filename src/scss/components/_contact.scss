@@ -1,0 +1,11 @@
+.contact {
+  display: flex;
+  align-items: center;
+  gap: torem(16px);
+  padding: torem(12px) torem(16px);
+
+  &__title {
+    display: block;
+    margin-bottom: 4px;
+  }
+}
