@@ -8,7 +8,7 @@
     position: relative;
 
     .ui-input {
-      padding-right: toRem(30px);
+      padding-right: torem(30px);
     }
 
     .button_icon {
@@ -31,7 +31,7 @@
 
   &__title {
     margin-top: 1.5rem;
-    margin-bottom: toRem(50px);
+    margin-bottom: torem(50px);
     font-size: 1.5rem;
   }
 
@@ -41,7 +41,7 @@
   }
 
   &__footer {
-    margin-top: toRem(32px);
+    margin-top: torem(32px);
   }
 
   &_horizontal {

@@ -19,8 +19,8 @@ body * {
 }
 * {
   box-sizing: border-box;
-  &:before,
-  &:after {
+  &::before,
+  &::after {
     box-sizing: border-box;
   }
 }
@@ -115,7 +115,7 @@ button,
 [type='button'],
 [type='reset'],
 [type='submit'] {
-  -webkit-appearance: button;
+  appearance: button;
 }
 button::-moz-focus-inner,
 [type='button']::-moz-focus-inner,
@@ -152,14 +152,14 @@ textarea {
   height: auto;
 }
 [type='search'] {
-  -webkit-appearance: textfield;
+  appearance: textfield;
   outline-offset: -2px;
 }
 [type='search']::-webkit-search-decoration {
-  -webkit-appearance: none;
+  appearance: none;
 }
 ::-webkit-file-upload-button {
-  -webkit-appearance: button; /* 1 */
+  appearance: button; /* 1 */
   font: inherit; /* 2 */
 }
 details {

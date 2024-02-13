@@ -15,36 +15,33 @@
 }
 
 .icon_eye {
-  mask-image: url(../icons/eye.svg);
-  -webkit-mask-image: url(../icons/eye.svg);
+  mask-image: url("../icons/eye.svg");
 }
 
 .icon_eye-close {
-  mask-image: url(../icons/eye-close.svg);
-  -webkit-mask-image: url(../icons/eye-close.svg);
+  mask-image: url("../icons/eye-close.svg");
 }
 
 .icon_logout {
-  mask-image: url(../icons/logout.svg);
-  -webkit-mask-image: url(../icons/logout.svg);
+  mask-image: url("../icons/logout.svg");
 }
 
 .icon_settings {
-  mask-image: url(../icons/settings.svg);
-  -webkit-mask-image: url(../icons/settings.svg);
+  mask-image: url("../icons/settings.svg");
 }
 
 .icon_search {
-  mask-image: url(../icons/search.svg);
-  -webkit-mask-image: url(../icons/search.svg);
+  mask-image: url("../icons/search.svg");
 }
 
 .icon_attach {
-  mask-image: url(../icons/attach.svg);
-  -webkit-mask-image: url(../icons/attach.svg);
+  mask-image: url("../icons/attach.svg");
 }
 
 .icon_send {
-  mask-image: url(../icons/send.svg);
-  -webkit-mask-image: url(../icons/send.svg);
+  mask-image: url("../icons/send.svg");
+}
+
+.icon_file {
+  mask-image: url("../icons/file.svg");
 }

@@ -1,5 +1,5 @@
 :root {
-  --upload-bg: rgba(237, 242, 246, 0.5);
+  --upload-bg: rgb(237 242 246 / 50%);
   --upload-border-color: var(--grey);
   --upload-size: 130px;
 }
@@ -10,10 +10,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: toRem(16px);
+  gap: torem(16px);
   width: var(--upload-size);
   height: var(--upload-size);
-  padding: toRem(18px);
+  padding: torem(18px);
   background-color: var(--upload-bg);
   border: 1px dashed var(--upload-border-color);
   border-radius: var(--border-radius-sm);

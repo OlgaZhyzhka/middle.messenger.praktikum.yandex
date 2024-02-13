@@ -8,11 +8,11 @@
     padding: 0;
     margin: 0;
     list-style: none;
-    column-gap: toRem(50px);
+    column-gap: torem(50px);
   }
 
   &__item {
-    margin-bottom: toRem(24px);
+    margin-bottom: torem(24px);
   }
 
   &__label {
@@ -25,18 +25,18 @@
   }
 
   &__footer {
-    margin-bottom: toRem(40px);
+    margin-bottom: torem(40px);
     display: flex;
     align-items: center;
-    gap: toRem(24px);
+    gap: torem(24px);
   }
 
   &__upload {
-    margin-bottom: toRem(24px);
+    margin-bottom: torem(24px);
   }
 
   &_profile {
-    margin-top: toRem(40px);
+    margin-top: torem(40px);
   }
 
   @include create-mq($grid__bp-xl, 'min') {

@@ -11,8 +11,7 @@
     opacity: 0;
     transition: opacity var(--transition-duration) var(--transition-easing);
     pointer-events: none;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden auto;
   }
 
   &__close {
@@ -55,7 +54,7 @@
     transition: transform var(--transition-duration) var(--transition-easing);
     background: var(--body-bg);
     border-radius: var(--border-radius);
-    box-shadow: 0 2px 35px 14px rgba(13, 13, 13, 0.04);
+    box-shadow: 0 2px 35px 14px rgb(13 13 13 / 4%);
     color: var(--color-text);
     text-align: center;
     z-index: var(--modal-z-index);

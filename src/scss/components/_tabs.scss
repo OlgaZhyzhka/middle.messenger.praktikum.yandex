@@ -5,11 +5,11 @@
 .tabs {
   &__nav {
     display: flex;
-    gap: toRem(12px);
+    gap: torem(12px);
   }
 
   &__link {
-    padding: 0 toRem(12px) toRem(8px);
+    padding: 0 torem(12px) torem(8px);
     font-size: var(--font-size-md);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text);

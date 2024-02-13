@@ -11,11 +11,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: toRem(5px) toRem(15px);
+    padding: torem(5px) torem(15px);
   }
 
   &__link {
-    font-size: toRem(14px);
+    font-size: torem(14px);
   }
 
   @include create-mq($grid__bp-xl, 'min') {
@@ -24,7 +24,7 @@
 
     &__container {
       flex-direction: column;
-      padding: toRem(24px) toRem(5px);
+      padding: torem(24px) torem(5px);
       text-align: center;
     }
   }

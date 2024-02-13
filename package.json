@@ -12,6 +12,8 @@
     "preview": "vite preview",
     "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0 --fix",
+    "lint:css": "stylelint 'src/scss/**/*.scss'",
+    "lint:css:fix": "npm run lint:css -- --fix",
     "prepare": "husky install"
   },
   "engines": {
@@ -32,6 +34,10 @@
     "nodemon": "^3.0.3",
     "prettier": "^2.8.8",
     "sass": "^1.70.0",
+    "stylelint": "^16.2.1",
+    "stylelint-config-standard-scss": "^13.0.0",
+    "stylelint-order": "^6.0.4",
+    "stylelint-scss": "^6.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
@@ -45,6 +51,9 @@
   "lint-staged": {
     "src/**/*.ts": [
       "eslint --cache --fix"
+    ],
+    "src/**/*.scss": [
+      "stylelint --fix"
     ]
   }
 }
