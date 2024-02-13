@@ -40,4 +40,3 @@ Basic Html pages and css styles are are developed. Chat list page in development
 5. Run `npm run build` to build the project.
 6. Run `npm run start` to serve the project in production mode and open `http://localhost:3000/` in your browser.
 7. Index page contains links to other pages.
-
