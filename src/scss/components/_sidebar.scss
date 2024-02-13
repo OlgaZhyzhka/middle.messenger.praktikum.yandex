@@ -4,10 +4,6 @@
   left: 0;
   width: 100%;
   height: var(--sidebar-size);
-  background: var(--sidebar-bg);
-  border-right: var(--border-width) solid var(--border-color);
-  box-shadow: var(--box-shadow);
-  z-index: var(--z-index-3);
 
   &__container {
     width: 100%;

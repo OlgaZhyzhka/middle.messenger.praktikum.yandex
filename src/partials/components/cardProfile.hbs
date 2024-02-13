@@ -11,113 +11,22 @@
       </div>
       {{#if editMode}}
         <div class="tabs__content card__content">
-          <form class="form form_horizontal">
-            <div class="card__info">
-              <div class="card__avatar">
-                  <div class="card__upload upload">
-                    <input class="upload__input" type="file" accept=".jpg, .jpeg, .png, .gif" />
-                    <div class="upload__preview" style="display: none;"></div>
-                    <img class="upload__icon" src="/icons/upload-avatar.svg" alt="upload icon">
-                    <span class="upload__label">Upload avatar</span>
-                  </div>
-              </div>
-              <ul class="card__list">
-                <li class="form__row is-error">
-                  <input class="ui-input ui-input_sm" type="email" name="userEmail" placeholder="Email" />
-                  <span class="form__error">Please enter a valid email address</span>
-                </li>
-                <li class="form__row">
-                  <input class="ui-input ui-input_sm" type="text" name="userFirstName" placeholder="First Name" />
-                    <span class="form__error"></span>
-                </li>
-                <li class="form__row is-success">
-                  <input class="ui-input ui-input_sm" type="text" name="userLogin" placeholder="Login" />
-                    <span class="form__error"></span>
-                </li>
-                <li class="form__row">
-                  <input class="ui-input ui-input_sm" type="text" name="userLastName" placeholder="Last Name" />
-                    <span class="form__error"></span>
-                </li>
-                <li class="form__row">
-                  <input class="ui-input ui-input_sm" type="tel" name="userPhone" pattern='\+7\s\([0-9]{3}\)\s[0-9]{3}-[0-9]{2}-[0-9]{2}' placeholder="Phone +7 (XXX) XXX-XX-XX" title="+7 (XXX) XXX-XX-XX" />
-                    <span class="form__error"></span>
-                </li>
-                 <li class="form__row">
-                  <input class="ui-input ui-input_sm" type="text" name="userLastName" placeholder="Chat Name" />
-                    <span class="form__error"></span>
-                </li>
-              </ul>
-              <div class="card__footer">
-                {{> components/button label="Save" class="button button_primary button_md button_rounded"}}
-                <button class="button button_link">Reset</button>
-              </div>
-            </div>
-          </form>
+          {{> components/tabProfileEdit }}
         </div>
         {{else if changePasswordMode}}
           <div class="tabs__content card__content">
-              <form class="form form_horizontal">
-                <div class="form__row">
-                  <div class="form__wrapper">
-                    <input class="ui-input ui-input_sm" type='password' name="password" placeholder="Old password"/>
-                    <span class="button button_icon">{{> components/iconBase class='eye-close' size='sm' }}</span>
-                  </div>
-                   <span class="form__error"></span>
-                </div>
-                <div class="form__row">
-                  <div class="form__wrapper">
-                    <input class="ui-input ui-input_sm" type='password' name="password" placeholder="New password"/>
-                    <span class="button button_icon">{{> components/iconBase class='eye-close' size='sm' }}</span>
-                  </div>
-                   <span class="form__error"></span>
-                </div>
-                <div class="form__row">
-                  <div class="form__wrapper">
-                    <input class="ui-input ui-input_sm" type='password' name="userConfirmPassword" placeholder="Confirm password"/>
-                    <span class="button button_icon">{{> components/iconBase class='eye-close' size='sm' }}</span>
-                  </div>
-                  <span class="form__error"></span>
-                </div>
-                <div class="card__footer">
-                  {{> components/button label="Save" class="button button_primary button_md button_rounded"}}
-                  <button class="button button_link">Reset</button>
-                </div>
-              </form>
+            {{> components/tabProfilePassword }}
           </div>
         {{else}}
           <div class="tabs__content card__content">
-            <div class="card__info">
-              <div class="card__avatar">
-                {{> components/avatar avatarSrc=avatarSrc avatarSize="lg"}}
-              </div>
-              <hr class="divider">
-              <ul class="card__list">
-                <li class="card__item">
-                  <span class="card__label">Email:</span>
-                  <span class="card__text">{{userEmail}}</span>
-                </li>
-                <li class="card__item">
-                  <span class="card__label">First Name:</span>
-                  <span class="card__text">{{userFirstName}}</span>
-                </li>
-                <li class="card__item">
-                  <span class="card__label">Login:</span>
-                  <span class="card__text">{{userLogin}}</span>
-                </li>
-                <li class="card__item">
-                  <span class="card__label">Last Name:</span>
-                  <span class="card__text">{{userLastName}}</span>
-                </li>
-                <li class="card__item">
-                  <span class="card__label">Phone:</span>
-                  <span class="card__text">{{userPhone}}</span>
-                </li>
-                <li class="card__item">
-                  <span class="card__label">Chat name:</span>
-                  <span class="card__text">{{userChatName}}</span>
-                </li>
-              </ul>
-            </div>
+            {{> components/tabProfileInfo
+              avatarSrc="/images/user.jpg"
+              userEmail="maria@gmail.com" 
+              userLogin="MariaMI"
+              userPhone="+7 (909) 123-45-67"
+              userFirstName="Maria"
+              userLastName="Ivanova"
+              userChatName="MariaIvanova"}}
           </div>
       {{/if}}
     </div>
