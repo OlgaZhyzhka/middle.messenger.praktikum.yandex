@@ -1,0 +1,56 @@
+:root {
+  --upload-bg: rgba(237, 242, 246, 0.5);
+  --upload-border-color: var(--light);
+  --upload-size: 130px;
+}
+
+.upload {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: toRem(16px);
+  width: var(--upload-size);
+  height: var(--upload-size);
+  padding: toRem(18px);
+  background-color: var(--upload-bg);
+  border: 1px dashed var(--upload-border-color);
+  border-radius: var(--border-radius-sm);
+  text-align: center;
+
+  &__preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &__icon {
+    width: 36px;
+  }
+
+  &__label {
+    margin: 0 0 0 auto;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    text-align: center;
+    cursor: pointer;
+  }
+
+  input[type='file'] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    direction: ltr;
+    cursor: pointer;
+    opacity: 0;
+  }
+}

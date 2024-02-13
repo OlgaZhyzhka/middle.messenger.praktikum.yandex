@@ -1,15 +1,15 @@
 .link {
   color: var(--color-text);
-  transition: color var(--transition-duration) var(--transition-easing);
+  transition: opacity var(--transition-duration) var(--transition-easing);
   text-decoration: none;
 
   &:hover {
-    text-decoration: underline;
+    color: inherit;
+    opacity: 0.65;
   }
 
-  @media (hover: hover) {
-    &:hover {
-      cursor: pointer;
-    }
+  &_icon {
+    display: flex;
+    align-items: center;
   }
 }

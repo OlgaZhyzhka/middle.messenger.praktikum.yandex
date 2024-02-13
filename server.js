@@ -1,6 +1,6 @@
 import express from 'express';
 import { config } from 'dotenv';
-import { dirname, join, resolve } from 'path';
+import { dirname, resolve } from 'path';
 
 import { fileURLToPath } from 'url';
 

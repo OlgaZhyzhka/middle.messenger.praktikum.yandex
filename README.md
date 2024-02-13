@@ -6,7 +6,7 @@
 
 ## Pages
 
-- [Главная страница](https://simple-chat-mess.netlify.app/index.html)
-- [Страница логина](https://simple-chat-mess.netlify.app/login.html)
-- [Страница 404](https://simple-chat-mess.netlify.app/404.html)
-- [Страница 500](https://simple-chat-mess.netlify.app/500.html)
+- [Главная страница](https://simple-chat-messenger.netlify.app/index.html)
+- [Страница логина](https://simple-chat-messenger.netlify.app/login.html)
+- [Страница 404](https://simple-chat-messenger.netlify.app/404.html)
+- [Страница 500](https://simple-chat-messenger.netlify.app/500.html)

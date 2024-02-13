@@ -31,14 +31,33 @@
     }
   }
 
-  @include create-mq($grid__bp-md, 'min') {
-    padding-top: 50px;
-    padding-bottom: 100px;
+  &_inner {
+    min-height: 100%;
+    padding-top: var(--sidebar-size);
+    background: var(--page-bg);
+  }
 
+  &_chat {
+    padding-bottom: 0;
+  }
+
+  @include create-mq($grid__bp-md, 'min') {
     &_error {
       .page__button {
         min-width: 320px;
       }
+    }
+  }
+
+  @include create-mq($grid__bp-xl, 'min') {
+    &:not(.page_chat) {
+      padding-top: 50px;
+      padding-bottom: 100px;
+    }
+
+    &_inner {
+      padding-top: 0;
+      padding-left: var(--sidebar-size);
     }
   }
 }

@@ -1,10 +1,5 @@
 .button {
   display: inline-block;
-  font-family: var(--font-family-base);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-base);
-  text-decoration: none;
-  text-align: center;
   border: none;
   background-color: transparent;
   box-shadow: none;
@@ -12,6 +7,11 @@
   appearance: none;
   user-select: none;
   backface-visibility: hidden;
+  text-decoration: none;
+  text-align: center;
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-base);
 
   &:disabled,
   &.disabled {
@@ -39,11 +39,12 @@
   }
 
   &_md {
+    min-width: 180px;
     height: var(--input-md);
     padding-left: 1.25rem;
     padding-right: 1.25rem;
     font-size: var(--font-size-base);
-    line-height: calc(var(--input-md) - 2px);
+    line-height: calc(var(--input-md) - 4px);
   }
 
   &_rounded {
@@ -72,6 +73,20 @@
     &:hover {
       background-color: var(--color-primary);
       color: var(--white);
+    }
+  }
+
+  &_icon,
+  &_link {
+    padding: 0;
+  }
+
+  &_link {
+    color: var(--color-text);
+
+    &:hover {
+      transition: var(--transition-duration) var(--transition-easing);
+      color: var(--color-link-hover);
     }
   }
 }

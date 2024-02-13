@@ -15,11 +15,21 @@
 }
 
 .icon_eye {
-  mask-image: url(../static/icons/eye.svg);
-  -webkit-mask-image: url(../static/icons/eye.svg);
+  mask-image: url(../icons/eye.svg);
+  -webkit-mask-image: url(../icons/eye.svg);
 }
 
 .icon_eye-close {
-  mask-image: url(../static/icons/eye-close.svg);
-  -webkit-mask-image: url(../static/icons/eye-close.svg);
+  mask-image: url(../icons/eye-close.svg);
+  -webkit-mask-image: url(../icons/eye-close.svg);
+}
+
+.icon_logout {
+  mask-image: url(../icons/logout.svg);
+  -webkit-mask-image: url(../icons/logout.svg);
+}
+
+.icon_settings {
+  mask-image: url(../icons/settings.svg);
+  -webkit-mask-image: url(../icons/settings.svg);
 }

@@ -3,14 +3,25 @@
 
   <body>
     <main id="app" class="wrapper">
-      <h2>{{ title }}</h2>
-      <ul>
-        <li><a href="/login.html" target="_blank">Login page</a></li>
-        <li><a href="/registration.html" target="_blank">Registration page</a></li>
-        <li><a href="/chat-list.html" target="_blank">Chat list page</a></li>
-        <li><a href="/404.html" target="_blank">404 page</a></li>
-        <li><a href="/500.html" target="_blank">500 page</a></li>
-      </ul>
+      <div class="container container_centered page">
+        <h1 class="page__heading">{{ title }}</h1>
+        <ul class="menu">
+          <li class="menu__item"><a class="menu__link" href="/login.html" target="_blank">Login page</a></li>
+          <li class="menu__item">
+            <a class="menu__link" href="/registration.html" target="_blank">Registration page</a>
+          </li>
+          <li class="menu__item"><a class="menu__link" href="/profile.html" target="_blank">Profile page</a></li>
+          <li class="menu__item">
+            <a class="menu__link" href="/profile-edit.html" target="_blank">Profile edit page</a>
+          </li>
+          <li class="menu__item">
+            <a class="menu__link" href="/profile-password.html" target="_blank">Profile change password page</a>
+          </li>
+          <li class="menu__item"><a class="menu__link" href="/chat-list.html" target="_blank">Chat list page</a></li>
+          <li class="menu__item"><a class="menu__link" href="/404.html" target="_blank">404 page</a></li>
+          <li class="menu__item"><a class="menu__link" href="/500.html" target="_blank">500 page</a></li>
+        </ul>
+      </div>
     </main>
     {{> _scripts }}
   </body>

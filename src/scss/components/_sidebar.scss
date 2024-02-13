@@ -1,0 +1,35 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--sidebar-size);
+  background: var(--sidebar-bg);
+  border-right: var(--border-width) solid var(--border-color);
+  box-shadow: var(--box-shadow);
+  z-index: var(--z-index-3);
+
+  &__container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: toRem(5px) toRem(15px);
+  }
+
+  &__link {
+    font-size: toRem(14px);
+  }
+
+  @include create-mq($grid__bp-xl, 'min') {
+    height: var(--app-height);
+    width: var(--sidebar-size);
+
+    &__container {
+      flex-direction: column;
+      padding: toRem(24px) toRem(5px);
+      text-align: center;
+    }
+  }
+}

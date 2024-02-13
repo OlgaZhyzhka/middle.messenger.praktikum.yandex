@@ -4,8 +4,8 @@
   padding-right: calc($gutter / 2) * 1px;
   padding-left: calc($gutter / 2) * 1px;
 
-  @include create-mq($grid__bp-lg, 'min') {
-    max-width: $container-width-lg;
+  @include create-mq($grid__bp-xl, 'min') {
+    max-width: $container-width-xl;
   }
 
   &_fluid {

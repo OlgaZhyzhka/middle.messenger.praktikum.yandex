@@ -1,0 +1,14 @@
+<aside class="sidebar">
+  <div class="sidebar__container">
+    {{> components/logo isVertical=true}}
+    <div class="sidebar__footer">
+      {{#if isProfile}}
+          {{> components/logoutLink class="sidebar__link"}}
+        {{else if isChat}}
+          {{> components/avatar avatarSrc="/images/avatar1.jpg" avatarSize="sm" userName="OlgaZH" class="hidden-xl-down"}}
+          {{> components/settingsLink class="sidebar__link"}}
+      {{/if}}
+    </div>
+  </div>
+  
+</aside>

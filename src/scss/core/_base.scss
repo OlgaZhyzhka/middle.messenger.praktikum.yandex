@@ -30,24 +30,37 @@
   --color-error: var(--red);
   --color-success: var(--green);
   --color-warning: var(--yellow);
-
   --color-placeholder: var(--light-grey);
 
-  --input-bg: var(--light);
-  --input-sm: 36px;
-  --input-md: 52px;
+  --gradient: linear-gradient(to right, #d2d5f9, #2c37e1);
 
   --border-radius-xs: 4px;
   --border-radius-sm: 10px;
   --border-radius-md: 30px;
   --border-color: var(--light-grey1);
+  --border-width: 1px;
+
+  --box-shadow: 0 -1px 30px rgba(0, 0, 0, 0.15);
+
+  --input-bg: var(--light);
+  --input-sm: 36px;
+  --input-md: 52px;
+
+  --component-padding: 24px;
+  --component-bg: var(--white);
+  --component-border-radius: var(--border-radius-xs);
+  --component-box-shadow: 0 0 30px rgba(170, 170, 170, 0.15), 0 10px 20px rgba(194, 194, 194, 0.15);
+  --component-divider: var(--light-grey1);
+
+  --page-bg: var(--light);
 
   --transition-duration: 0.25s;
   --transition-easing: cubic-bezier(0.5, 0, 0.5, 1);
 
   --font-family-base: 'Mulish', Helvetica, sans-serif;
   --font-size-base: 16px;
-  --font-size-sm: 14px;
+  --font-size-xs: 14px;
+  --font-size-md: 20px;
   --font-weight-normal: 400;
   --font-weight-semibold: 500;
   --font-weight-bold: 700;
@@ -63,15 +76,27 @@
   --z-index-3: 15;
 
   --app-height: 100vh;
+
+  --sidebar-size: 80px;
+  --sidebar-bg: var(--body-bg);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --body-bg: #1f161e;
+
     --color-text: var(--light);
     --color-heading: var(--light);
+    --color-link-hover: var(--purple);
+
     --input-bg: var(--dark1);
 
     --border-color: var(--dark1);
+
+    --component-bg: #1f161e;
+    --component-box-shadow: 0 0 30px rgba(30, 30, 30, 0.15), 0 10px 20px rgba(0, 0, 0, 0.15);
+    --component-divider: var(--dark2);
+
+    --page-bg: var(--dark1);
   }
 }

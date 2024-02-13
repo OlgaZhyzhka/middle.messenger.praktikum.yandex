@@ -1,3 +1,20 @@
 .logo {
-  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+  }
+
+  @include create-mq($grid__bp-xl, 'min') {
+    flex-direction: column;
+
+    .logo__title {
+      font-size: 1.125rem;
+    }
+  }
 }

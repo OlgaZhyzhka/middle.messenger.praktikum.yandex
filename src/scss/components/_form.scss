@@ -11,7 +11,7 @@
       padding-right: toRem(30px);
     }
 
-    .icon {
+    .button_icon {
       position: absolute;
       top: 50%;
       right: 5px;
@@ -23,23 +23,16 @@
     position: absolute;
     top: 100%;
     left: 2px;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
     font-weight: var(--font-weight-semibold);
     letter-spacing: var(--letter-spacing-xs);
     color: var(--color-error);
   }
 
-  &_horizontal {
-    .ui-input,
-    .button {
-      display: block;
-      width: 100%;
-    }
-  }
-
   &__title {
+    margin-top: 1.5rem;
+    margin-bottom: toRem(50px);
     font-size: 1.5rem;
-    margin-bottom: toRem(80px);
   }
 
   &__text {
@@ -51,9 +44,22 @@
     margin-top: toRem(32px);
   }
 
+  &_horizontal {
+    .ui-input {
+      display: block;
+      width: 100%;
+    }
+  }
+
   &_auth {
-    margin-top: 1.5rem;
-    text-align: center;
+    .form__title,
+    .form__text {
+      text-align: center;
+    }
+
+    .form__footer .button {
+      width: 100%;
+    }
 
     @include create-mq($grid__bp-md, 'min') {
       width: 370px;

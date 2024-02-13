@@ -12,4 +12,13 @@ export const pagesData = {
   '/chat-list.html': {
     title: 'Chateo - simple messenger - start chatting',
   },
+  '/profile.html': {
+    title: 'Chateo - simple messenger - profile',
+  },
+  '/profile-edit.html': {
+    title: 'Chateo - simple messenger - profile',
+  },
+  '/profile-password.html': {
+    title: 'Chateo - simple messenger - profile',
+  },
 };

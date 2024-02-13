@@ -1,0 +1,16 @@
+.menu {
+  @extend .list;
+
+  &__item {
+    margin-bottom: 0.75rem;
+  }
+
+  &__link {
+    color: var(--color-text);
+    transition: color var(--transition-duration) var(--transition-easing);
+
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+}

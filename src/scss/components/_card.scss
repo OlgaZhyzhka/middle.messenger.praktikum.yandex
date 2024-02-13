@@ -1,0 +1,60 @@
+.card {
+  padding: var(--component-padding);
+  background-color: var(--component-bg);
+  border-radius: var(--component-border-radius);
+  box-shadow: var(--component-box-shadow);
+
+  &__list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    column-gap: toRem(50px);
+  }
+
+  &__item {
+    margin-bottom: toRem(24px);
+  }
+
+  &__label {
+    font-weight: var(--font-weight-semibold);
+    color: var(--light-grey);
+  }
+
+  &__content {
+    margin-top: 1.5rem;
+  }
+
+  &__footer {
+    margin-bottom: toRem(40px);
+    display: flex;
+    align-items: center;
+    gap: toRem(24px);
+  }
+
+  &__upload {
+    margin-bottom: toRem(24px);
+  }
+
+  &_profile {
+    margin-top: toRem(40px);
+  }
+
+  @include create-mq($grid__bp-xl, 'min') {
+    &__list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(150px, 1fr));
+    }
+
+    &_profile {
+      margin-top: 0;
+    }
+  }
+
+  @include create-mq($grid__bp-md, 'min') {
+    &_profile {
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
