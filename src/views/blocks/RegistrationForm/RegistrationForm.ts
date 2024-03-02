@@ -1,37 +1,65 @@
-import Template from '@/core/Template';
+import Block, { Props } from '@/core/Block';
 import { Input } from '@/views/components/Input';
-import { Button } from '@/views/components/Button';
-import tpl from './tpl.hbs?raw';
+import tpl from './tpl';
 
-type Props = {
-  userName?: string;
-  class?: string;
-};
-
-class RegistrationForm extends Template {
-  // private loginInput: Input;
-  private passwordInput: Input;
-
-  private submitButton: Button;
-
-  constructor(private props: Props) {
-    super(tpl);
-    // this.registrationForm = new Input({ class: 'ui-input', type: 'text', placeholder: 'Login', name: 'login' });
-    this.passwordInput = new Input({ class: 'ui-input', type: 'password', placeholder: 'Password', name: 'password' });
-    this.submitButton = new Button({ class: 'ui-input', body: 'Login' });
+class RegistrationForm extends Block {
+  constructor(props: Props) {
+    super({
+      ...props,
+      loginInput: new Input({
+        attributes: { class: 'form__row' },
+        type: 'text',
+        size: 'sm',
+        name: 'login',
+        placeholder: 'Login',
+      }),
+      passwordInput: new Input({
+        attributes: { class: 'form__row' },
+        type: 'password',
+        size: 'sm',
+        name: 'password',
+        placeholder: 'Password',
+      }),
+      confirmPasswordInput: new Input({
+        attributes: { class: 'form__row' },
+        type: 'password',
+        size: 'sm',
+        name: 'confirm_password',
+        placeholder: 'Confirm Password',
+      }),
+      emailInput: new Input({
+        attributes: { class: 'form__row' },
+        type: 'email',
+        size: 'sm',
+        name: 'email',
+        placeholder: 'Email',
+      }),
+      firstNameInput: new Input({
+        attributes: { class: 'form__row' },
+        type: 'text',
+        size: 'sm',
+        name: 'first_name',
+        placeholder: 'First Name',
+      }),
+      lastNameInput: new Input({
+        attributes: { class: 'form__row' },
+        type: 'text',
+        size: 'sm',
+        name: 'second_name',
+        placeholder: 'Last Name',
+      }),
+      phoneInput: new Input({
+        attributes: { class: 'form__row' },
+        type: 'tel',
+        size: 'sm',
+        name: 'phone',
+        placeholder: 'Phone number',
+      }),
+    });
   }
 
-  public render(): string {
-    // const loginInputHtml = this.loginInput.render();
-    const passwordInputHtml = this.passwordInput.render();
-    const submitButtonHtml = this.submitButton.render();
-
-    return super.render({
-      ...this.props,
-      // loginInput: loginInputHtml,
-      passwordInput: passwordInputHtml,
-      submitButton: submitButtonHtml,
-    });
+  public render(): DocumentFragment {
+    return this.compile(tpl);
   }
 }
 

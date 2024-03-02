@@ -1,16 +1,12 @@
-import Template from '@/core/Template';
-import tpl from './tpl.hbs?raw';
+import { BasePage } from '@/views/pages/BasePage';
+import tpl from './tpl.ts';
 
-class Home extends Template {
-  constructor() {
-    super(tpl);
-  }
 
-  public render(): string {
-    const data = {
-      pageTitle: 'Chateo - simple messenger',
-    };
-    return super.render(data);
+
+class Home extends BasePage {
+
+  public render(): DocumentFragment {
+    return this.compile(tpl);
   }
 }
 

@@ -1,38 +1,39 @@
-import Template from '@/core/Template';
+import Block, { Props } from '@/core/Block';
 import { Input } from '@/views/components/Input';
-import { Button } from '@/views/components/Button';
-import tpl from './tpl.hbs?raw';
+import { ErrorText } from '@/views/components/ErrorText';
+import tpl from './tpl';
 
-type Props = {
-  userName?: string;
-  class?: string;
-};
-
-class LoginForm extends Template {
-  private loginInput: Input;
-
-  private passwordInput: Input;
-
-  private submitButton: Button;
-
-  constructor(private props: Props) {
-    super(tpl);
-    this.loginInput = new Input({ class: 'ui-input', type: 'text', placeholder: 'Login', name: 'login' });
-    this.passwordInput = new Input({ class: 'ui-input', type: 'password', placeholder: 'Password', name: 'password' });
-    this.submitButton = new Button({ class: 'ui-input', body: 'Login' });
+class LoginForm extends Block {
+  constructor(props: Props) {
+    super({
+      ...props,
+      loginInput: new Input({
+        attributes: { class: 'form__row' },
+        type: 'text',
+        size: 'sm',
+        name: 'login',
+        placeholder: 'Login',
+        errorText: new ErrorText({
+          attributes: { class: 'form__error' },
+          text: 'Login is required',
+        }),
+      }),
+      passwordInput: new Input({
+        attributes: { class: 'form__row' },
+        type: 'password',
+        size: 'sm',
+        name: 'password',
+        placeholder: 'Password',
+        errorText: new ErrorText({
+          attributes: { class: 'form__error' },
+          text: 'Password is required',
+        }),
+      }),
+    });
   }
 
-  public render(): string {
-    const loginInputHtml = this.loginInput.render();
-    const passwordInputHtml = this.passwordInput.render();
-    const submitButtonHtml = this.submitButton.render();
-
-    return super.render({
-      ...this.props,
-      loginInput: loginInputHtml,
-      passwordInput: passwordInputHtml,
-      submitButton: submitButtonHtml,
-    });
+  public render(): DocumentFragment {
+    return this.compile(tpl);
   }
 }
 

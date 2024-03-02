@@ -1,38 +1,20 @@
-import updateContent from '@/helpers/updateContent';
-import { Login } from '@/views/pages/Login';
-import { Home } from '@/views/pages/Home';
+import { renderDOM } from '@/helpers';
 import { pagesData } from './pagesData';
 import { Routes } from './Routes';
-
-const renderHomePage = (): string => {
-  const homePage = new Home();
-  return homePage.render();
-};
-
-const renderLoginPage = (): string => {
-  const loginPage = new Login();
-  return loginPage.render();
-};
+import { getPageComponent } from './getPageComponent';
+import eventBus from './eventBus';
 
 const handleRouteChange = (): void => {
   const path = window.location.pathname;
   const pageData = pagesData[path as Routes] || pagesData[Routes.Error404];
   document.title = pageData.title;
-  let pageContent = '';
+  const pageComponent = getPageComponent(path);
 
-  switch (path) {
-    case Routes.Home:
-      pageContent = renderHomePage();
-      break;
-    case Routes.Login:
-      pageContent = renderLoginPage();
-      break;
-    default:
-      pageContent = '404 Not Found';
-      break;
+  if (pageComponent) {
+    renderDOM(pageComponent);
   }
-
-  updateContent(pageContent);
 };
+
+eventBus.on('routeChange', handleRouteChange);
 
 export default handleRouteChange;

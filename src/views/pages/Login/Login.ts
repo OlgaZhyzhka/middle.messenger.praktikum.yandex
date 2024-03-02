@@ -1,21 +1,28 @@
-import Template from '@/core/Template';
-import { LoginForm } from '@/views/blocks/LoginForm';
-import tpl from './tpl.hbs?raw';
+import { Form } from '@/views/blocks/Form';
+import { BasePage } from '@/views/pages/BasePage';
+import { BasePageProps } from '@/views/pages/BasePage/BasePage.ts';
+import tpl from './tpl.ts';
 
-class LoginPage extends Template {
-  private loginForm: LoginForm;
+interface LoginProps extends BasePageProps {
+  imgSrc: string;
+  imgAlt: string;
+}
 
-  constructor() {
-    super(tpl);
-    this.loginForm = new LoginForm({ userName: 'Marta', class: 'form_horizontal' });
+class Login extends BasePage {
+  constructor(props: LoginProps) {
+    super({
+      ...props,
+      pageTitle: 'Welcome back!',
+      form: new Form({
+        attributes: { class: 'form form_horizontal form_auth' },
+        type: 'login',
+      }),
+    });
   }
 
-  public render(): string {
-    const loginFormHtml = this.loginForm.render();
-    return super.render({
-      loginForm: loginFormHtml,
-    });
+  public render(): DocumentFragment {
+    return this.compile(tpl);
   }
 }
 
-export default LoginPage;
+export default Login;

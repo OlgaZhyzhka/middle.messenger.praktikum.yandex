@@ -1,8 +1,8 @@
-import handleRouteChange from './handleRouteChange';
+import eventBus from './eventBus';
 
 const navigateTo = (url: string): void => {
   history.pushState({}, '', url);
-  handleRouteChange();
+  eventBus.emit('routeChange');
 };
 
 export default navigateTo;

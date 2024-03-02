@@ -1,21 +1,14 @@
-import Template from '@/core/Template';
-import tpl from './tpl.hbs?raw';
+import Block from '@/core/Block';
+import tpl from './tpl';
 
-type Props = {
-  class?: string;
-  type: string;
-  placeholder: string;
-  name: string;
-};
 
-class Input extends Template {
+class Input extends Block {
 
-  constructor(private props: Props) {
-    super(tpl);
-  }
-
-  public render(): string {
-    return super.render(this.props);
+  public render(): DocumentFragment {
+    const sizeClass = `ui-input_${this.props.size || ''}`;
+    const className = `ui-input ${sizeClass}`;
+    const combinedProps = { ...this.props, className };
+    return this.compile(tpl, combinedProps);
   }
 }
 
