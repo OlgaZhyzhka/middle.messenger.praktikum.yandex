@@ -1,7 +1,7 @@
 export const enum Routes {
   Home = '/',
   Login = '/login',
-  Register = '/register',
+  Register = '/registration',
   Chats = '/chats',
   Profile = '/profile',
   ProfileEdit = '/profile-edit',
