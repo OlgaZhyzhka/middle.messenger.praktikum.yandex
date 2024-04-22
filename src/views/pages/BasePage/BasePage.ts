@@ -1,12 +1,7 @@
 import Block, { Props } from '@/core/Block';
 
-export interface BasePageProps extends Props {
-  pageTitle: string;
-  attributes?: Record<string, string>;
-}
-
 class BasePage extends Block {
-  constructor(props: BasePageProps) {
+  constructor(props: Props) {
     super({
       ...props,
       attributes: {

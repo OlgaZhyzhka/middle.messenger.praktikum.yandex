@@ -10,6 +10,7 @@ export type VARIANT =
   | 'light'
   | 'dark'
   | 'link'
+  | 'icon'
   | 'primary-bordered';
 
 export type SHAPE = 'round' | 'circle' | 'rounded' | 'default';

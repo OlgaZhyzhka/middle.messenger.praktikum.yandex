@@ -8,7 +8,7 @@
 
 - [Главная страница](https://simple-chat-messenger.netlify.app/)
 - [Страница логина](https://simple-chat-messenger.netlify.app/login)
-- [Страница 404](https://simple-chat-messenger.netlify.app/registration)
+- [Страница регистрации](https://simple-chat-messenger.netlify.app/registration)
 
 ## Description
 

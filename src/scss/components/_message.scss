@@ -1,0 +1,47 @@
+.message {
+  position: relative;
+
+  &__footer {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__date {
+    display: block;
+    margin: 0 5px 0 auto;
+    font-size: torem(12px);
+    color: var(--light-grey)
+  }
+
+  &__content {
+    margin: 0;
+  }
+
+  &_base {
+    padding: torem(10px);
+  }
+
+  &_media {
+    padding: 6px;
+  }
+
+  &__thumb {
+    position: relative;
+    display: block;
+    min-height: 150px;
+    margin-bottom: 5px;
+    aspect-ratio: 16/9;
+    border-radius: var(--border-radius-xs);
+    overflow: hidden;
+
+    img,
+    video {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 5px;
+    }
+  }
+}

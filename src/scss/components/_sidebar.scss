@@ -15,7 +15,11 @@
   }
 
   &__link {
+    display: block;
+    margin-top: 5px;
     font-size: torem(14px);
+    color: var(--color-text);
+    text-decoration: none;
   }
 
   @include create-mq($grid__bp-xl, 'min') {

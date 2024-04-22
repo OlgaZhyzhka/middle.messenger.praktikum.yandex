@@ -4,13 +4,15 @@ import { deepEqual, generateUniqueId } from '@/helpers';
 
 import EventBus from './EventBus';
 
+Handlebars.registerHelper('eq', (a, b) => a === b);
+
 export interface Props {
   [key: string]: unknown;
   settings?: {
     withInternalId: boolean;
   };
   events?: { [key: string]: (event: Event) => void };
-  attributes?: { [key: string]: string };
+  attributes?: { [key: string]: string | boolean};
 }
 
 interface Children {
@@ -43,7 +45,7 @@ export default class Block {
 
   protected eventBus: EventBus;
 
-  private _element: HTMLElement | null = null;
+  protected _element: HTMLElement | null = null;
 
   private _meta: { tagName: string } | null = null;
 
@@ -71,12 +73,20 @@ export default class Block {
     this.eventBus.emit(Block.EVENTS.INIT);
   }
 
-  protected get element(): HTMLElement | null {
+  public get element(): HTMLElement | null {
     return this._element;
   }
 
   protected get id(): string {
     return this._id;
+  }
+
+  public getProps(): Props {
+    return this.props;
+  }
+
+  public getChild(name: string): Block | undefined {
+    return this.children[name];
   }
 
   private _registerEvents(): void {
@@ -115,6 +125,7 @@ export default class Block {
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target, prop: string, value): boolean => {
+        console.log(`Setting prop ${prop} to`, value);
         if (!deepEqual(target[prop], value)) {
           target[prop] = value;
           this._isUpdated = true;
@@ -193,6 +204,7 @@ export default class Block {
 
     const { attributes } = this.props;
     this._setAttribute(attributes);
+    console.log('Render element');
   }
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -206,6 +218,11 @@ export default class Block {
     this.componentDidMount();
     Object.values(this.children).forEach((child) => {
       child.dispatchComponentDidMount();
+    });
+    Object.values(this.childItems).forEach((items) => {
+      items.forEach((item) => {
+        item.dispatchComponentDidMount();
+      });
     });
   }
 
@@ -221,6 +238,7 @@ export default class Block {
     if (this._element instanceof HTMLElement) {
       this._element.remove();
     }
+
     this._element = null;
   }
 
@@ -229,6 +247,10 @@ export default class Block {
   }
 
   private _componentDidUpdate(oldProps: Props, newProps: Props): void {
+    if (!oldProps || !newProps) {
+      return;
+    }
+
     const response = this.componentDidUpdate(oldProps, newProps);
 
     if (response) {
@@ -241,8 +263,18 @@ export default class Block {
     return true;
   }
 
-  private _setAttribute(attributes: Record<string, string> = {}): void {
-    Object.entries(attributes).forEach(([key, value]) => this._element?.setAttribute(key, value));
+  private _setAttribute(attributes: Record<string, string | boolean> = {}): void {
+    Object.entries(attributes).forEach(([key, value]) => this._element?.setAttribute(key, String(value)));
+  }
+
+  public toggleClass(className: Record<string, string>): void {
+    const key = className.class;
+
+    if (this.element?.classList.contains(key)) {
+      this.element?.classList.remove(key);
+    }
+
+    this.element?.classList.add(key);
   }
 
   private _addEvents(): void {
@@ -311,6 +343,7 @@ export default class Block {
 
     Object.values(this.children).forEach((child) => {
       const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+
       if (stub) {
         const content = child.getContent();
 
@@ -322,6 +355,7 @@ export default class Block {
 
     Object.entries(this.childItems).forEach(([key, items]) => {
       const stub = fragment.content.querySelector(`[data-id="${key}"]`);
+
       if (!stub) {
         return;
       }

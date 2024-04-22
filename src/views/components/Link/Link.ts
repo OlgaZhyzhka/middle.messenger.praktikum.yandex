@@ -1,11 +1,11 @@
 import Block, { Props } from '@/core/Block';
 
-interface ILinkProps extends Props {
+interface LinkProps extends Props {
   text: string;
 }
 
 class Link extends Block {
-  constructor(props: ILinkProps) {
+  constructor(props: LinkProps) {
     super(props, 'a');
   }
 

@@ -1,11 +1,11 @@
 export const enum Routes {
   Home = '/',
   Login = '/login',
-  Register = '/registration',
-  Chats = '/chats',
-  Profile = '/profile',
-  ProfileEdit = '/profile-edit',
-  ProfilePassword = '/profile-password',
+  Registration = '/sign-up',
+  Messenger = '/messenger',
+  Settings = '/settings',
+  SettingsEdit = '/settings-edit',
+  SettingsPassword = '/settings-password',
   Error404 = '/404',
   Error500 = '/500',
 }

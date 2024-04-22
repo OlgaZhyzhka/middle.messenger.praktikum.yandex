@@ -1,16 +1,15 @@
+import { Props } from '@/core/Block.ts';
 import { BasePage } from '@/views/pages/BasePage';
-import { Form } from '@/views/blocks/Form';
-import { BasePageProps } from '@/views/pages/BasePage/BasePage.ts';
+import { RegistrationForm } from '@/views/blocks/RegistrationForm/index.ts';
 import tpl from './tpl.ts';
 
-interface RegistrationProps extends BasePageProps {}
 
 class Registration extends BasePage {
-  constructor(props: RegistrationProps) {
+  constructor(props: Props) {
     super({
       ...props,
       pageTitle: 'Connect easily with your family and friends over countries',
-      form: new Form({
+      registrationForm: new RegistrationForm({
         attributes: { class: 'form form_horizontal form_auth' },
         type: 'registration',
       }),

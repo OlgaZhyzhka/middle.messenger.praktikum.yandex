@@ -1,4 +1,4 @@
-import { Callback } from '@/types/types';
+import { Callback } from '@/utils/types';
 
 class EventBus {
   private listeners: { [key: string]: Callback[] } = {};

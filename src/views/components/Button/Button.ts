@@ -1,30 +1,43 @@
 import Block, { Props } from '@/core/Block';
-import { SIZE, VARIANT, SHAPE } from '@/types/types';
+import { SIZE, VARIANT, SHAPE } from '@/utils/types';
 
 interface ButtonProps extends Props {
   variant?: VARIANT;
   shape?: SHAPE;
   size?: SIZE;
-  children?: string;
+  children?: string | Block;
   onClick?(event: Event): void;
 }
 
 class Button extends Block {
   constructor(props: ButtonProps) {
-    super({
-      ...props,
-      events: {
-        click: props.onClick || (():void => {}),
+    super(
+      {
+        ...props,
+        events: {
+          click: props.onClick || ((): void => {}),
+        },
       },
-    });
+      'button'
+    );
   }
 
   public render(): DocumentFragment {
-    const sizeClass = `button_${this.props.size || ''}`;
-    const variantClass = `button_${this.props.variant || ''}`;
-    const shapeClass = `button_${this.props.shape || ''}`;
+    const { shape, variant, size } = this.props;
+    const sizeClass = size ? `button_${size}` : '';
+    const variantClass = variant ? `button_${variant}` : '';
+    const shapeClass = shape ? `button_${shape}` : '';
     const className = `button ${sizeClass} ${variantClass} ${shapeClass}`;
-    return this.compile(`<button type="${this.props.type}" class="${className}">{{{children}}}</button>`);
+   
+    this.props = {
+      ...this.props,
+      attributes: {
+        ...this.props.attributes,
+        class: `${this.props.attributes?.class || ''} ${className}`.trim(),
+      },
+    };
+
+    return this.compile(`{{{children}}}`);
   }
 }
 

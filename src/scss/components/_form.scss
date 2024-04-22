@@ -4,25 +4,9 @@
     margin-bottom: 1.5rem;
   }
 
-  &__wrapper {
-    position: relative;
-
-    .ui-input {
-      padding-right: torem(30px);
-    }
-
-    .button_icon {
-      position: absolute;
-      top: 50%;
-      right: 5px;
-      transform: translateY(-50%);
-    }
-  }
-
   &__error {
-    position: absolute;
-    top: 100%;
-    left: 2px;
+    display: block;
+    margin-top: 5px;
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-semibold);
     letter-spacing: var(--letter-spacing-xs);
@@ -45,7 +29,7 @@
   }
 
   &_horizontal {
-    .ui-input {
+    .input {
       display: block;
       width: 100%;
     }

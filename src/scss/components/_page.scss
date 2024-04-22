@@ -8,49 +8,55 @@
     &:first-of-type {
       margin-top: 0;
     }
+
+    &_lg {
+      margin-top: torem(50px);
+      font-size: torem(95px);
+    }
   }
 
   &__title {
     font-weight: var(--font-weight-semibold);
-  }
 
-  &_error {
-    .page__heading {
-      margin-top: torem(50px);
-      font-size: torem(95px);
-    }
-
-    .page__title {
+    &_lg {
       margin-top: 0;
       margin-bottom: torem(40px);
       font-size: torem(36px);
     }
+  }
 
-    .page__button {
+  &__button {
+    &_lg {
       min-width: 180px;
     }
   }
 
   &_inner {
-    min-height: 100%;
+    height: var(--app-height);
     padding-top: var(--sidebar-size);
     background: var(--page-bg);
-  }
-
-  &_chat {
     padding-bottom: 0;
   }
 
+  &__section {
+    position: relative;
+    @include create-mq($grid__bp-xl, 'min') {
+      // height: var(--app-height);
+      // display: block;
+      flex: 1;
+    }
+  }
+
   @include create-mq($grid__bp-md, 'min') {
-    &_error {
-      .page__button {
+    .page__button {
+      &_lg {
         min-width: 320px;
       }
     }
   }
 
   @include create-mq($grid__bp-xl, 'min') {
-    &:not(.page_chat) {
+    &:not(.page_inner) {
       padding-top: 50px;
       padding-bottom: 100px;
     }
@@ -58,6 +64,7 @@
     &_inner {
       padding-top: 0;
       padding-left: var(--sidebar-size);
+      display: flex;
     }
   }
 }
