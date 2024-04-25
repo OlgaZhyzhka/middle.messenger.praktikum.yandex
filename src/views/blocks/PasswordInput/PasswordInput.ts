@@ -8,24 +8,22 @@ class PasswordInput extends Block {
   private isPasswordVisible: boolean;
 
   constructor(props: Props) {
-    super({
-      ...props,
+    super(props);
+    this.setProps({
       inputAddon: new InputAddon({
         placement: 'right',
         addon: new IconButton({
           iconName: 'eye-close',
           iconSize: 'sm',
-          onClick: (event): void => {
-            event.preventDefault();
-            this.toggleVisibility();
-          },
+          onClick: (event: Event): void => this.toggleVisibility(event),
         }),
       }),
     });
     this.isPasswordVisible = false;
   }
 
-  public toggleVisibility(): void {
+  public toggleVisibility(event: Event): void {
+    event.preventDefault();
     this.isPasswordVisible = !this.isPasswordVisible;
     const inputElement = (this.children.inputElement as InputElement).getInputElement();
     inputElement.type = this.isPasswordVisible ? 'text' : 'password';

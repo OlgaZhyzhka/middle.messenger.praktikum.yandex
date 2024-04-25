@@ -1,4 +1,6 @@
-export interface MessageProps {
+import { Props } from '@/core/Block';
+
+export interface MessageProps extends Props {
   id: string;
   user_id: string;
   content: string;

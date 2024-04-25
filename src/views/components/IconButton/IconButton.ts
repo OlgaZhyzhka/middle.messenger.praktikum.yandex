@@ -1,15 +1,9 @@
-import Block, { Props } from '@/core/Block';
-import { Icon } from '@/views/components/Icon ';
+import Block from '@/core/Block';
+import { Icon } from '@/views/components/Icon';
+import { IconButtonProps } from './interfaces/IconButtonProps';
 
-interface IconButtonProps extends Props {
-  onClick?(event: Event): void;
-}
 
 class IconButton extends Block {
-  public getIcon(): Icon {
-    return this.children.icon as Icon;
-  }
-
   constructor(props: IconButtonProps) {
     const { iconSize, iconName } = props;
     super(
@@ -25,6 +19,10 @@ class IconButton extends Block {
       },
       'button'
     );
+  }
+
+  public getIcon(): Icon {
+    return this.children.icon as Icon;
   }
 
   public render(): DocumentFragment {

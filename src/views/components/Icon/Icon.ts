@@ -29,6 +29,10 @@ class Icon extends Block {
 
     this._element?.setAttribute('class', `${className}`.trim());
   }
+
+  public render(): DocumentFragment {
+    return this.compile('');
+  }
 }
 
 export default Icon;

@@ -1,16 +1,17 @@
-import Block, { Props } from '@/core/Block';
-import { Icon } from '@/views/components/Icon ';
+import Block from '@/core/Block';
+import { Icon } from '@/views/components/Icon';
 import { MessageProps } from './interfaces/MessageProps';
 import tpl from './tpl';
 
 class Message extends Block {
-  constructor(props: MessageProps & Props) {
+  constructor(props: MessageProps) {
     super(props);
-    const baseClass = 'message';
-    const typeClass = props.type === 'media' ? `${baseClass}_media` : `${baseClass}_base`;
+    const { type } = props;
+    const typeClass = type ? `message_${type}` : '';
+    const className = `message ${typeClass}`.trim();
     this.setProps({
       attributes: {
-        class: `${baseClass} ${typeClass}`,
+        class: `${className}`.trim(),
       },
       icon: new Icon({ name: 'read', size: 'sm' }),
     });

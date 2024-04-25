@@ -1,8 +1,6 @@
-import Block, { Props } from '@/core/Block';
+import Block from '@/core/Block';
+import { LinkProps } from './interfaces/LinkProps';
 
-interface LinkProps extends Props {
-  text: string;
-}
 
 class Link extends Block {
   constructor(props: LinkProps) {

@@ -12,10 +12,7 @@ class Search extends Block {
         attributes: { class: 'search__button' },
         iconName: 'search',
         iconSize: 'sm',
-        onClick: (event): void => {
-          event.preventDefault();
-          this.handleSearch();
-        },
+        onClick: (event: Event): void => this.handleSearch(event),
       }),
       searchInput: new Input({
         size: 'sm',
@@ -24,7 +21,8 @@ class Search extends Block {
     });
   }
 
-  private handleSearch(): void {
+  private handleSearch(event: Event): void {
+    event.preventDefault();
     const value = ((this.getChild('searchInput') as Input).element as HTMLInputElement)?.value;
     console.log(value);
   }

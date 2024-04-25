@@ -1,13 +1,9 @@
-import Block, { Props } from '@/core/Block';
+import Block from '@/core/Block';
 import { ErrorText } from '@/views/components/ErrorText';
 import { Input } from '@/views/components/Input';
+import { InputElementProps } from './interfaces/InputProps';
 import tpl from './tpl';
 
-interface InputElementProps extends Props {
-  inputAttributes?: Record<string, string | boolean>;
-  isValid: boolean;
-  onBlur?(event: Event): void;
-}
 
 
 class InputElement extends Block {
@@ -23,7 +19,7 @@ class InputElement extends Block {
         attributes: {
           ...props.inputAttributes,
         },
-        onBlur: props.onBlur || ((): void => {}),
+        onBlur: props.onBlur,
       }),
     });
   }

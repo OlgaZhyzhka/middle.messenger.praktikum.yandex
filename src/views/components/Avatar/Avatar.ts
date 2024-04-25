@@ -1,11 +1,8 @@
-import Block, { Props } from '@/core/Block';
-import { SIZE } from '@/utils/types';
+import Block from '@/core/Block';
+import { AvatarProps } from './interfaces/AvatarProps';
 import tpl from './tpl';
 
-interface AvatarProps extends Props {
-  size?: SIZE;
-  onClick?(event: Event): void;
-}
+
 
 class Avatar extends Block {
   constructor(props: AvatarProps) {

@@ -37,7 +37,7 @@ class RegistrationForm extends Block {
 
   private createLoginInput(): InputElement {
     const onBlur = (event: Event): void => {
-      const {value} = (event.target as HTMLInputElement);
+      const { value } = event.target as HTMLInputElement;
       const data = { login: value };
       const validText = validate(data, 'login');
       const input = this.getChild('loginInput') as InputElement;
@@ -54,7 +54,7 @@ class RegistrationForm extends Block {
 
   private createEmailInput(): InputElement {
     const onBlur = (event: Event): void => {
-      const {value} = (event.target as HTMLInputElement);
+      const { value } = event.target as HTMLInputElement;
       const data = { email: value };
       const validText = validate(data, 'email');
       const input = this.getChild('emailInput') as InputElement;
@@ -71,7 +71,7 @@ class RegistrationForm extends Block {
 
   private createFirstNameInput(): InputElement {
     const onBlur = (event: Event): void => {
-      const {value} = (event.target as HTMLInputElement);
+      const { value } = event.target as HTMLInputElement;
       const data = { firstName: value };
       const validText = validate(data, 'firstName');
       const input = this.getChild('firstNameInput') as InputElement;
@@ -88,7 +88,7 @@ class RegistrationForm extends Block {
 
   private createLastNameInput(): InputElement {
     const onBlur = (event: Event): void => {
-      const {value} = (event.target as HTMLInputElement);
+      const { value } = event.target as HTMLInputElement;
       const data = { secondName: value };
       const validText = validate(data, 'secondName');
       const input = this.getChild('lastNameInput') as InputElement;
@@ -105,7 +105,7 @@ class RegistrationForm extends Block {
 
   private createPhoneInput(): InputElement {
     const onBlur = (event: Event): void => {
-      const {value} = (event.target as HTMLInputElement);
+      const { value } = event.target as HTMLInputElement;
       const data = { phone: value };
       const validText = validate(data, 'phone');
       const input = this.getChild('phoneInput') as InputElement;
@@ -122,7 +122,7 @@ class RegistrationForm extends Block {
 
   private createPasswordInput(): PasswordInput {
     const onBlur = (event: Event): void => {
-      const {value} = (event.target as HTMLInputElement);
+      const { value } = event.target as HTMLInputElement;
       const data = { password: value };
       const validText = validate(data, 'password');
       const passwordInput = this.getChild('passwordInput')?.getChild('inputElement') as InputElement;
@@ -141,7 +141,7 @@ class RegistrationForm extends Block {
 
   private createConfirmPasswordInput(): PasswordInput {
     const onBlur = (event: Event): void => {
-      const {value} = (event.target as HTMLInputElement);
+      const { value } = event.target as HTMLInputElement;
       const passwordInput = this.getChild('passwordInput')?.getChild('inputElement') as InputElement;
       const passwordValue = passwordInput.getInputElement().value;
       const data = { oldPassword: passwordValue, newPassword: value };
@@ -216,36 +216,7 @@ class RegistrationForm extends Block {
       size: 'md',
       variant: 'primary',
       shape: 'rounded',
-      onClick: (event): void => {
-        event.preventDefault();
-        const form = this.element as HTMLFormElement;
-
-        if (!form) {
-          console.error('Form element not found');
-          return;
-        }
-
-        const isFormValid = this.checkFormValidity();
-
-        if (!isFormValid) {
-          console.error('Invalid input value');
-          return;
-        }
-
-        const formData = new FormData(form);
-
-        const data: Record<string, unknown> = {
-          login: formData.get('login') || '',
-          password: formData.get('password') || '',
-          email: formData.get('email') || '',
-          firstName: formData.get('first_name') || '',
-          secondName: formData.get('second_name') || '',
-          phone: formData.get('phone') || '',
-          confirmPassword: formData.get('confirm_password') || '',
-        };
-
-        console.log(data);
-      },
+      onClick: (event: Event): void => this.handleSubmit(event),
       children: 'Create an account',
     });
   }
@@ -261,6 +232,37 @@ class RegistrationForm extends Block {
       },
       children: 'Login',
     });
+  }
+
+  private handleSubmit(event: Event): void {
+    event.preventDefault();
+    const form = this.element as HTMLFormElement;
+
+    if (!form) {
+      console.error('Form element not found');
+      return;
+    }
+
+    const isFormValid = this.checkFormValidity();
+
+    if (!isFormValid) {
+      console.error('Invalid input value');
+      return;
+    }
+
+    const formData = new FormData(form);
+
+    const data: Record<string, unknown> = {
+      login: formData.get('login') || '',
+      password: formData.get('password') || '',
+      email: formData.get('email') || '',
+      firstName: formData.get('first_name') || '',
+      secondName: formData.get('second_name') || '',
+      phone: formData.get('phone') || '',
+      confirmPassword: formData.get('confirm_password') || '',
+    };
+
+    console.log(data);
   }
 
   public render(): DocumentFragment {

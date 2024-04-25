@@ -1,7 +1,7 @@
-export interface DropdownProps {
-  isOpen: boolean;
-  items: {
-    title: string;
-    onClick: (event: Event) => void;
-  }[];
+import { Props } from '@/core/Block';
+import { DropdownItemProps } from "@/views/components/DropdownItem/interfaces/DropdownItemProps";
+
+export interface DropdownProps extends Props {
+  type: string;
+  items: DropdownItemProps[];
 }

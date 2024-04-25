@@ -1,4 +1,4 @@
-import Block, { Props } from '@/core/Block';
+import Block from '@/core/Block';
 import { DropdownItem } from '@/views/components/DropdownItem';
 import { Button } from '@/views/components/Button';
 import { DropdownItemProps } from '@/views/components/DropdownItem/interfaces/DropdownItemProps';
@@ -6,32 +6,40 @@ import { DropdownProps } from './interfaces/DropdownProps';
 import tpl from './tpl';
 
 class Dropdown extends Block {
-  constructor(props: DropdownProps & Props) {
+  constructor(props: DropdownProps) {
     super(props);
+    const { type } = props;
+    const typeClass = type ? `dropdown_${type}` : '';
+    const className = `dropdown ${typeClass}`.trim();
     this.setProps({
-      attributes: { class: 'dropdown' },
+      attributes: { class: `${className}`.trim() },
       isOpen: false,
+      dropdownList: (props.items).map(
+        (item: DropdownItemProps) =>
+          new DropdownItem({
+            ...item,
+            onToggle: (): void => this.onToggle(),
+          })
+      ),
       button: new Button({
-        class: props.buttonClass,
-        onClick: (): void => this.onToggle(),
+        attributes: {
+          class: props.buttonType ? `dropdown__button dropdown__button_${props.buttonType}` : 'dropdown__button',
+        },
+        onClick: this.onToggle.bind(this),
+        children: `<span></span>`,
       }),
-      dropdownList: this.createDropdownList(),
     });
-  }
-
-  private createDropdownList(): Block[] {
-    return (this.props.items as DropdownItemProps[]).map(
-      (item) =>
-        new DropdownItem({
-          ...item,
-          onToggle: () => this.onToggle(),
-        })
-    );
   }
 
   private onToggle(): void {
     this.setProps({
       isOpen: !this.props.isOpen,
+    });
+  }
+
+  public closeDropdown(): void {
+    this.setProps({
+      isOpen: false,
     });
   }
 

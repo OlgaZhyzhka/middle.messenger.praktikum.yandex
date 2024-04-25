@@ -13,23 +13,30 @@ interface SidebarProps extends Props {
 class Sidebar extends Block {
   constructor(props: SidebarProps) {
     super(props, 'aside');
-    this.setProps({
-      attributes: { class: 'sidebar panel' },
-      logo: new Logo({
-        src: logoData.src,
-        text: logoData.text,
-      }),
-      // TODO request to server for user data
-      userAvatar: props.isMessenger
-        ? new Avatar({ src: currentUser.avatar, title: currentUser.name, size: 'sm' })
-        : null,
-      linkToProfile: props.isMessenger
-        ? new Link({ attributes: { href: '/settings', class: 'sidebar__link' }, text: 'Settings' })
-        : null,
-      linkToLogout: props.isSettings
-        ? new Link({ attributes: { href: '/logout', class: 'sidebar__link' }, text: 'Logout' })
-        : null,
-    });
+
+    // TODO request to server for user data
+    if (props.isMessenger) {
+      this.setProps({
+        attributes: { class: 'sidebar panel' },
+        logo: new Logo({
+          src: logoData.src,
+          text: logoData.text,
+        }),
+        userAvatar: new Avatar({ src: currentUser.avatar, title: currentUser.name, size: 'sm' }),
+        linkToProfile: new Link({ attributes: { href: '/settings', class: 'sidebar__link' }, text: 'Settings' }),
+      });
+    }
+    
+    if (props.isProfile) {
+      this.setProps({
+        attributes: { class: 'sidebar panel' },
+        logo: new Logo({
+          src: logoData.src,
+          text: logoData.text,
+        }),
+        linkToLogout: new Link({ attributes: { href: '/logout', class: 'sidebar__link' }, text: 'Logout' }),
+      });
+    }
   }
 
   public render(): DocumentFragment {

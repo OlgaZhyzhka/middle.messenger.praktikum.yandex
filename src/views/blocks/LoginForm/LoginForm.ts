@@ -92,31 +92,7 @@ class LoginForm extends Block {
       size: 'md',
       variant: 'primary',
       shape: 'rounded',
-      onClick: (event): void => {
-        event.preventDefault();
-        const form = this.element as HTMLFormElement;
-
-        if (!form) {
-          console.error('Form element not found');
-          return;
-        }
-
-        const isFormValid = this.checkFormValidity();
-
-        if (!isFormValid) {
-          console.error('Invalid input value');
-          return;
-        }
-
-        const formData = new FormData(form);
-
-        const data: Record<string, unknown> = {
-          login: formData.get('login') || '',
-          password: formData.get('password') || '',
-        };
-
-        console.log(data);
-      },
+      onClick: (event: Event): void => this.handleSubmit(event),
       children: 'Login',
     });
   }
@@ -126,12 +102,37 @@ class LoginForm extends Block {
       size: 'md',
       variant: 'primary-bordered',
       shape: 'rounded',
-      onClick: (event): void => {
-        event.preventDefault();
+      onClick: (event: Event): void => {
         handleLinkClick(event, Routes.Registration);
       },
       children: 'Create an account',
     });
+  }
+
+  private handleSubmit(event: Event): void {
+    event.preventDefault();
+    const form = this.element as HTMLFormElement;
+
+    if (!form) {
+      console.error('Form element not found');
+      return;
+    }
+
+    const isFormValid = this.checkFormValidity();
+
+    if (!isFormValid) {
+      console.error('Invalid input value');
+      return;
+    }
+
+    const formData = new FormData(form);
+
+    const data: Record<string, unknown> = {
+      login: formData.get('login') || '',
+      password: formData.get('password') || '',
+    };
+
+    console.log(data);
   }
 
   public render(): DocumentFragment {

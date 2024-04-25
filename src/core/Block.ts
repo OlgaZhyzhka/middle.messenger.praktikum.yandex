@@ -1,6 +1,7 @@
 import Handlebars from 'handlebars';
 
 import { deepEqual, generateUniqueId } from '@/helpers';
+import { EventCallback } from '@/utils/types';
 
 import EventBus from './EventBus';
 
@@ -11,8 +12,8 @@ export interface Props {
   settings?: {
     withInternalId: boolean;
   };
-  events?: { [key: string]: (event: Event) => void };
-  attributes?: { [key: string]: string | boolean};
+  events?: { [key: string]: EventCallback };
+  attributes?: { [key: string]: string | boolean };
 }
 
 interface Children {
@@ -217,11 +218,15 @@ export default class Block {
   private _componentDidMount(): void {
     this.componentDidMount();
     Object.values(this.children).forEach((child) => {
-      child.dispatchComponentDidMount();
+      if (child instanceof Block) {
+        child.dispatchComponentDidMount();
+      }
     });
     Object.values(this.childItems).forEach((items) => {
       items.forEach((item) => {
-        item.dispatchComponentDidMount();
+        if (item instanceof Block) {
+          item.dispatchComponentDidMount();
+        }
       });
     });
   }

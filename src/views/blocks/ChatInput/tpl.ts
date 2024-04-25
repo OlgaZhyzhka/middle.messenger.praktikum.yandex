@@ -1,2 +1,2 @@
-const tpl = `{{{ chatInput }}}{{{ fileIcon }}}{{{ sendIcon }}}`;
+const tpl = `{{{ chatInput }}}{{{ dropdown }}}{{{ sendButton }}}{{{ fileInputMedia }}}{{{ fileInputFile }}}`;
 export default tpl;

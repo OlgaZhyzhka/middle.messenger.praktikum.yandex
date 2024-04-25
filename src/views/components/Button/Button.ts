@@ -1,13 +1,5 @@
-import Block, { Props } from '@/core/Block';
-import { SIZE, VARIANT, SHAPE } from '@/utils/types';
-
-interface ButtonProps extends Props {
-  variant?: VARIANT;
-  shape?: SHAPE;
-  size?: SIZE;
-  children?: string | Block;
-  onClick?(event: Event): void;
-}
+import Block from '@/core/Block';
+import { ButtonProps } from './interfaces/ButtonProps';
 
 class Button extends Block {
   constructor(props: ButtonProps) {
@@ -15,7 +7,7 @@ class Button extends Block {
       {
         ...props,
         events: {
-          click: props.onClick || ((): void => {}),
+          click: props?.onClick || ((): void => {}),
         },
       },
       'button'
