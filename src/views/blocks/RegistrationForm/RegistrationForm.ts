@@ -1,7 +1,6 @@
 import Block, { Props } from '@/core/Block';
 import { validate } from '@/helpers';
-import { Routes } from '@/routes/Routes';
-import { handleLinkClick } from '@/routes/handleLinkClick';
+import { Routes } from '@/router/enums';
 import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
 import { PasswordInput } from '@/views/blocks/PasswordInput';
@@ -223,15 +222,12 @@ class RegistrationForm extends Block {
 
   private createLinkButton(): Button {
     return new Button({
+      attributes: { href: Routes.Login },
       size: 'md',
       variant: 'primary-bordered',
       shape: 'rounded',
-      onClick: (event): void => {
-        event.preventDefault();
-        handleLinkClick(event, Routes.Login);
-      },
       children: 'Login',
-    });
+    }, 'a');
   }
 
   private handleSubmit(event: Event): void {

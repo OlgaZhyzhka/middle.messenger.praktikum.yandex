@@ -1,5 +1,6 @@
 import Block, { Props } from '@/core/Block';
 import { currentUser, logoData } from '@/utils/constants';
+import { Routes } from '@/router/enums';
 import { Logo } from '@/views/components/Logo';
 import { Link } from '@/views/components/Link';
 import { Avatar } from '@/views/components/Avatar';
@@ -23,7 +24,7 @@ class Sidebar extends Block {
           text: logoData.text,
         }),
         userAvatar: new Avatar({ src: currentUser.avatar, title: currentUser.name, size: 'sm' }),
-        linkToProfile: new Link({ attributes: { href: '/settings', class: 'sidebar__link' }, text: 'Settings' }),
+        linkToProfile: new Link({ attributes: { href: Routes.Settings, class: 'sidebar__link' }, text: 'Settings' }),
       });
     }
     
@@ -34,7 +35,7 @@ class Sidebar extends Block {
           src: logoData.src,
           text: logoData.text,
         }),
-        linkToLogout: new Link({ attributes: { href: '/logout', class: 'sidebar__link' }, text: 'Logout' }),
+        linkToLogout: new Link({ attributes: { href: Routes.Logout, class: 'sidebar__link' }, text: 'Logout' }),
       });
     }
   }

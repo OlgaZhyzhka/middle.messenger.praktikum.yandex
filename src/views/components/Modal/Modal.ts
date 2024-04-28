@@ -17,7 +17,6 @@ class Modal extends Block {
         ...props.attributes,
         class: `${props.attributes?.class || ''} ${className}`.trim(),
       },
-      isOpen: false,
       buttonClose: new Button({
         attributes: { class: 'modal__close' },
         onClick: (event: Event): void => this.handleClose(event),
@@ -35,7 +34,6 @@ class Modal extends Block {
   private handleClose(event: Event): void {
     event.preventDefault();
     this.setProps({
-      isOpen: false,
       class: `${this.props.attributes?.class || ''} modal`.trim(),
     });
     (this.props.onClose as Callback)?.();
@@ -44,7 +42,6 @@ class Modal extends Block {
   private handleOpen(): void {
     this.setProps({
       attributes: { class: `${this.props.attributes?.class || ''} modal_open` },
-      isOpen: true,
     });
     (this.props.onOpen as Callback)?.();
   }

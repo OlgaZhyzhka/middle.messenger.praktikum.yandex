@@ -1,10 +1,7 @@
-const tpl = `{{#if isOpen}}
-    <div class="modal__overlay">
-      <div class="modal__content">
-        {{{content}}}
-        <button class="modal__close-button">X</button>
-      </div>
-    </div>
-  {{/if}}`;
+const tpl = `{{{ modalBg }}}
+  <div class="modal__container">
+    {{{ buttonClose }}}
+    <div class="modal__body">{{{content}}}</div>
+  </div>`;
 
 export default tpl;

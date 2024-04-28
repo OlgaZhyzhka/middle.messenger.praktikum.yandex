@@ -19,3 +19,7 @@ export type SHAPE = 'round' | 'circle' | 'rounded' | 'default';
 export type Callback = (...args: any[]) => void;
 
 export type EventCallback = (event: Event) => void;
+
+export type Indexed<T = unknown> = {
+  [key in string | symbol]: T;
+};

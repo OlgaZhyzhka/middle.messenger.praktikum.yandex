@@ -2,7 +2,7 @@ import Block from '@/core/Block';
 import { ButtonProps } from './interfaces/ButtonProps';
 
 class Button extends Block {
-  constructor(props: ButtonProps) {
+  constructor(props: ButtonProps, tagName: string = 'button') {
     super(
       {
         ...props,
@@ -10,7 +10,7 @@ class Button extends Block {
           click: props?.onClick || ((): void => {}),
         },
       },
-      'button'
+      tagName
     );
   }
 
@@ -20,7 +20,7 @@ class Button extends Block {
     const variantClass = variant ? `button_${variant}` : '';
     const shapeClass = shape ? `button_${shape}` : '';
     const className = `button ${sizeClass} ${variantClass} ${shapeClass}`;
-   
+
     this.props = {
       ...this.props,
       attributes: {

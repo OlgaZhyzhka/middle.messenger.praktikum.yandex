@@ -1,6 +1,7 @@
 import Handlebars from 'handlebars';
 
-import { deepEqual, generateUniqueId } from '@/helpers';
+import { generateUniqueId } from '@/helpers';
+import { isEqual } from '@/helpers/isEqual';
 import { EventCallback } from '@/utils/types';
 
 import EventBus from './EventBus';
@@ -127,7 +128,7 @@ export default class Block {
       },
       set: (target, prop: string, value): boolean => {
         console.log(`Setting prop ${prop} to`, value);
-        if (!deepEqual(target[prop], value)) {
+        if (!isEqual(target[prop], value)) {
           target[prop] = value;
           this._isUpdated = true;
           this.eventBus.emit(Block.EVENTS.FLOW_CDU);
@@ -143,7 +144,7 @@ export default class Block {
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target, prop: string, value): boolean => {
-        if (!deepEqual(target[prop], value)) {
+        if (!isEqual(target[prop], value)) {
           target[prop] = value;
           this._isUpdated = true;
           this.eventBus.emit(Block.EVENTS.FLOW_CDU);
@@ -159,7 +160,7 @@ export default class Block {
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target, prop: string, value): boolean => {
-        if (!deepEqual(target[prop], value)) {
+        if (!isEqual(target[prop], value)) {
           target[prop] = value;
           this._isUpdated = true;
           this.eventBus.emit(Block.EVENTS.FLOW_CDU);
