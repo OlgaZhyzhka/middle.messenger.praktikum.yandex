@@ -20,6 +20,6 @@ export type Callback = (...args: any[]) => void;
 
 export type EventCallback = (event: Event) => void;
 
-export type Indexed<T = unknown> = {
-  [key in string | symbol]: T;
+export type PlainObject<T = unknown> = {
+  [k in string]: T;
 };

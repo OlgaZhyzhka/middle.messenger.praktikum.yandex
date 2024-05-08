@@ -10,6 +10,11 @@
   height: 24px;
 }
 
+.icon_md {
+  width: 36px;
+  height: 36px;
+}
+
 .icon_base {
   background-color: var(--color-text);
 }
@@ -64,6 +69,10 @@
 
 .icon_location {
   mask-image: url("../icons/location.svg");
+}
+
+.icon_upload {
+  mask-image: url("../icons/upload-avatar.svg");
 }
 
 .icon_read {

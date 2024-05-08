@@ -1,18 +1,10 @@
 import BASE_URL from '@/api/http/BaseUrl';
+import { Method } from '@/utils/enums';
+import { Options } from '@/utils/interfaces';
 
-export const enum Method {
-  Get = 'Get',
-  Post = 'Post',
-  Put = 'Put',
-  Patch = 'Patch',
-  Delete = 'Delete',
-}
 
-interface Options {
-  headers?: { [key: string]: string };
-  method?: string;
-  data?: unknown;
-}
+
+
 
 function queryStringify(data: { [key: string]: string }): string {
   const keys = Object.keys(data);

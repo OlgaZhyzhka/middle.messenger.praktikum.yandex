@@ -11,13 +11,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: torem(5px) torem(15px);
+    padding: toRem(5px) toRem(15px);
   }
 
   &__link {
     display: block;
     margin-top: 5px;
-    font-size: torem(14px);
+    font-size: toRem(14px);
     color: var(--color-text);
     text-decoration: none;
   }
@@ -28,7 +28,7 @@
 
     &__container {
       flex-direction: column;
-      padding: torem(24px) torem(5px);
+      padding: toRem(24px) toRem(5px);
       text-align: center;
     }
   }

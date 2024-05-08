@@ -3,32 +3,23 @@ import { ButtonProps } from './interfaces/ButtonProps';
 
 class Button extends Block {
   constructor(props: ButtonProps, tagName: string = 'button') {
-    super(
-      {
-        ...props,
-        events: {
-          click: props?.onClick || ((): void => {}),
-        },
-      },
-      tagName
-    );
-  }
-
-  public render(): DocumentFragment {
+    super(props, tagName);
     const { shape, variant, size } = this.props;
     const sizeClass = size ? `button_${size}` : '';
     const variantClass = variant ? `button_${variant}` : '';
     const shapeClass = shape ? `button_${shape}` : '';
     const className = `button ${sizeClass} ${variantClass} ${shapeClass}`;
-
-    this.props = {
-      ...this.props,
+    this.setProps({
       attributes: {
-        ...this.props.attributes,
         class: `${this.props.attributes?.class || ''} ${className}`.trim(),
       },
-    };
+      events: {
+        click: props?.onClick || ((): void => {}),
+      },
+    });
+  }
 
+  public render(): DocumentFragment {
     return this.compile(`{{{children}}}`);
   }
 }

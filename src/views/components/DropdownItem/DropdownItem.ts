@@ -9,7 +9,7 @@ class DropdownItem extends Block {
     super(props, 'li');
     const isFileInput = !!props.inputId;
     const { inputId } = props;
-    const icon = new Icon({ name: props.iconName, size: 'sm' });
+    const icon = new Icon({ iconName: props.iconName, size: 'sm' });
 
    if (isFileInput) {
      this.setProps({

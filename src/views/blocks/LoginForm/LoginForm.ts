@@ -1,6 +1,6 @@
 import Block, { Props } from '@/core/Block';
 import { validate } from '@/helpers';
-import { Routes } from '@/router/enums';
+import { Routes } from '@/utils/enums';
 import { PasswordInput } from '@/views/blocks/PasswordInput';
 import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
@@ -11,6 +11,7 @@ class LoginForm extends Block {
   constructor(props: Props) {
     super(props, 'form');
     this.setProps({
+      attributes: { class: 'form form_horizontal form_auth' },
       loginInput: this.createLoginInput(),
       passwordInput: this.createPasswordInput(),
       submitButton: this.createSubmitButton(),

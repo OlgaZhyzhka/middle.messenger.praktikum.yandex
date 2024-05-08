@@ -2,25 +2,21 @@ import Block, { Props } from '@/core/Block';
 
 class Icon extends Block {
   constructor(props: Props) {
-    const { name, size } = props;
-    const nameClass = name ? `icon_${name}` : '';
+    const { iconName, size } = props;
+    const nameClass = iconName ? `icon_${iconName}` : '';
     const sizeClass = size ? `icon_${size}` : '';
     const className = `icon icon_base ${nameClass} ${sizeClass}`;
-
-    super(
-      {
-        ...props,
-        attributes: {
-          class: `${className}`.trim(),
-        },
+    super(props, 'i');
+    this.setProps({
+      attributes: {
+        class: `${className}`.trim(),
       },
-      'i'
-    );
+    });
   }
 
   public setIconName(iconName: string): void {
     this.setProps({
-      name: iconName,
+      iconName,
     });
 
     const nameClass = iconName ? `icon_${iconName}` : '';

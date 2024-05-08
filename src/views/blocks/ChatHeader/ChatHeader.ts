@@ -1,48 +1,57 @@
-import Block, { Props } from '@/core/Block';
-import { currentUser } from '@/utils/constants.ts';
+import Block from '@/core/Block';
+import { Callback } from '@/utils/types';
+import { contactsMap } from '@/utils/constants.ts';
 import { Dropdown } from '@/views/components/Dropdown';
 import { DropdownItemProps } from '@/views/components/DropdownItem/interfaces/DropdownItemProps';
 import { Avatar } from '@/views/components/Avatar';
 import tpl from './tpl';
+import { ChatHeaderProps } from './interfaces/ChatHeaderProps';
 
 class ChatHeader extends Block {
-  constructor(props: Props) {
+  constructor(props: ChatHeaderProps) {
     super(props);
-    // const dropdownChatItems: DropdownItemProps[] = [
-    //   {
-    //     title: 'Delete chat',
-    //     iconName: 'delete',
-    //     onClick: () => console.log('Delete chat'),
-    //     onToggle: () => console.log('Toggle'),
-    //   },
-    // ];
     const dropdownChatGroupItems: DropdownItemProps[] = [
       {
         title: 'Upload photo',
-        iconName: 'media'
+        iconName: 'media',
+        onClick: (): void => {
+          (this.props.onShowModalUploadAvatar as Callback)?.();
+        },
       },
       {
         title: 'Add user',
-        iconName: 'add-user'
+        iconName: 'add-user',
+        onClick: (): void => {
+          (this.props.onShowModalAddUser as Callback)?.();
+        },
       },
       {
         title: 'Delete user',
-        iconName: 'delete-user'
+        iconName: 'delete-user',
+        onClick: (): void => {
+          (this.props.onShowModalDeleteUser as Callback)?.();
+        },
       },
       {
         title: 'Delete chat',
-        iconName: 'delete'
+        iconName: 'delete',
+        onClick: (): void => {
+          (this.props.onShowModalDeleteChat as Callback)?.();
+        },
       },
     ];
+
+    const opponent = contactsMap.get(this.props.opponentId as string);
+
     this.setProps({
       attributes: { class: 'chat__header' },
       dropdown: new Dropdown({
         type: 'top',
-        buttonType: 'option',  
+        buttonType: 'option',
         items: dropdownChatGroupItems,
       }),
-      title: currentUser.name,
-      avatar: new Avatar({ src: currentUser.avatar, title: currentUser.name, size: 'sm' }),
+      opponent,
+      avatar: new Avatar({ src: opponent?.avatar, title: opponent?.firstName, size: 'sm' }),
     });
   }
 

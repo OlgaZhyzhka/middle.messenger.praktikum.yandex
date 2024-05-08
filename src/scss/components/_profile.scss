@@ -1,0 +1,48 @@
+.profile {
+  &__card {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include create-mq($grid__bp-lg, 'min') {
+      margin-top: 50px;
+      width: 700px;
+    }
+  }
+
+  &__info {
+    .list__item {
+      margin-bottom: toRem(24px);
+    }
+  }
+
+  &__list {
+    column-gap: toRem(50px);
+
+    @include create-mq($grid__bp-xl, 'min') {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(150px, 1fr));
+    }
+  }
+
+  .title {
+    margin-right: 5px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--light-grey);
+  }
+
+  &__content {
+    margin-top: 1.5rem;
+  }
+
+  &__footer {
+    margin-bottom: toRem(40px);
+    display: flex;
+    align-items: center;
+    gap: toRem(24px);
+  }
+
+  &__upload {
+    margin-bottom: toRem(24px);
+  }
+}

@@ -1,7 +1,7 @@
-import { Indexed } from "@/utils/types";
+import { PlainObject } from '@/utils/types';
 import merge from "./merge";
 
-const set = (object: Indexed | unknown, path: string, value: unknown): Indexed | unknown => {
+const set = (object: PlainObject | unknown, path: string, value: unknown): PlainObject | unknown => {
   if (typeof object !== 'object') {
     return object;
   }
@@ -15,8 +15,8 @@ const set = (object: Indexed | unknown, path: string, value: unknown): Indexed |
       [key]: acc,
     }),
     value
-  ) as Indexed;
-  return merge(object as Indexed, result);
-}
+  ) as PlainObject;
+  return merge(object as PlainObject, result);
+};
 
 export default set;

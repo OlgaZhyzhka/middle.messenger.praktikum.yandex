@@ -1,7 +1,6 @@
 import Handlebars from 'handlebars';
 
-import { generateUniqueId } from '@/helpers';
-import { isEqual } from '@/helpers/isEqual';
+import { generateUniqueId, isEqual } from '@/helpers';
 import { EventCallback } from '@/utils/types';
 
 import EventBus from './EventBus';
@@ -32,7 +31,7 @@ interface SeparatedProps {
 }
 
 export default class Block {
-  protected static EVENTS = {
+  public static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
@@ -209,8 +208,9 @@ export default class Block {
     console.log('Render element');
   }
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  public render(): any {}
+  public render(): DocumentFragment {
+    return document.createDocumentFragment();
+  }
 
   public getContent(): HTMLElement | null {
     return this.element;

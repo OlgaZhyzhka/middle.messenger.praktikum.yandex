@@ -1,13 +1,23 @@
 export const contacts = [
   {
-    name: 'Maria',
+    id: '12121',
+    firstName: 'Maria',
+    login: 'Maria',
+    lastName: 'Malnich',
+    phone: '+7 999 999 99 99',
+    chatName: 'Maria',
     lastMessage: 'Chatgram Web was updated.',
     time: '19:48',
     avatar: '/images/avatar2.jpg',
     unreadCount: 1,
   },
   {
-    name: 'Maria2',
+    id: '45464',
+    firstName: 'Maria2',
+    login: 'Maria2',
+    lastName: 'Malnich',
+    phone: '+7 999 999 99 99',
+    chatName: 'Maria2',
     lastMessage: 'Chatgram Web was updated.',
     time: '19:48',
     avatar: '/images/avatar2.jpg',
@@ -15,9 +25,18 @@ export const contacts = [
   },
 ];
 
+export const contactsMap = new Map(contacts.map(contact => [contact.id, contact]));
+
+export const holder = '/icons/upload-avatar.svg';
+
 export const currentUser = {
-  name: 'OlgaZH',
+  firstName: 'Olga',
+  secondName: 'Zhyzhka',
   avatar: '/images/avatar1.jpg',
+  email: 'olga@gmail.com',
+  phone: '+7 999 999 99 99',
+  login: 'OlgaZH',
+  chatName: 'OlgaZH',
 };
 
 export const logoData = {

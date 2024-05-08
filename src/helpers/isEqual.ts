@@ -1,24 +1,6 @@
-import { Indexed } from "@/utils/types";
+import { isArray, isPlainObject } from "./typesUtils";
 
-
-function isObject(value: unknown): value is Indexed {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    value.constructor === Object &&
-    Object.prototype.toString.call(value) === '[object Object]'
-  );
-}
-
-function isArray(value: unknown): value is [] {
-  return Array.isArray(value);
-}
-
-function isObjectOrArray(value: unknown): value is Indexed | unknown[] {
-  return isObject(value) || isArray(value);
-}
-
-function isEqual(a: unknown, b: unknown): boolean {
+const isEqual = (a: unknown, b: unknown): boolean => {
   if (a === b) {
     return true;
   }
@@ -57,7 +39,7 @@ function isEqual(a: unknown, b: unknown): boolean {
     return true;
   }
 
-  if (isObject(a) && isObject(b)) {
+  if (isPlainObject(a) && isPlainObject(b)) {
     const aKeys = Object.keys(a);
     const bKeys = Object.keys(b);
 
@@ -75,4 +57,4 @@ function isEqual(a: unknown, b: unknown): boolean {
   return false;
 }
 
-export { isEqual, isObject, isArray, isObjectOrArray };
+export default isEqual;

@@ -10,10 +10,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: torem(16px);
+  gap: toRem(16px);
   width: var(--upload-size);
   height: var(--upload-size);
-  padding: torem(18px);
+  padding: toRem(18px);
   background-color: var(--upload-bg);
   border: 1px dashed var(--upload-border-color);
   border-radius: var(--border-radius-sm);
@@ -31,10 +31,10 @@
   }
 
   &__icon {
-    width: 36px;
+    // width: 36px;
   }
 
-  &__label {
+  &__button {
     margin: 0 0 0 auto;
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-semibold);

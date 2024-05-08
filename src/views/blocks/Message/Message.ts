@@ -13,7 +13,7 @@ class Message extends Block {
       attributes: {
         class: `${className}`.trim(),
       },
-      icon: new Icon({ name: 'read', size: 'sm' }),
+      icon: new Icon({ iconName: 'read', size: 'sm' }),
     });
   }
 

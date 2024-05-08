@@ -1,15 +1,13 @@
-import Block, { Props } from '@/core/Block';
+import Block from '@/core/Block';
 import { currentUser, logoData } from '@/utils/constants';
-import { Routes } from '@/router/enums';
+import { Routes } from '@/utils/enums';
 import { Logo } from '@/views/components/Logo';
 import { Link } from '@/views/components/Link';
 import { Avatar } from '@/views/components/Avatar';
+import { SidebarProps } from './interfaces/SidebarProps';
 import tpl from './tpl';
 
-interface SidebarProps extends Props {
-  isMessenger?: boolean;
-  isProfile?: boolean;
-}
+
 
 class Sidebar extends Block {
   constructor(props: SidebarProps) {
@@ -23,12 +21,12 @@ class Sidebar extends Block {
           src: logoData.src,
           text: logoData.text,
         }),
-        userAvatar: new Avatar({ src: currentUser.avatar, title: currentUser.name, size: 'sm' }),
+        userAvatar: new Avatar({ src: currentUser.avatar, title: currentUser.login, size: 'sm' }),
         linkToProfile: new Link({ attributes: { href: Routes.Settings, class: 'sidebar__link' }, text: 'Settings' }),
       });
     }
     
-    if (props.isProfile) {
+    if (props.isSettings) {
       this.setProps({
         attributes: { class: 'sidebar panel' },
         logo: new Logo({

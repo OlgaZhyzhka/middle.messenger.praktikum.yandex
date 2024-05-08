@@ -1,6 +1,6 @@
 import '@/scss/app.scss';
 import Router from '@/router/Router';
-import { Routes } from '@/router/enums';
+import { Routes } from '@/utils/enums';
 import { Home } from '@/views/pages/Home';
 import { Link } from '@/views/components/Link';
 import { Login } from '@/views/pages/Login';

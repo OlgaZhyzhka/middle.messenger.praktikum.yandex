@@ -1,16 +1,16 @@
 import EventBus from "@/core/EventBus";
 import { set } from "@/helpers";
 import { cloneDeep } from "@/helpers/cloneDeep";
-import { Indexed } from "@/utils/types";
+import { PlainObject } from '@/utils/types';
 
 export enum StoreEvents {
   Updated = 'updated',
 }
 
-export class Store extends EventBus {
-  private state: Indexed = {};
+class Store extends EventBus {
+  private state: PlainObject = {};
 
-  public getState(): Indexed {
+  public getState(): PlainObject {
     return cloneDeep(this.state);
   }
 
@@ -20,3 +20,7 @@ export class Store extends EventBus {
     this.emit(StoreEvents.Updated);
   }
 }
+
+const store = new Store();
+
+export default store;

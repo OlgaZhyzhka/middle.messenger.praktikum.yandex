@@ -8,22 +8,17 @@ class Input extends Block {
 
     const sizeClass = size ? `input_${size}` : '';
     const className = `input ${sizeClass}`.trim();
-
-    super(
-      {
-        ...props,
-        attributes: {
-          ...props.attributes,
-          class: `${props.attributes?.class || ''} ${className}`.trim(),
-        },
-        events: {
-          blur: props.onBlur || ((): void => {}),
-          input: props.onInput || ((): void => {}),
-          change: props.onChange || ((): void => {}),
-        },
+    super(props, 'input');
+    this.setProps({
+      attributes: {
+        class: `${props.attributes?.class || ''} ${className}`.trim(),
       },
-      'input'
-    );
+      events: {
+        blur: props.onBlur || ((): void => {}),
+        input: props.onInput || ((): void => {}),
+        change: props.onChange || ((): void => {}),
+      },
+    });
   }
 
   public render(): DocumentFragment {

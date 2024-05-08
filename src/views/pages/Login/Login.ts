@@ -8,9 +8,7 @@ class Login extends BasePage {
     super({
       ...props,
       pageTitle: 'Welcome back!',
-      loginForm: new LoginForm({
-        attributes: { class: 'form form_horizontal form_auth' },
-      }),
+      loginForm: new LoginForm({}),
     });
   }
 

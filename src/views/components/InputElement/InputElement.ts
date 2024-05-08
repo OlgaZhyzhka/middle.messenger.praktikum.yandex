@@ -8,8 +8,8 @@ import tpl from './tpl';
 
 class InputElement extends Block {
   constructor(props: InputElementProps) {
-    super({
-      ...props,
+    super(props);
+    this.setProps({
       errorText: new ErrorText({
         attributes: { class: 'form__error' },
         text: props.errorText || '',

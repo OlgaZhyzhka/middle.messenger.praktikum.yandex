@@ -1,7 +1,6 @@
 import Block from '@/core/Block.ts';
-import { renderDOM } from '@/helpers/index.ts';
-import { isEqual } from '@/helpers/isEqual';
-import { RouteOptionsWithProps } from './interfaces';
+import { isEqual, renderDOM } from '@/helpers/index.ts';
+import { RouteOptionsWithProps } from '@/utils/interfaces';
 
 class Route {
   private _pathname: string;

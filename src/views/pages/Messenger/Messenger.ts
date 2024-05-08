@@ -17,6 +17,7 @@ class Messenger extends Block {
       contactsPanel: new ContactsPanel({ attributes: { class: 'contacts panel' } }),
       chat: new Chat({
         attributes: { class: 'chat' },
+        isLoading: false,
       }),
     });
   }

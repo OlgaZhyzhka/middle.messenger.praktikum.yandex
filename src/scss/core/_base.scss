@@ -83,6 +83,7 @@
   --sidebar-bg: var(--body-bg);
   --panel-border-color: var(--light-grey1);
   --header-border-color: var(--light-grey2);
+  --contact-active-bg: var(--light);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -105,5 +106,6 @@
     --page-bg: var(--dark1);
     --panel-border-color: rgba(170, 170, 170, 0.15);
     --header-border-color: var(--dark2);
+    --contact-active-bg: var(--dark-blue);
   }
 }

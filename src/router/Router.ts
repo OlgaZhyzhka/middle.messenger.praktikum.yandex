@@ -1,6 +1,6 @@
 import Block from '@/core/Block.ts';
+import { RouteOptionsWithProps } from '@/utils/interfaces.ts';
 import Route from './Route.ts';
-import { RouteOptionsWithProps } from './interfaces.ts';
 
 class Router {
   private static __instance: Router;

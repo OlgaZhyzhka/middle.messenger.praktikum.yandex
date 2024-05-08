@@ -1,6 +1,6 @@
 import Block, { Props } from '@/core/Block';
 import { validate } from '@/helpers';
-import { Routes } from '@/router/enums';
+import { Routes } from '@/utils/enums';
 import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
 import { PasswordInput } from '@/views/blocks/PasswordInput';
@@ -11,10 +11,11 @@ class RegistrationForm extends Block {
   constructor(props: Props) {
     super(props, 'form');
     this.setProps({
+      attributes: { class: 'form form_horizontal form_auth' },
       loginInput: this.createLoginInput(),
       emailInput: this.createEmailInput(),
       firstNameInput: this.createFirstNameInput(),
-      lastNameInput: this.createLastNameInput(),
+      secondNameInput: this.createSecondNameInput(),
       phoneInput: this.createPhoneInput(),
       passwordInput: this.createPasswordInput(),
       confirmPasswordInput: this.createConfirmPasswordInput(),
@@ -85,19 +86,19 @@ class RegistrationForm extends Block {
     return this.createInput(inputProps);
   }
 
-  private createLastNameInput(): InputElement {
+  private createSecondNameInput(): InputElement {
     const onBlur = (event: Event): void => {
       const { value } = event.target as HTMLInputElement;
       const data = { secondName: value };
       const validText = validate(data, 'secondName');
-      const input = this.getChild('lastNameInput') as InputElement;
+      const input = this.getChild('secondNameInput') as InputElement;
       input.setIsValid(!validText);
       if (validText) input.setErrorMessage(validText);
     };
     const inputProps = {
       onBlur,
       attributes: { class: 'form__row' },
-      inputAttributes: { name: 'second_name', type: 'text', placeholder: 'Last Name' },
+      inputAttributes: { name: 'second_name', type: 'text', placeholder: 'Second Name' },
     };
     return this.createInput(inputProps);
   }
@@ -164,7 +165,7 @@ class RegistrationForm extends Block {
     const phoneInput = this.getChild('phoneInput') as InputElement;
     const emailInput = this.getChild('emailInput') as InputElement;
     const firstNameInput = this.getChild('firstNameInput') as InputElement;
-    const lastNameInput = this.getChild('lastNameInput') as InputElement;
+    const secondNameInput = this.getChild('secondNameInput') as InputElement;
     const passwordInput = this.getChild('passwordInput')?.getChild('inputElement') as InputElement;
     const confirmPasswordInput = this.getChild('confirmPasswordInput')?.getChild('inputElement') as InputElement;
 
@@ -200,8 +201,8 @@ class RegistrationForm extends Block {
       isFormValid = false;
     }
 
-    if (lastNameInput?.getProps()?.isValid !== true) {
-      lastNameInput?.setErrorMessage('Invalid last name');
+    if (secondNameInput?.getProps()?.isValid !== true) {
+      secondNameInput?.setErrorMessage('Invalid second name');
       isFormValid = false;
     }
 

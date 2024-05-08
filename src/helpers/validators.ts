@@ -54,6 +54,8 @@ const validate = (value: Record<string, string>, type: string): string | null =>
       return validateName(value.firstName) ? null : errorMessages.name;
     case 'secondName':
       return validateName(value.secondName) ? null : errorMessages.name;
+    case 'chatName':
+      return validateName(value.chatName) ? null : errorMessages.name;
     case 'message':
       return validateMessage(value.message) ? null : errorMessages.message;
     default:

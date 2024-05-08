@@ -6,5 +6,5 @@ const tpl = `{{#if isLoading}}
 <div class="chat__body">{{{ chatMessages }}}</div>
 {{{ chatInput }}}
 </div>
-{{/if}}`;
+{{/if}}{{{ modalAddUser }}}{{{ modalDeleteUser }}}{{{ modalDeleteChat }}}{{{ modalUploadAvatar }}}`;
 export default tpl;
