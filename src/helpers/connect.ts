@@ -1,33 +1,42 @@
 import Block, { Props } from '@/core/Block';
+import { store, StoreEvents } from '@/store';
 import { PlainObject } from '@/utils/types';
-import store, { StoreEvents } from '@/store';
 import isEqual from './isEqual';
 
 type BlockConstructorType<T> = {
   new (props: T): Block;
+  EVENTS: typeof Block.EVENTS;
 };
 
+const connect =
+  <T = Props>(mapStateToProps: (state: PlainObject) => PlainObject) =>
+  (BlockConstructor: BlockConstructorType<T>): BlockConstructorType<T> =>
+    class ConnectedBlock extends BlockConstructor {
 
-const connect = <T = Props>(
-  BlockConstructor: BlockConstructorType<T>,
-  mapStateToProps: (state: PlainObject) => PlainObject
-): typeof Block => class extends BlockConstructor {
-    public static EVENTS = Block.EVENTS;
+      private onChangeStoreCallback: () => void;
 
-    constructor(props?: PlainObject) {
-      let state = mapStateToProps(store.getState());
+      constructor(props: T) {
+        let state = mapStateToProps(store.getState());
 
-      super({ ...props, ...state } as T);
+        super({ ...props, ...state } as T);
 
-      store.on(StoreEvents.Updated, () => {
-        const newState = mapStateToProps(store.getState());
+        this.onChangeStoreCallback = (): void => {
+          const newState = mapStateToProps(store.getState());
 
-        if (!isEqual(state, newState)) {
-          this.setProps({ ...newState });
+          if (!isEqual(state, newState)) {
+            this.setProps({ ...newState });
+          }
+
           state = newState;
-        }
-      });
-    }
-  };
+        };
+
+        store.on(StoreEvents.Updated, this.onChangeStoreCallback);
+      }
+
+      public componentWillUnmount(): void {
+        super.componentWillUnmount();
+        store.off(StoreEvents.Updated, this.onChangeStoreCallback);
+      }
+    };
 
 export default connect;

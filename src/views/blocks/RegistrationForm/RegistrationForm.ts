@@ -1,6 +1,8 @@
 import Block, { Props } from '@/core/Block';
 import { validate } from '@/helpers';
-import { Routes } from '@/utils/enums';
+import { ROUTES } from '@/utils/enums';
+import AuthService from '@/services/AuthService';
+import { CreateUserDTO } from '@/utils/interfaces';
 import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
 import { PasswordInput } from '@/views/blocks/PasswordInput';
@@ -222,13 +224,16 @@ class RegistrationForm extends Block {
   }
 
   private createLinkButton(): Button {
-    return new Button({
-      attributes: { href: Routes.Login },
-      size: 'md',
-      variant: 'primary-bordered',
-      shape: 'rounded',
-      children: 'Login',
-    }, 'a');
+    return new Button(
+      {
+        attributes: { href: ROUTES.Login },
+        size: 'md',
+        variant: 'primary-bordered',
+        shape: 'rounded',
+        children: 'Login',
+      },
+      'a'
+    );
   }
 
   private handleSubmit(event: Event): void {
@@ -249,15 +254,17 @@ class RegistrationForm extends Block {
 
     const formData = new FormData(form);
 
-    const data: Record<string, unknown> = {
-      login: formData.get('login') || '',
-      password: formData.get('password') || '',
-      email: formData.get('email') || '',
-      firstName: formData.get('first_name') || '',
-      secondName: formData.get('second_name') || '',
-      phone: formData.get('phone') || '',
-      confirmPassword: formData.get('confirm_password') || '',
+    const data: CreateUserDTO = {
+      login: formData.get('login')?.toString() || '',
+      password: formData.get('password')?.toString() || '',
+      email: formData.get('email')?.toString() || '',
+      firstName: formData.get('first_name')?.toString() || '',
+      secondName: formData.get('second_name')?.toString() || '',
+      phone: formData.get('phone')?.toString() || '',
+      confirmPassword: formData.get('confirm_password')?.toString() || '',
     };
+    
+    AuthService.signUp(data);
 
     console.log(data);
   }

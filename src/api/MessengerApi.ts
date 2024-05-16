@@ -1,4 +1,4 @@
-import { User } from "@/utils/interfaces";
+import { UserDTO } from "@/utils/interfaces";
 import BaseAPI from "./BaseApi";
 
 class MessengerAPI extends BaseAPI {
@@ -10,7 +10,7 @@ class MessengerAPI extends BaseAPI {
     return this.HTTP.post('/', { data: { title }, withCredentials: true });
   }
 
-  public addUsers(data: { id: string; users: User[] }): Promise<string> {
+  public addUsers(data: { id: string; users: UserDTO[] }): Promise<string> {
     return this.HTTP.put('/users', { data, withCredentials: true });
   }
 

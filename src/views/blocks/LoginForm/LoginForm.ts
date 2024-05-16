@@ -1,6 +1,8 @@
 import Block, { Props } from '@/core/Block';
 import { validate } from '@/helpers';
-import { Routes } from '@/utils/enums';
+import { ROUTES } from '@/utils/enums';
+import AuthService from '@/services/AuthService';
+import { SignInRequest } from '@/utils/interfaces';
 import { PasswordInput } from '@/views/blocks/PasswordInput';
 import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
@@ -98,13 +100,16 @@ class LoginForm extends Block {
   }
 
   private createLinkButton(): Button {
-    return new Button({
-      attributes: { href: Routes.Registration },
-      size: 'md',
-      variant: 'primary-bordered',
-      shape: 'rounded',
-      children: 'Create an account',
-    },'a');
+    return new Button(
+      {
+        attributes: { href: ROUTES.Registration },
+        size: 'md',
+        variant: 'primary-bordered',
+        shape: 'rounded',
+        children: 'Create an account',
+      },
+      'a'
+    );
   }
 
   private handleSubmit(event: Event): void {
@@ -125,10 +130,12 @@ class LoginForm extends Block {
 
     const formData = new FormData(form);
 
-    const data: Record<string, unknown> = {
-      login: formData.get('login') || '',
-      password: formData.get('password') || '',
+    const data: SignInRequest = {
+      login: formData.get('login')?.toString() || '',
+      password: formData.get('password')?.toString() || '',
     };
+
+    AuthService.login(data);
 
     console.log(data);
   }

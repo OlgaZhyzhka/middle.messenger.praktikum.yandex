@@ -1,4 +1,4 @@
-import { UpdatePassword, User } from '@/utils/interfaces';
+import { UpdatePassword, UserDTO } from '@/utils/interfaces';
 import BaseAPI from "./BaseApi";
 
 class UserAPI extends BaseAPI {
@@ -6,7 +6,7 @@ class UserAPI extends BaseAPI {
     super('/user');
   }
 
-  public updateProfile(user: User): Promise<string> {
+  public updateProfile(user: UserDTO): Promise<string> {
     return this.HTTP.put('/profile', { data: user, withCredentials: true });
   }
 

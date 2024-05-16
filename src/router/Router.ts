@@ -25,9 +25,9 @@ class Router {
       Router.__instance._rootQuery = rootQuery;
     }
 
-    if (!Router.__instance._rootQuery) {
-      throw new Error('RootQuery must be provided for Router initialization');
-    }
+    // if (!Router.__instance._rootQuery) {
+    //   throw new Error('RootQuery must be provided for Router initialization');
+    // }
 
     return Router.__instance;
   }

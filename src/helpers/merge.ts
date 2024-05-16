@@ -3,7 +3,7 @@ import { PlainObject } from '@/utils/types';
 const isObject = (item: unknown): item is PlainObject =>
   typeof item === 'object' && item !== null && !Array.isArray(item);
 
-function merge(lhs: PlainObject, rhs: PlainObject): PlainObject {
+const merge = (lhs: PlainObject, rhs: PlainObject): PlainObject => {
   const stack = [{ lhs, rhs }];
 
   while (stack.length > 0) {

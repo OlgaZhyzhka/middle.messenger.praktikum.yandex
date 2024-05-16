@@ -1,12 +1,21 @@
-export const enum Method {
-  Get = 'get',
-  Post = 'post',
-  Put = 'put',
-  Patch = 'patch',
-  Delete = 'delete',
+export const enum METHODS {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  PATCH = 'PATCH',
+  DELETE = 'DELETE',
 }
 
-export const enum Routes {
+
+export enum WebSocketEvents{
+  open = 'open',
+  message = 'message',
+  error = 'error',
+  close = 'close',
+}
+
+
+export const enum ROUTES {
   Home = '/',
   Login = '/login',
   Logout = '/logout',
@@ -19,7 +28,7 @@ export const enum Routes {
   Error500 = '/500',
 }
 
-export enum AuthMode {
+export enum MODE {
   OnlyAuthorized,
   OnlyNotAuthorized,
   Any,

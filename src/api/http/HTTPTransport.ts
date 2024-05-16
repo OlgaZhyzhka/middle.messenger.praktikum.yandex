@@ -1,17 +1,13 @@
 import BASE_URL from '@/api/http/BaseUrl';
-import { Method } from '@/utils/enums';
-import { Options } from '@/utils/interfaces';
+import { METHODS } from '@/utils/enums';
+import { HTTPMethod, Options } from '@/utils/types';
 
-
-
-
-
-function queryStringify(data: { [key: string]: string }): string {
+const queryStringify = (data: { [key: string]: string }): string => {
   const keys = Object.keys(data);
   return keys.reduce((result, key, index) => `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`, '?');
-}
+};
 
-type HTTPMethod = (url: string, options?: Options) => Promise<string>;
+
 
 export default class HTTPTransport {
   protected endpoint: string;
@@ -22,30 +18,31 @@ export default class HTTPTransport {
 
   public get: HTTPMethod = (url = '/', options = {}) => {
     const query = options.data ? queryStringify(options.data as { [key: string]: string }) : '';
-    return this.request(`${this.endpoint}${url}${query}`, { ...options, method: Method.Get });
+    return this.request(`${this.endpoint}${url}${query}`, { ...options, method: METHODS.GET });
   };
 
   public post: HTTPMethod = (url, options) =>
-    this.request(`${this.endpoint}${url}`, { ...options, method: Method.Post });
+    this.request(`${this.endpoint}${url}`, { ...options, method: METHODS.POST });
 
-  public put: HTTPMethod = (url, options) => this.request(`${this.endpoint}${url}`, { ...options, method: Method.Put });
+  public put: HTTPMethod = (url, options) =>
+    this.request(`${this.endpoint}${url}`, { ...options, method: METHODS.PUT });
 
   public patch: HTTPMethod = (url, options) =>
-    this.request(`${this.endpoint}${url}`, { ...options, method: Method.Patch });
+    this.request(`${this.endpoint}${url}`, { ...options, method: METHODS.PATCH });
 
   public delete: HTTPMethod = (url, options) =>
-    this.request(`${this.endpoint}${url}`, { ...options, method: Method.Delete });
+    this.request(`${this.endpoint}${url}`, { ...options, method: METHODS.DELETE });
 
-  private request<Response>(url: string, options: Options = { method: Method.Get }): Promise<Response> {
-    const { method, data, headers = {} } = options;
+  private request(url: string, options: Options = { method: METHODS.GET }): Promise<XMLHttpRequest> {
+    const { method, data, withCredentials = true, headers = {} } = options;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      
+
       if (!method) {
         throw new Error('Method is undefined');
       }
-      
+
       xhr.open(method, url);
 
       xhr.onreadystatechange = (): void => {
@@ -62,17 +59,19 @@ export default class HTTPTransport {
       xhr.onerror = (): void => reject(xhr.response);
       xhr.ontimeout = (): void => reject(xhr.response);
 
-      xhr.withCredentials = true;
-      xhr.responseType = 'json';
+      xhr.withCredentials = withCredentials;
+      // xhr.responseType = 'json';
+      if (headers) {
+        Object.entries(headers).forEach(([key, value]) => xhr.setRequestHeader(key, value));
+      }
 
-      if (data instanceof FormData) {
+      if (method === METHODS.GET || !data) {
+        xhr.send();
+      } else if (data instanceof FormData) {
         xhr.send(data);
       } else {
-        headers['Content-Type'] = headers['Content-Type'] || 'application/json';
-        Object.keys(headers).forEach((key) => {
-          xhr.setRequestHeader(key, headers[key]);
-        });
-        xhr.send(method === Method.Get ? null : JSON.stringify(data));
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(data));
       }
     });
   }
