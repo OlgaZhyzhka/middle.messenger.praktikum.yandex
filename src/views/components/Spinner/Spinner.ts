@@ -1,4 +1,5 @@
 import Block, { Props } from '@/core/Block';
+
 import tpl from './tpl';
 
 class Spinner extends Block {
@@ -6,7 +7,7 @@ class Spinner extends Block {
     super(props);
     this.props = {
       attributes: { class: 'spinner' },
-    }
+    };
   }
 
   public render(): DocumentFragment {

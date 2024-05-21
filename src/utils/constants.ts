@@ -25,7 +25,7 @@ export const contacts = [
   },
 ];
 
-export const contactsMap = new Map(contacts.map(contact => [contact.id, contact]));
+export const contactsMap = new Map(contacts.map((contact) => [contact.id, contact]));
 
 export const holder = '/icons/upload-avatar.svg';
 
@@ -43,7 +43,6 @@ export const logoData = {
   src: '/images/logo.svg',
   text: 'Chateo',
 };
-
 
 export const chatMessages = [
   {

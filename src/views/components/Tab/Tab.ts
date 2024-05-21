@@ -1,5 +1,6 @@
 import Block from '@/core/Block';
 import { Callback } from '@/utils/types';
+
 import { TabProps } from './interfaces/TabProps';
 import tpl from './tpl';
 
@@ -7,7 +8,7 @@ class Tab extends Block {
   constructor(props: TabProps) {
     super(props, 'li');
     this.setProps({
-      attributes: { class: 'tabs__link'},
+      attributes: { class: 'tabs__link' },
       events: {
         click: (event: Event) => this.onClick(event),
       },

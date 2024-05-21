@@ -1,4 +1,4 @@
-import HTTPTransport from "@/api/http/HTTPTransport";
+import HTTPTransport from '@/api/http/HTTPTransport';
 
 class BaseAPI {
   public HTTP: HTTPTransport;
@@ -6,7 +6,7 @@ class BaseAPI {
   constructor(path: string) {
     this.HTTP = new HTTPTransport(path);
   }
-  
+
   public create(): void {
     throw new Error('Not implemented');
   }

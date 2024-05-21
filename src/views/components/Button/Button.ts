@@ -1,4 +1,5 @@
 import Block from '@/core/Block';
+
 import { ButtonProps } from './interfaces/ButtonProps';
 
 class Button extends Block {

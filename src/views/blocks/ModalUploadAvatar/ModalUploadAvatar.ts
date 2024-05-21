@@ -1,8 +1,9 @@
 import Block, { Props } from '@/core/Block';
 import { Callback } from '@/utils/types';
 import { Button } from '@/views/components/Button';
-import tpl from './tpl';
 import { Upload } from '@/views/components/Upload';
+
+import tpl from './tpl';
 
 class ModalUploadAvatar extends Block {
   private file: File | null = null;
@@ -29,8 +30,8 @@ class ModalUploadAvatar extends Block {
       size: 'md',
       variant: 'primary',
       shape: 'rounded',
-      onClick: (event: Event): void => this.handleSubmit(event),
       children: 'Save',
+      onClick: (event: Event): void => this.handleSubmit(event),
     });
   }
 

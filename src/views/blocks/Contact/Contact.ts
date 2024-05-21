@@ -1,5 +1,6 @@
 import Block, { Props } from '@/core/Block';
 import { Avatar } from '@/views/components/Avatar';
+
 import tpl from './tpl';
 
 class Contact extends Block {

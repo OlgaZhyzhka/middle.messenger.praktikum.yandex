@@ -2,11 +2,14 @@ import Block, { Props } from '@/core/Block';
 import { validate } from '@/helpers';
 import { ROUTES } from '@/utils/enums';
 import AuthService from '@/services/AuthService';
-import { CreateUserDTO } from '@/utils/interfaces';
+import { mapSignUpData } from '@/helpers/mapSignUpData';
+import { RegistrationFormData } from '@/utils/interfaces';
 import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
 import { PasswordInput } from '@/views/blocks/PasswordInput';
+import { RouterLink } from '@/views/components/RouterLink';
 import { Button } from '@/views/components/Button';
+
 import tpl from './tpl';
 
 class RegistrationForm extends Block {
@@ -22,7 +25,7 @@ class RegistrationForm extends Block {
       passwordInput: this.createPasswordInput(),
       confirmPasswordInput: this.createConfirmPasswordInput(),
       submitButton: this.createSubmitButton(),
-      linkButton: this.createLinkButton(),
+      navButton: this.createNavButton(),
       text: 'Already have an account?',
     });
   }
@@ -47,9 +50,9 @@ class RegistrationForm extends Block {
       if (validText) input.setErrorMessage(validText);
     };
     const inputProps = {
-      onBlur,
       attributes: { class: 'form__row' },
       inputAttributes: { name: 'login', type: 'text', placeholder: 'Login' },
+      onBlur,
     };
     return this.createInput(inputProps);
   }
@@ -64,9 +67,9 @@ class RegistrationForm extends Block {
       if (validText) input.setErrorMessage(validText);
     };
     const inputProps = {
-      onBlur,
       attributes: { class: 'form__row' },
       inputAttributes: { name: 'email', placeholder: 'Email', type: 'email' },
+      onBlur,
     };
     return this.createInput(inputProps);
   }
@@ -81,9 +84,9 @@ class RegistrationForm extends Block {
       if (validText) input.setErrorMessage(validText);
     };
     const inputProps = {
-      onBlur,
       attributes: { class: 'form__row' },
       inputAttributes: { name: 'first_name', type: 'text', placeholder: 'First Name' },
+      onBlur,
     };
     return this.createInput(inputProps);
   }
@@ -98,9 +101,9 @@ class RegistrationForm extends Block {
       if (validText) input.setErrorMessage(validText);
     };
     const inputProps = {
-      onBlur,
       attributes: { class: 'form__row' },
       inputAttributes: { name: 'second_name', type: 'text', placeholder: 'Second Name' },
+      onBlur,
     };
     return this.createInput(inputProps);
   }
@@ -115,9 +118,9 @@ class RegistrationForm extends Block {
       if (validText) input.setErrorMessage(validText);
     };
     const inputProps = {
-      onBlur,
       attributes: { class: 'form__row' },
       inputAttributes: { name: 'phone', type: 'tel', placeholder: 'Phone number' },
+      onBlur,
     };
     return this.createInput(inputProps);
   }
@@ -132,8 +135,8 @@ class RegistrationForm extends Block {
       if (validText) passwordInput.setErrorMessage(validText);
     };
     const inputProps = {
-      onBlur,
       inputAttributes: { name: 'password', type: 'password', placeholder: 'Password' },
+      onBlur,
     };
     return new PasswordInput({
       attributes: { class: 'form__row' },
@@ -153,8 +156,8 @@ class RegistrationForm extends Block {
       if (validText) confirmPasswordInput.setErrorMessage(validText);
     };
     const inputProps = {
-      onBlur,
       inputAttributes: { name: 'confirm_password', type: 'password', placeholder: 'Confirm Password' },
+      onBlur,
     };
     return new PasswordInput({
       attributes: { class: 'form__row' },
@@ -218,22 +221,19 @@ class RegistrationForm extends Block {
       size: 'md',
       variant: 'primary',
       shape: 'rounded',
-      onClick: (event: Event): void => this.handleSubmit(event),
       children: 'Create an account',
+      onClick: (event: Event): void => this.handleSubmit(event),
     });
   }
 
-  private createLinkButton(): Button {
-    return new Button(
-      {
-        attributes: { href: ROUTES.Login },
-        size: 'md',
-        variant: 'primary-bordered',
-        shape: 'rounded',
-        children: 'Login',
-      },
-      'a'
-    );
+  private createNavButton(): RouterLink {
+    return new RouterLink({
+      size: 'md',
+      variant: 'primary-bordered',
+      shape: 'rounded',
+      children: 'Login',
+      to: ROUTES.Login,
+    });
   }
 
   private handleSubmit(event: Event): void {
@@ -254,7 +254,7 @@ class RegistrationForm extends Block {
 
     const formData = new FormData(form);
 
-    const data: CreateUserDTO = {
+    const data: RegistrationFormData = {
       login: formData.get('login')?.toString() || '',
       password: formData.get('password')?.toString() || '',
       email: formData.get('email')?.toString() || '',
@@ -263,10 +263,10 @@ class RegistrationForm extends Block {
       phone: formData.get('phone')?.toString() || '',
       confirmPassword: formData.get('confirm_password')?.toString() || '',
     };
-    
-    AuthService.signUp(data);
 
-    console.log(data);
+    const apiData = mapSignUpData(data);
+
+    AuthService.signUp(apiData);
   }
 
   public render(): DocumentFragment {

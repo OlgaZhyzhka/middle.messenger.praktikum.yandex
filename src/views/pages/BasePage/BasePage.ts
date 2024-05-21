@@ -5,7 +5,7 @@ class BasePage extends Block {
     super({
       ...props,
       attributes: {
-        class: 'container container_centered page',
+        class: 'container page',
         ...props.attributes,
       },
     });

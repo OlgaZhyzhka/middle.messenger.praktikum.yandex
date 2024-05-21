@@ -1,5 +1,6 @@
 import Block from '@/core/Block';
 import { Icon } from '@/views/components/Icon';
+
 import { MessageProps } from './interfaces/MessageProps';
 import tpl from './tpl';
 

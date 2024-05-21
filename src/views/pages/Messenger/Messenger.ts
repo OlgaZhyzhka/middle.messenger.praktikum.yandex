@@ -1,8 +1,8 @@
 import Block, { Props } from '@/core/Block.ts';
 import { Sidebar } from '@/views/blocks/Sidebar';
 import { Chat } from '@/views/blocks/Chat';
-
 import { ContactsPanel } from '@/views/blocks/ContactsPanel';
+
 import tpl from './tpl.ts';
 
 class Messenger extends Block {

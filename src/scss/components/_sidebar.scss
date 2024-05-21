@@ -20,6 +20,10 @@
     font-size: toRem(14px);
     color: var(--color-text);
     text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   @include create-mq($grid__bp-xl, 'min') {

@@ -2,6 +2,7 @@ import Block from '@/core/Block';
 import { DropdownItem } from '@/views/components/DropdownItem';
 import { Button } from '@/views/components/Button';
 import { DropdownItemProps } from '@/views/components/DropdownItem/interfaces/DropdownItemProps';
+
 import { DropdownProps } from './interfaces/DropdownProps';
 import tpl from './tpl';
 
@@ -14,7 +15,7 @@ class Dropdown extends Block {
     this.setProps({
       attributes: { class: `${className}`.trim() },
       isOpen: false,
-      dropdownList: (props.items).map(
+      dropdownList: props.items.map(
         (item: DropdownItemProps) =>
           new DropdownItem({
             ...item,
@@ -25,8 +26,8 @@ class Dropdown extends Block {
         attributes: {
           class: props.buttonType ? `dropdown__button dropdown__button_${props.buttonType}` : 'dropdown__button',
         },
-        onClick: this.onToggle.bind(this),
         children: `<span></span>`,
+        onClick: this.onToggle.bind(this),
       }),
     });
   }

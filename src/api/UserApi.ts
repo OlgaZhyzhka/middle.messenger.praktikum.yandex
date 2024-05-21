@@ -1,5 +1,5 @@
 import { UpdatePassword, UserDTO } from '@/utils/interfaces';
-import BaseAPI from "./BaseApi";
+import BaseAPI from './BaseApi';
 
 class UserAPI extends BaseAPI {
   constructor() {

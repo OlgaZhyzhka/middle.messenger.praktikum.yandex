@@ -1,6 +1,7 @@
 import Block, { Props } from '@/core/Block';
 import { currentUser, holder } from '@/utils/constants';
 import { Avatar } from '@/views/components/Avatar';
+
 import tpl from './tpl';
 
 class ProfileInfo extends Block {

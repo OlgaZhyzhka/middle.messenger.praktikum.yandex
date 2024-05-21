@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 export const enum METHODS {
   GET = 'GET',
   POST = 'POST',
@@ -6,14 +8,32 @@ export const enum METHODS {
   DELETE = 'DELETE',
 }
 
+export const enum HTTP_CODES {
+  OK = 200,
+  CREATED = 201,
+  REDIRECT = 300,
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  FORBIDDEN = 403,
+  NOT_FOUND = 404,
+  INTERNAL_SERVER_ERROR = 500,
+}
 
-export enum WebSocketEvents{
+export const enum ERRORS_MESSAGES {
+  USER_IN_SYSTEM = 'User already in system',
+  USER_REQUIRED = 'User is required',
+  NETWORK = 'Network Error',
+  ABORTED = 'Request aborted',
+  TIMEOUT = 'Timeout exceeded',
+  ERROR = 'Error',
+}
+
+export enum WS_EVENTS {
   open = 'open',
   message = 'message',
   error = 'error',
   close = 'close',
 }
-
 
 export const enum ROUTES {
   Home = '/',
@@ -24,12 +44,6 @@ export const enum ROUTES {
   Settings = '/settings',
   SettingsEdit = '/settings-edit',
   SettingsPassword = '/settings-password',
-  Error404 = '/404',
   Error500 = '/500',
-}
-
-export enum MODE {
-  OnlyAuthorized,
-  OnlyNotAuthorized,
-  Any,
+  Error404 = '/404',
 }

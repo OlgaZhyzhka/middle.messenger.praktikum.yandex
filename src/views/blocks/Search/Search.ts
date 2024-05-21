@@ -1,6 +1,7 @@
 import Block, { Props } from '@/core/Block';
 import { Input } from '@/views/components/Input';
 import { IconButton } from '@/views/components/IconButton';
+
 import tpl from './tpl';
 
 class Search extends Block {

@@ -1,6 +1,7 @@
 import Block from '@/core/Block';
 import { Input } from '@/views/components/Input';
 import { Icon } from '@/views/components/Icon';
+
 import { UploadProps } from './interfaces/UploadProps';
 import tpl from './tpl';
 

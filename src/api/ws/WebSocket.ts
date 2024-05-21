@@ -1,7 +1,6 @@
 import EventBus from '@/core/EventBus';
 
 class WebSocket extends EventBus {
-
   private url: string;
 
   private ws?: WebSocket;
@@ -18,15 +17,13 @@ class WebSocket extends EventBus {
 
     this.ws.send(data);
   }
-  
+
   public connect(): void {
-     if (this.ws) {
-       throw new Error('Socket is already connected');
-     }
+    if (this.ws) {
+      throw new Error('Socket is already connected');
+    }
 
     this.ws = new WebSocket(this.url);
-
-    
   }
 
   public close(): void {

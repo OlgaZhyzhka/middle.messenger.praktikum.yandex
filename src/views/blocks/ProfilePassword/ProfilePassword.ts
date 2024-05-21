@@ -4,6 +4,7 @@ import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
 import { PasswordInput } from '@/views/blocks/PasswordInput';
 import { Button } from '@/views/components/Button';
+
 import tpl from './tpl';
 
 class ProfilePassword extends Block {
@@ -26,8 +27,8 @@ class ProfilePassword extends Block {
       size: 'md',
       variant: 'primary',
       shape: 'rounded',
-      onClick: (event: Event): void => this.handleSubmit(event),
       children: 'Save',
+      onClick: (event: Event): void => this.handleSubmit(event),
     });
   }
 
@@ -52,7 +53,7 @@ class ProfilePassword extends Block {
 
   private createOldPasswordInput(): PasswordInput {
     const inputProps = {
-      inputAttributes: { name: 'old_password', type: 'password', placeholder: 'Old Password', required: true},
+      inputAttributes: { name: 'old_password', type: 'password', placeholder: 'Old Password', required: true },
     };
     return new PasswordInput({
       attributes: { class: 'form__row' },
@@ -70,8 +71,8 @@ class ProfilePassword extends Block {
       if (validText) passwordInput.setErrorMessage(validText);
     };
     const inputProps = {
-      onBlur,
       inputAttributes: { name: 'password', type: 'password', placeholder: 'Password' },
+      onBlur,
     };
     return new PasswordInput({
       attributes: { class: 'form__row' },
@@ -91,8 +92,8 @@ class ProfilePassword extends Block {
       if (validText) confirmPasswordInput.setErrorMessage(validText);
     };
     const inputProps = {
-      onBlur,
       inputAttributes: { name: 'confirm_password', type: 'password', placeholder: 'Confirm Password' },
+      onBlur,
     };
     return new PasswordInput({
       attributes: { class: 'form__row' },
@@ -142,22 +143,7 @@ class ProfilePassword extends Block {
       data[key] = value;
     });
 
-    console.log(data);
-
-    // fetch('/your-endpoint', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(data),
-    // })
-    //   .then((response) => response.json())
-    //   .then((result) => {
-    //     // Обработайте результат
-    //   })
-    //   .catch((error) => {
-    //     // Обработайте ошибку
-    //   });
+    // console.log(data);
 
     form.reset();
   }

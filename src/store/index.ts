@@ -9,18 +9,20 @@ export enum StoreEvents {
 
 export interface IStore {
   isLoading: boolean;
-  loginFields: Record<string, string> | null;
   user: UserDTO | null;
+  isAuthenticated?: boolean;
+  loginError?: string | null;
+  signUpError?: string | null;
 }
 
 class Store extends EventBus {
-  private state: PlainObject = {};
+  private state: IStore;
 
   private static __instance: Store | null = null;
 
   constructor(defaultState: PlainObject = {}) {
     super();
-    this.state = cloneDeep(defaultState);
+    this.state = { isLoading: false, user: null, ...defaultState } as IStore;
   }
 
   public static getInstance(defaultState?: PlainObject): Store {
@@ -30,20 +32,26 @@ class Store extends EventBus {
     return Store.__instance;
   }
 
-  public getState(): PlainObject {
+  public getState(): IStore {
     return cloneDeep(this.state);
   }
 
-  public set(nextState: PlainObject): void {
+  public set(nextState: Partial<IStore>): void {
     const prevState = this.getState();
-    this.state = { ...this.state, ...nextState };
+    this.state = { ...this.state, ...nextState } as IStore;
 
     if (this.listeners[StoreEvents.Updated]) {
       this.emit(StoreEvents.Updated, prevState, nextState);
     }
-
-    // this.emit(STORE_EVENTS.Updated, prevState, this.getState());
   }
 }
 
-export const store = Store.getInstance();
+const defaultState: PlainObject = {
+  isLoading: false,
+  user: null,
+  loginError: null,
+  signUpError: null,
+  isAuthenticated: false,
+};
+
+export const store = Store.getInstance(defaultState);

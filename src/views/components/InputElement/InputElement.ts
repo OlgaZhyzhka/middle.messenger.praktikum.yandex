@@ -1,10 +1,9 @@
 import Block from '@/core/Block';
 import { ErrorText } from '@/views/components/ErrorText';
 import { Input } from '@/views/components/Input';
+
 import { InputElementProps } from './interfaces/InputProps';
 import tpl from './tpl';
-
-
 
 class InputElement extends Block {
   constructor(props: InputElementProps) {

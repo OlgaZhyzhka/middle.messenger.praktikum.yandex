@@ -1,5 +1,5 @@
 import { PlainObject } from '@/utils/types';
-import merge from "./merge";
+import merge from './merge';
 
 const set = (object: PlainObject | unknown, path: string, value: unknown): PlainObject | unknown => {
   if (typeof object !== 'object') {

@@ -1,6 +1,7 @@
 import Block, { Props } from '@/core/Block.ts';
 import { Sidebar } from '@/views/blocks/Sidebar';
 import Profile from '@/views/blocks/Profile/Profile.ts';
+
 import tpl from './tpl.ts';
 
 class Settings extends Block {
@@ -12,7 +13,7 @@ class Settings extends Block {
         isMessenger: false,
         isSettings: true,
       }),
-      profile: new Profile({ attributes: { class: 'profile' }}),
+      profile: new Profile({ attributes: { class: 'profile' } }),
     });
   }
 

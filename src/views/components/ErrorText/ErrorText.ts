@@ -1,4 +1,5 @@
 import Block, { Props } from '@/core/Block';
+
 import tpl from './tpl';
 
 class ErrorText extends Block {

@@ -1,6 +1,7 @@
 import Block from '@/core/Block';
 import TabsNav from '@/views/components/TabsNav/TabsNav';
 import { TabsContent } from '@/views/components/TabsContent';
+
 import { TabsProps } from './interfaces/TabsProps';
 import tpl from './tpl';
 
@@ -21,7 +22,7 @@ class Tabs extends Block {
   }
 
   private updateTabsDisplay(): void {
-    (this.children.tabsNav as TabsNav).highlightTab(this.activeTab); 
+    (this.children.tabsNav as TabsNav).highlightTab(this.activeTab);
     const contentComponent = (this.props as TabsProps).onChange(this.activeTab);
     (this.children.tabsContent as TabsContent).setProps({
       content: contentComponent,

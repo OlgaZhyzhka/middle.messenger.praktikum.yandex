@@ -23,6 +23,6 @@ const merge = (lhs: PlainObject, rhs: PlainObject): PlainObject => {
   }
 
   return lhs;
-}
+};
 
 export default merge;

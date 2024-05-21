@@ -1,5 +1,8 @@
 import Block from '@/core/Block.ts';
 import { RouteOptionsWithProps } from '@/utils/interfaces.ts';
+import { ROUTES } from '@/utils/enums.ts';
+import { MiddleWare } from '@/utils/types.ts';
+
 import Route from './Route.ts';
 
 class Router {
@@ -25,15 +28,16 @@ class Router {
       Router.__instance._rootQuery = rootQuery;
     }
 
-    // if (!Router.__instance._rootQuery) {
-    //   throw new Error('RootQuery must be provided for Router initialization');
-    // }
-
     return Router.__instance;
   }
 
-  public use(pathname: string, blockConstructor: typeof Block, props?: RouteOptionsWithProps): Router {
-    const route = new Route(pathname, blockConstructor, { ...props, rootQuery: this._rootQuery });
+  public use(
+    pathname: string,
+    blockConstructor: typeof Block,
+    props?: RouteOptionsWithProps,
+    middleware?: MiddleWare | undefined
+  ): Router {
+    const route = new Route(pathname, blockConstructor, { ...props, rootQuery: this._rootQuery }, middleware);
     this.routes.push(route);
     return this;
   }
@@ -52,15 +56,24 @@ class Router {
     const route = this.getRoute(pathname);
 
     if (!route) {
-      // 404
+      this.go(ROUTES.Error404);
       return;
     }
 
-    if (this._currentRoute) {
+    if (this._currentRoute && this._currentRoute !== route) {
       this._currentRoute.leave();
     }
 
     this._currentRoute = route;
+
+    if (route.middleware) {
+      const redirectOccurred = route.middleware(pathname);
+      if (redirectOccurred) {
+        return;
+      }
+    }
+
+    // route.middleware?.(pathname);
     route.render();
   }
 

@@ -4,8 +4,9 @@ import { contactsMap } from '@/utils/constants.ts';
 import { Dropdown } from '@/views/components/Dropdown';
 import { DropdownItemProps } from '@/views/components/DropdownItem/interfaces/DropdownItemProps';
 import { Avatar } from '@/views/components/Avatar';
-import tpl from './tpl';
+
 import { ChatHeaderProps } from './interfaces/ChatHeaderProps';
+import tpl from './tpl';
 
 class ChatHeader extends Block {
   constructor(props: ChatHeaderProps) {

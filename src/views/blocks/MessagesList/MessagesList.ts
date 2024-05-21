@@ -1,6 +1,7 @@
 import Block, { Props } from '@/core/Block';
 import { chatMessages } from '@/utils/constants';
 import { MessageListItem } from '@/views/blocks/MessageListItem';
+
 import tpl from './tpl';
 
 class MessagesList extends Block {

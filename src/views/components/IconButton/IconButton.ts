@@ -1,7 +1,7 @@
 import Block from '@/core/Block';
 import { Icon } from '@/views/components/Icon';
-import { IconButtonProps } from './interfaces/IconButtonProps';
 
+import { IconButtonProps } from './interfaces/IconButtonProps';
 
 class IconButton extends Block {
   constructor(props: IconButtonProps) {

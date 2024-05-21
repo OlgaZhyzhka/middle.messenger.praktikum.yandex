@@ -1,4 +1,4 @@
-import { METHODS } from "./enums";
+import { METHODS } from './enums';
 
 export type SIZE = 'sm' | 'xs' | 'md' | 'lg' | 'xl';
 
@@ -20,12 +20,13 @@ export type SHAPE = 'round' | 'circle' | 'rounded' | 'default';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Callback = (...args: any[]) => void;
 
+export type MiddleWare = (pathname: string) => boolean;
+
 export type EventCallback = (event: Event) => void;
 
 export type PlainObject<T = unknown> = {
   [k in string]: T;
 };
-
 
 export type Options = {
   headers?: Record<string, string>;
@@ -38,4 +39,4 @@ export type Options = {
 
 export type OptionsWithoutMethod = Omit<Options, 'method'>;
 
-export type HTTPMethod = (url: string, options?: Options) => Promise<XMLHttpRequest>;
+export type HTTPMethod = <TResponse>(url: string, options?: Options) => Promise<TResponse>;

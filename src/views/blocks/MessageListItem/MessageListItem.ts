@@ -1,6 +1,7 @@
 import Block, { Props } from '@/core/Block';
 import { Message } from '@/views/blocks/Message';
 import { MessageProps } from '@/views/blocks/Message/interfaces/MessageProps';
+
 import tpl from './tpl';
 
 class MessageListItem extends Block {

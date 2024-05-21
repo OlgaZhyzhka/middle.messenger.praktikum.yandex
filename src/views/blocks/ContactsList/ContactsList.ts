@@ -1,6 +1,7 @@
 import Block, { Props } from '@/core/Block';
 import { contacts } from '@/utils/constants';
 import { Contact } from '@/views/blocks/Contact';
+
 import tpl from './tpl';
 
 class ContactsList extends Block {

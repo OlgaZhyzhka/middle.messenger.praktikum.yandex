@@ -1,4 +1,6 @@
-import { APIError, CreateUserDTO, SignInRequest, SignUpResponse, UserDTO } from '@/utils/interfaces';
+import { ApiResponse, CreateUserDTO, SignInRequest } from '@/utils/interfaces';
+import { ERRORS_MESSAGES } from '@/utils/enums';
+
 import BaseAPI from './BaseApi';
 
 class AuthAPI extends BaseAPI {
@@ -6,29 +8,35 @@ class AuthAPI extends BaseAPI {
     super('/auth');
   }
 
-  public signIn(user?: SignInRequest): Promise<void | APIError> {
+  public async signIn(user?: SignInRequest): Promise<ApiResponse> {
     if (!user) {
-      throw new Error('"user" is required');
+      throw new Error(ERRORS_MESSAGES.USER_REQUIRED);
     }
 
-    return this.HTTP.post('/signin', { data: user, withCredentials: true });
+    const response = (await this.HTTP.post('/signin', { data: user, withCredentials: true }));
+    return response as ApiResponse;
   }
 
-  public signUp(user?: CreateUserDTO): Promise<SignUpResponse> {
+  public async signUp(user?: CreateUserDTO): Promise<ApiResponse> {
     if (!user) {
-      throw new Error('"user" is required');
+      throw new Error(ERRORS_MESSAGES.USER_REQUIRED);
     }
 
-    return this.HTTP.post('/signup', { data: user, withCredentials: true });
+    console.log(user);
+
+    const response = (await this.HTTP.post('/signup', { data: user, withCredentials: true }));
+    return response as ApiResponse;
   }
 
-  public getUser(): Promise<UserDTO | APIError> {
-    return this.HTTP.get('/user', { withCredentials: true });
+  public async logout(): Promise<ApiResponse> {
+    const response = (await this.HTTP.post('/logout'));
+    return response as ApiResponse;
   }
 
-  public logout(): Promise<void | APIError> {
-    return this.HTTP.post('/logout', { withCredentials: true });
+  public async getUser(): Promise<ApiResponse> {
+    const response = (await this.HTTP.get('/user'));
+    return response as ApiResponse;
   }
 }
 
-export default AuthAPI; 
+export default AuthAPI;

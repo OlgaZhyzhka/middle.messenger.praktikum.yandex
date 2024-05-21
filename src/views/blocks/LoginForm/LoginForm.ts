@@ -7,6 +7,8 @@ import { PasswordInput } from '@/views/blocks/PasswordInput';
 import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
 import { Button } from '@/views/components/Button';
+import { RouterLink } from '@/views/components/RouterLink';
+
 import tpl from './tpl';
 
 class LoginForm extends Block {
@@ -17,7 +19,7 @@ class LoginForm extends Block {
       loginInput: this.createLoginInput(),
       passwordInput: this.createPasswordInput(),
       submitButton: this.createSubmitButton(),
-      linkButton: this.createLinkButton(),
+      navButton: this.createNavButton(),
       text: 'Need an account?',
     });
   }
@@ -34,24 +36,24 @@ class LoginForm extends Block {
 
   private createLoginInput(): InputElement {
     const onBlur = (event: Event): void => {
-      const {value} = (event.target as HTMLInputElement);
+      const { value } = event.target as HTMLInputElement;
       const data = { login: value };
       const validText = validate(data, 'login');
       const input = this.getChild('loginInput') as InputElement;
       input.setIsValid(!validText);
       if (validText) input.setErrorMessage(validText);
     };
-    const inputProps = {  
+    const inputProps = {
       attributes: { class: 'form__row' },
-      onBlur,
       inputAttributes: { name: 'login', type: 'text', placeholder: 'Login' },
+      onBlur,
     };
     return this.createInput(inputProps);
   }
 
   private createPasswordInput(): PasswordInput {
     const onBlur = (event: Event): void => {
-      const {value} = (event.target as HTMLInputElement);
+      const { value } = event.target as HTMLInputElement;
       const data = { password: value };
       const validText = validate(data, 'password');
       const passwordInput = this.getChild('passwordInput')?.getChild('inputElement') as InputElement;
@@ -59,8 +61,8 @@ class LoginForm extends Block {
       if (validText) passwordInput.setErrorMessage(validText);
     };
     const inputProps = {
-      onBlur,
       inputAttributes: { name: 'password', type: 'password', placeholder: 'Password' },
+      onBlur,
     };
     return new PasswordInput({
       attributes: { class: 'form__row' },
@@ -94,22 +96,19 @@ class LoginForm extends Block {
       size: 'md',
       variant: 'primary',
       shape: 'rounded',
-      onClick: (event: Event): void => this.handleSubmit(event),
       children: 'Login',
+      onClick: (event: Event): void => this.handleSubmit(event),
     });
   }
 
-  private createLinkButton(): Button {
-    return new Button(
-      {
-        attributes: { href: ROUTES.Registration },
-        size: 'md',
-        variant: 'primary-bordered',
-        shape: 'rounded',
-        children: 'Create an account',
-      },
-      'a'
-    );
+  private createNavButton(): RouterLink {
+    return new RouterLink({
+      size: 'md',
+      variant: 'primary-bordered',
+      shape: 'rounded',
+      children: 'Create an account',
+      to: ROUTES.Registration,
+    });
   }
 
   private handleSubmit(event: Event): void {

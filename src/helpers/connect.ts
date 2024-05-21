@@ -1,5 +1,5 @@
 import Block, { Props } from '@/core/Block';
-import { store, StoreEvents } from '@/store';
+import { IStore, store, StoreEvents } from '@/store';
 import { PlainObject } from '@/utils/types';
 import isEqual from './isEqual';
 
@@ -9,10 +9,9 @@ type BlockConstructorType<T> = {
 };
 
 const connect =
-  <T = Props>(mapStateToProps: (state: PlainObject) => PlainObject) =>
+  <T = Props>(mapStateToProps: (state: IStore) => PlainObject) =>
   (BlockConstructor: BlockConstructorType<T>): BlockConstructorType<T> =>
     class ConnectedBlock extends BlockConstructor {
-
       private onChangeStoreCallback: () => void;
 
       constructor(props: T) {

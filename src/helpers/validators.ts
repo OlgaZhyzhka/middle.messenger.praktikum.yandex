@@ -34,7 +34,8 @@ const validateName = (name: string): boolean => {
   return regex.test(name);
 };
 
-const validateConfirmPassword = (password: string, confirmPassword: string): boolean => !!confirmPassword && password === confirmPassword;
+const validateConfirmPassword = (password: string, confirmPassword: string): boolean =>
+  !!confirmPassword && password === confirmPassword;
 
 const validateMessage = (message: string): boolean => message.length > 0;
 

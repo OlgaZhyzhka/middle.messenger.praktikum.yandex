@@ -1,6 +1,7 @@
 import Block from '@/core/Block.ts';
 import { isEqual, renderDOM } from '@/helpers/index.ts';
 import { RouteOptionsWithProps } from '@/utils/interfaces';
+import { MiddleWare } from '@/utils/types';
 
 class Route {
   private _pathname: string;
@@ -11,10 +12,22 @@ class Route {
 
   private _props: RouteOptionsWithProps;
 
-  constructor(pathname: string, blockConstructor: typeof Block, props: RouteOptionsWithProps) {
+  private _middleware: MiddleWare | undefined;
+
+  constructor(
+    pathname: string,
+    blockConstructor: typeof Block,
+    props?: RouteOptionsWithProps,
+    middleware?: MiddleWare
+  ) {
     this._pathname = pathname;
     this._blockConstructor = blockConstructor;
-    this._props = props;
+    this._middleware = middleware || undefined;
+    this._props = props || {};
+  }
+
+  public get middleware(): MiddleWare | undefined {
+    return this._middleware;
   }
 
   public navigate(pathname: string): void {
@@ -25,7 +38,9 @@ class Route {
   }
 
   public leave(): void {
-    this._block?.hide();
+    // this._block?.hide();
+    this._block?.remove();
+    this._block = null;
   }
 
   public match(pathname: string): boolean {
@@ -37,13 +52,16 @@ class Route {
       document.title = this._props.title;
     }
 
-    if (!this._block) {
-      this._block = new this._blockConstructor(this._props.props ? this._props.props : {});
-      renderDOM(this._block, this._props.rootQuery);
-      return;
-    }
+    this._block = new this._blockConstructor(this._props.props ? this._props.props : {});
+    renderDOM(this._block, this._props.rootQuery);
 
-    this._block.show();
+    // if (!this._block) {
+    //   this._block = new this._blockConstructor(this._props.props ? this._props.props : {});
+    //   renderDOM(this._block, this._props.rootQuery);
+    //   return;
+    // }
+
+    // this._block.show();
   }
 }
 

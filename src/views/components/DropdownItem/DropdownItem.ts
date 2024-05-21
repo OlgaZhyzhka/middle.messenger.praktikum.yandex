@@ -1,6 +1,7 @@
 import Block from '@/core/Block';
 import { Icon } from '@/views/components/Icon';
 import { Label } from '@/views/components/Label';
+
 import { DropdownItemProps } from './interfaces/DropdownItemProps';
 import tpl from './tpl';
 
@@ -11,24 +12,24 @@ class DropdownItem extends Block {
     const { inputId } = props;
     const icon = new Icon({ iconName: props.iconName, size: 'sm' });
 
-   if (isFileInput) {
-     this.setProps({
-       labelUpload: new Label({
-         attributes: { class: 'dropdown__label' },
-         for: inputId,
-         children: [icon, props.title],
-       }),
-     });
-   } else {
-     this.setProps({
-       events: {
-         click: (event) => {
-          props.onToggle?.(event);
-          props.onClick?.(event);
-         },
-       },
-     });
-   }
+    if (isFileInput) {
+      this.setProps({
+        labelUpload: new Label({
+          attributes: { class: 'dropdown__label' },
+          for: inputId,
+          children: [icon, props.title],
+        }),
+      });
+    } else {
+      this.setProps({
+        events: {
+          click: (event) => {
+            props.onToggle?.(event);
+            props.onClick?.(event);
+          },
+        },
+      });
+    }
 
     this.setProps({
       attributes: { class: 'dropdown__item' },

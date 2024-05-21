@@ -4,6 +4,7 @@ import { Upload } from '@/views/components/Upload';
 import { Button } from '@/views/components/Button';
 import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
+
 import tpl from './tpl';
 
 class ProfileEdit extends Block {
@@ -50,9 +51,9 @@ class ProfileEdit extends Block {
       if (validText) input.setErrorMessage(validText);
     };
     const inputProps = {
-      onBlur,
       attributes: { class: 'form__row' },
       inputAttributes: { name: 'login', type: 'text', placeholder: 'Login' },
+      onBlur,
     };
     return this.createInput(inputProps);
   }
@@ -67,9 +68,9 @@ class ProfileEdit extends Block {
       if (validText) input.setErrorMessage(validText);
     };
     const inputProps = {
-      onBlur,
       attributes: { class: 'form__row' },
       inputAttributes: { name: 'email', placeholder: 'Email', type: 'email' },
+      onBlur,
     };
     return this.createInput(inputProps);
   }
@@ -84,9 +85,9 @@ class ProfileEdit extends Block {
       if (validText) input.setErrorMessage(validText);
     };
     const inputProps = {
-      onBlur,
       attributes: { class: 'form__row' },
       inputAttributes: { name: 'first_name', type: 'text', placeholder: 'First Name' },
+      onBlur,
     };
     return this.createInput(inputProps);
   }
@@ -101,9 +102,9 @@ class ProfileEdit extends Block {
       if (validText) input.setErrorMessage(validText);
     };
     const inputProps = {
-      onBlur,
       attributes: { class: 'form__row' },
       inputAttributes: { name: 'second_name', type: 'text', placeholder: 'Second Name' },
+      onBlur,
     };
     return this.createInput(inputProps);
   }
@@ -118,9 +119,9 @@ class ProfileEdit extends Block {
       if (validText) input.setErrorMessage(validText);
     };
     const inputProps = {
-      onBlur,
       attributes: { class: 'form__row' },
       inputAttributes: { name: 'chat_name', type: 'text', placeholder: 'Chat Name' },
+      onBlur,
     };
     return this.createInput(inputProps);
   }
@@ -135,9 +136,9 @@ class ProfileEdit extends Block {
       if (validText) input.setErrorMessage(validText);
     };
     const inputProps = {
-      onBlur,
       attributes: { class: 'form__row' },
       inputAttributes: { name: 'phone', type: 'tel', placeholder: 'Phone number' },
+      onBlur,
     };
     return this.createInput(inputProps);
   }
@@ -149,8 +150,8 @@ class ProfileEdit extends Block {
       size: 'md',
       variant: 'primary',
       shape: 'rounded',
-      onClick: (event: Event): void => this.handleSubmit(event),
       children: 'Save',
+      onClick: (event: Event): void => this.handleSubmit(event),
     });
   }
 
@@ -268,22 +269,7 @@ class ProfileEdit extends Block {
       data[key] = value;
     });
 
-    console.log(data);
-
-    // fetch('/your-endpoint', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(data),
-    // })
-    //   .then((response) => response.json())
-    //   .then((result) => {
-    //     // Обработайте результат
-    //   })
-    //   .catch((error) => {
-    //     // Обработайте ошибку
-    //   });
+    // console.log(data);
 
     this.resetUpload();
     form.reset();

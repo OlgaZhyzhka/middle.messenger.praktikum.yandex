@@ -13,7 +13,7 @@ class InputAddon extends Block {
       },
     });
   }
-  
+
   public getAddon(): IconButton {
     return this.children.addon as IconButton;
   }

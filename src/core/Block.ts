@@ -126,7 +126,7 @@ export default class Block {
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target, prop: string, value): boolean => {
-        console.log(`Setting prop ${prop} to`, value);
+        // console.log(`Setting prop ${prop} to`, value);
         if (!isEqual(target[prop], value)) {
           target[prop] = value;
           this._isUpdated = true;
@@ -205,7 +205,8 @@ export default class Block {
 
     const { attributes } = this.props;
     this._setAttribute(attributes);
-    console.log('Render element');
+
+    // console.log('Render element');
   }
 
   public render(): DocumentFragment {
@@ -232,9 +233,7 @@ export default class Block {
     });
   }
 
-  protected componentDidMount(oldProps?: Props): void {
-    console.log(`Component ${this._meta?.tagName} mounted with props:`, oldProps);
-  }
+  public componentDidMount(): void {}
 
   public dispatchComponentDidMount(): void {
     this.eventBus.emit(Block.EVENTS.FLOW_CDM);
@@ -264,8 +263,8 @@ export default class Block {
     }
   }
 
-  protected componentDidUpdate(oldProps: Props, newProps: Props): boolean {
-    console.log(`Component ${this._meta?.tagName} updated with props:`, oldProps, newProps);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected componentDidUpdate(_oldProps: Props, _newProps: Props): boolean {
     return true;
   }
 
@@ -388,17 +387,12 @@ export default class Block {
 
   public show(): void {
     const element = this.getContent() as HTMLElement;
-
-    if (element !== null) {
-      element.style.display = 'block';
-    }
+    if (!element) return;
+    element.style.display = 'block';
   }
 
   public hide(): void {
     const element = this.getContent() as HTMLElement;
-
-    if (element !== null) {
-      element.style.display = 'none';
-    }
+    element.style.display = 'none';
   }
 }

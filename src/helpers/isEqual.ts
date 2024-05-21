@@ -1,4 +1,4 @@
-import { isArray, isPlainObject } from "./typesUtils";
+import { isArray, isPlainObject } from './typesUtils';
 
 const isEqual = (a: unknown, b: unknown): boolean => {
   if (a === b) {
@@ -55,6 +55,6 @@ const isEqual = (a: unknown, b: unknown): boolean => {
   }
 
   return false;
-}
+};
 
 export default isEqual;

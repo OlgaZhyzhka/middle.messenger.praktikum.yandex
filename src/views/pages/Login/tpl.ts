@@ -1,11 +1,15 @@
 const tpl = `
+<div class="page__container">
 {{#if isLoading}}
   {{{ spinner }}}
 {{else}}
-    <img src="{{ imgSrc }}" alt="{{ imgAlt }}"> <h1 class="form__title">{{ pageTitle }}</h1> {{{loginForm}}}
+<img src="{{ imgSrc }}" alt="{{ imgAlt }}">
+<h1 class="page__title">{{ title }}</h1>
 {{#if loginError}}
-  <p>{{{loginError}}}</p>
+<h4 class="is-error">{{{loginError}}}</h4>
 {{/if}}
+{{{loginForm}}}
+</div>
 {{/if}}`;
 
 export default tpl;

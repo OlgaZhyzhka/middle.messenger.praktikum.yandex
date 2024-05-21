@@ -4,6 +4,7 @@ import { Callback } from '@/utils/types';
 import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
 import { Button } from '@/views/components/Button';
+
 import tpl from './tpl';
 
 class ModalUserForm extends Block {
@@ -38,8 +39,8 @@ class ModalUserForm extends Block {
     };
     const inputProps = {
       attributes: { class: 'form__row' },
-      onBlur,
       inputAttributes: { name: 'login', type: 'text', placeholder: 'Login' },
+      onBlur,
     };
     return this.createInput(inputProps);
   }
@@ -64,8 +65,8 @@ class ModalUserForm extends Block {
       size: 'md',
       variant: 'primary',
       shape: 'rounded',
-      onClick: (event: Event): void => this.handleSubmit(event),
       children: 'OK',
+      onClick: (event: Event): void => this.handleSubmit(event),
     });
   }
 

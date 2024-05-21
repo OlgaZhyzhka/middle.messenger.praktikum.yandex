@@ -21,4 +21,4 @@ export const cloneDeep = <T>(obj: T): T => {
   });
 
   return copyObject as T;
-}
+};

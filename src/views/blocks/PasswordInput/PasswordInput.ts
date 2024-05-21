@@ -2,6 +2,7 @@ import Block, { Props } from '@/core/Block';
 import { InputAddon } from '@/views/components/InputAddon';
 import { IconButton } from '@/views/components/IconButton';
 import { InputElement } from '@/views/components/InputElement';
+
 import tpl from './tpl';
 
 class PasswordInput extends Block {

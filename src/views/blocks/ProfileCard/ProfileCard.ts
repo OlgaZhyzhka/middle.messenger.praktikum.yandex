@@ -4,6 +4,7 @@ import { TabProps } from '@/views/components/Tab/interfaces/TabProps';
 import { ProfileInfo } from '@/views/blocks/ProfileInfo';
 import { ProfileEdit } from '@/views/blocks/ProfileEdit';
 import { ProfilePassword } from '@/views/blocks/ProfilePassword';
+
 import tpl from './tpl';
 
 class ProfileCard extends Block {

@@ -1,4 +1,5 @@
 import Block from '@/core/Block';
+
 import { LabelProps } from './interfaces/LabelProps';
 
 class Label extends Block {

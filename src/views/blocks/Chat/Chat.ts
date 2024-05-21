@@ -5,6 +5,7 @@ import { ChatInput } from '@/views/blocks/ChatInput';
 import { ModalUserForm } from '@/views/blocks/ModalUserForm';
 import { Modal } from '@/views/components/Modal';
 import { ModalUploadAvatar } from '@/views/blocks/ModalUploadAvatar';
+
 import tpl from './tpl';
 
 class Chat extends Block {
@@ -86,8 +87,8 @@ class Chat extends Block {
   }
 
   private uploadAvatar(data: Record<string, string>): void {
-     console.log(data);
-     this.handleCloseModal(this.children.modalUploadAvatar as Modal);
+    console.log(data);
+    this.handleCloseModal(this.children.modalUploadAvatar as Modal);
   }
 
   private createChatHeader(): Block {

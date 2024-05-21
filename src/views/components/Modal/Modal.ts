@@ -1,6 +1,7 @@
 import Block from '@/core/Block';
 import { Callback } from '@/utils/types';
 import { Button } from '@/views/components/Button';
+
 import { ModalProps } from './interfaces/ModalProps';
 import tpl from './tpl';
 

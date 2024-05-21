@@ -1,5 +1,5 @@
-import { UserDTO } from "@/utils/interfaces";
-import BaseAPI from "./BaseApi";
+import { UserDTO } from '@/utils/interfaces';
+import BaseAPI from './BaseApi';
 
 class MessengerAPI extends BaseAPI {
   constructor() {

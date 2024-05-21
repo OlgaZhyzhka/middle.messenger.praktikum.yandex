@@ -3,6 +3,8 @@
 }
 
 .is-error {
+  color: var(--color-error);
+
   .input {
     border-color: var(--color-error);
     color: var(--color-error);
@@ -10,6 +12,8 @@
 }
 
 .is-success {
+  color: var(--color-success);
+
   .input {
     border-color: var(--color-success);
     color: var(--color-success);

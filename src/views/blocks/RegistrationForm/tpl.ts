@@ -2,7 +2,7 @@ const tpl = `{{{ emailInput }}} {{{ loginInput }}} {{{ firstNameInput }}} {{{ se
 <div class="form__footer">
 {{{ submitButton }}}
 <span class="form__text">{{ text }}</span>
-{{{ linkButton }}}
+{{{ navButton }}}
 </div>`;
 
 export default tpl;

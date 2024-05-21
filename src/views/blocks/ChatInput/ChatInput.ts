@@ -3,6 +3,7 @@ import { Input } from '@/views/components/Input';
 import { IconButton } from '@/views/components/IconButton';
 import { Dropdown } from '@/views/components/Dropdown';
 import { DropdownItemProps } from '@/views/components/DropdownItem/interfaces/DropdownItemProps';
+
 import tpl from './tpl';
 
 class ChatInput extends Block {
@@ -64,7 +65,7 @@ class ChatInput extends Block {
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
       console.log('Media file:', file);
-      (this.children.dropdown as Dropdown).closeDropdown(); 
+      (this.children.dropdown as Dropdown).closeDropdown();
     }
   }
 
@@ -73,12 +74,11 @@ class ChatInput extends Block {
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
       console.log('Media file:', file);
-      (this.children.dropdown as Dropdown).closeDropdown(); 
+      (this.children.dropdown as Dropdown).closeDropdown();
     }
   }
 
   private handleSend(): void {
-    // console.log(value);
   }
 
   public render(): DocumentFragment {

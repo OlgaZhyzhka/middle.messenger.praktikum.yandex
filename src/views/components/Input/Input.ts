@@ -1,6 +1,6 @@
 import Block from '@/core/Block';
-import { InputProps } from './interfaces/InputProps';
 
+import { InputProps } from './interfaces/InputProps';
 
 class Input extends Block {
   constructor(props: InputProps) {

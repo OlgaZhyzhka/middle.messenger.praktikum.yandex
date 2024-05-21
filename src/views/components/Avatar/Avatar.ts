@@ -1,4 +1,5 @@
 import Block from '@/core/Block';
+
 import { AvatarProps } from './interfaces/AvatarProps';
 import tpl from './tpl';
 

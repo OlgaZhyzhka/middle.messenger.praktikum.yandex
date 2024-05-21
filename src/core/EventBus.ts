@@ -27,7 +27,7 @@ class EventBus {
   public emit(event: string, ...args: any[]): void {
     if (!this.listeners[event]) {
       console.warn(`No listeners for event: ${event}`);
-      return; 
+      return;
     }
 
     this.listeners[event].forEach((listener) => listener(...args));
