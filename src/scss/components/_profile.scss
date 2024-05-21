@@ -25,6 +25,14 @@
     }
   }
 
+  &__loader {
+    width: 100%;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .title {
     margin-right: 5px;
     font-weight: var(--font-weight-semibold);

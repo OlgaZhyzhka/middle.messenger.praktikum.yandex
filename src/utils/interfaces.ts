@@ -20,7 +20,15 @@ export interface RegistrationFormData {
   firstName: string;
   secondName: string;
   phone: string;
-  confirmPassword: string;
+}
+
+export interface UpdateProfileData {
+  login?: string;
+  email?: string;
+  firstName?: string;
+  secondName?: string;
+  chatName?: string;
+  phone?: string;
 }
 
 export interface UserDTO extends PlainObject<string> {
@@ -38,6 +46,8 @@ export type CreateUserDTO = Omit<UserDTO, 'avatar' | 'display_name' | 'id'> & {
   password: string;
 };
 
+export interface UpdateUserDTO extends Omit<UserDTO, 'avatar' | 'id'> {}
+
 export interface SignInRequest extends PlainObject<string> {
   login: string;
   password: string;
@@ -54,7 +64,7 @@ export interface ApiError {
 
 export interface ApiResponse {
   status: number;
-  data?: PlainObject | string | ApiError;
+  response?: string | ApiError;
 }
 
 export interface SignUpResponse {

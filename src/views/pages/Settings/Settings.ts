@@ -6,14 +6,14 @@ import tpl from './tpl.ts';
 
 class Settings extends Block {
   constructor(props: Props) {
-    super({
-      ...props,
+    super(props);
+    this.setProps({
       attributes: { class: 'page page_inner' },
       sidebar: new Sidebar({
         isMessenger: false,
         isSettings: true,
       }),
-      profile: new Profile({ attributes: { class: 'profile' } }),
+      profile: new Profile({ attributes: { class: 'profile' }}),
     });
   }
 

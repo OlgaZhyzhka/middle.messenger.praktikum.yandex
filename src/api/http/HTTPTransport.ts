@@ -48,23 +48,26 @@ export default class HTTPTransport {
 
       xhr.onload = (): void => {
         const contentType = xhr.getResponseHeader('Content-Type');
-        let response: TResponse;
+        let responseTransport;
+
         try {
           if (contentType && contentType.includes('application/json')) {
-            response = JSON.parse(xhr.responseText);
+            const response = JSON.parse(xhr.responseText);
+            responseTransport = { status: xhr.status, ...response };
           } else {
-            response = xhr.responseText as unknown as TResponse;
+            const response = xhr.responseText as unknown as TResponse;
+            responseTransport = { status: xhr.status, response };
           }
 
-          const responseWithStatus = { status: xhr.status, data: response };
-
           if (xhr.status >= HTTP_CODES.OK && xhr.status < HTTP_CODES.REDIRECT) {
-            resolve(responseWithStatus as unknown as TResponse);
+            resolve(responseTransport);
           } else if (
             xhr.status === HTTP_CODES.BAD_REQUEST &&
             JSON.parse(xhr.response).reason === ERRORS_MESSAGES.USER_IN_SYSTEM
           ) {
-            resolve(responseWithStatus as unknown as TResponse);
+            resolve(responseTransport);
+          } else {
+            reject(responseTransport);
           }
         } catch (error: unknown) {
           if (error instanceof Error) {

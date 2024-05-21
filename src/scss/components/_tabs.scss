@@ -24,6 +24,7 @@
     &_active {
       color: var(--tabs-link-active-color);
       border-color: var(--tabs-link-active-color);
+      cursor: pointer;
     }
   }
 }

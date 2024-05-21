@@ -1,7 +1,7 @@
 import Block from '@/core/Block';
-import { ProfileProps } from './interfaces/interfaces';
 import { ProfileCard } from '@/views/blocks/ProfileCard';
 
+import { ProfileProps } from './interfaces/interfaces';
 import tpl from './tpl';
 
 class Profile extends Block {

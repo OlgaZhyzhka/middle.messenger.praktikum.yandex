@@ -2,7 +2,7 @@ import Block, { Props } from '@/core/Block';
 import { validate } from '@/helpers';
 import { ROUTES } from '@/utils/enums';
 import AuthService from '@/services/AuthService';
-import { mapSignUpData } from '@/helpers/mapSignUpData';
+import { mapSignUpData } from '@/helpers/mapData';
 import { RegistrationFormData } from '@/utils/interfaces';
 import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
@@ -261,7 +261,6 @@ class RegistrationForm extends Block {
       firstName: formData.get('first_name')?.toString() || '',
       secondName: formData.get('second_name')?.toString() || '',
       phone: formData.get('phone')?.toString() || '',
-      confirmPassword: formData.get('confirm_password')?.toString() || '',
     };
 
     const apiData = mapSignUpData(data);

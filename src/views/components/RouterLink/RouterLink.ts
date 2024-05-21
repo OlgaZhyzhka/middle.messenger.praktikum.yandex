@@ -9,10 +9,16 @@ class RouterLink extends Block {
   constructor(props: RouterLinkProps, tagname = 'a') {
     super(props, tagname);
     const { shape, variant, size } = this.props;
-    const sizeClass = size ? `button_${size}` : '';
-    const variantClass = variant ? `button_${variant}` : '';
-    const shapeClass = shape ? `button_${shape}` : '';
-    const className = `button ${sizeClass} ${variantClass} ${shapeClass}`;
+    let className = '';
+
+    if (shape || variant || size) {
+      const sizeClass = size ? `button_${size}` : '';
+      const variantClass = variant ? `button_${variant}` : '';
+      const shapeClass = shape ? `button_${shape}` : '';
+      className = `button ${sizeClass} ${variantClass} ${shapeClass}`;
+    } else {
+      className = 'link';
+    }
 
     this.setProps({
       attributes: {

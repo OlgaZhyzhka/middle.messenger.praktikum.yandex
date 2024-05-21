@@ -6,16 +6,17 @@ import { RouterLink } from '@/views/components/RouterLink';
 import tpl from './tpl';
 
 class Logo extends Block {
-  constructor(props: Props, tagName: string = 'a') {
-    super(props, tagName);
+  constructor(props: Props) {
+    super(props);
 
     this.setProps({
+      attributes: { class: 'logo' },
       logoLink: new RouterLink({
         children: `
           <img src="${logoData.src}" alt="${logoData.text}" class="logo__image">
           <span class="logo__title">${logoData.text}</span>
         `,
-        to: ROUTES.Login,
+        to: ROUTES.Home,
       }),
     });
   }

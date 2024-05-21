@@ -23,6 +23,7 @@ const connect =
           const newState = mapStateToProps(store.getState());
 
           if (!isEqual(state, newState)) {
+            console.log(newState);
             this.setProps({ ...newState });
           }
 

@@ -1,5 +1,11 @@
 import Block, { Props } from '@/core/Block';
+import { IStore } from '@/store/index.ts';
+import UserService from '@/services/UserService';
+import connect from '@/helpers/connect.ts';
+import { mapUserProfileData } from '@/helpers/mapData';
 import { validate } from '@/helpers';
+import { UpdateUserDTO, UserDTO } from '@/utils/interfaces';
+import { Spinner } from '@/views/components/Spinner';
 import { Upload } from '@/views/components/Upload';
 import { Button } from '@/views/components/Button';
 import { InputElement } from '@/views/components/InputElement';
@@ -13,25 +19,42 @@ class ProfileEdit extends Block {
   constructor(props: Props) {
     super(props, 'form');
     this.file = null;
+    const {
+      avatar,
+      first_name: firstName,
+      second_name: secondName,
+      phone,
+      email,
+      login,
+      display_name: chatName,
+    } = this.props.user as UserDTO;
+
     this.setProps({
       attributes: { class: 'profile__form form form_horizontal' },
       uploadAvatar: new Upload({
         attributes: { class: 'profile__upload' },
         uploadId: 'avatar',
+        uploadPreview: new Block({
+          attributes: {
+            class: 'profile__preview',
+            style: avatar ? `background-image: url(${avatar})` : '',
+          },
+        }),
         onChange: (event: Event): void => this.handleChange(event),
       }),
-      loginInput: this.createLoginInput(),
-      emailInput: this.createEmailInput(),
-      firstNameInput: this.createFirstNameInput(),
-      secondNameInput: this.createSecondNameInput(),
-      chatNameInput: this.createChatNameInput(),
-      phoneInput: this.createPhoneInput(),
+      loginInput: this.createLoginInput(login),
+      emailInput: this.createEmailInput(email),
+      firstNameInput: this.createFirstNameInput(firstName),
+      secondNameInput: this.createSecondNameInput(secondName),
+      chatNameInput: this.createChatNameInput(chatName),
+      phoneInput: this.createPhoneInput(phone),
       submitButton: this.createSubmitButton(),
       cancelButton: this.createCancelButton(),
+      spinner: new Spinner({}),
     });
   }
 
-  private createInput({ onBlur, attributes = {}, inputAttributes = {} }: InputProps): InputElement {
+  private createInput({ attributes = {}, inputAttributes = {}, onBlur }: InputProps): InputElement {
     return new InputElement({
       size: 'sm',
       isValid: false,
@@ -41,106 +64,157 @@ class ProfileEdit extends Block {
     });
   }
 
-  private createLoginInput(): InputElement {
-    const onBlur = (event: Event): void => {
-      const { value } = event.target as HTMLInputElement;
-      const data = { login: value };
-      const validText = validate(data, 'login');
-      const input = this.getChild('loginInput') as InputElement;
-      input.setIsValid(!validText);
-      if (validText) input.setErrorMessage(validText);
-    };
-    const inputProps = {
-      attributes: { class: 'form__row' },
-      inputAttributes: { name: 'login', type: 'text', placeholder: 'Login' },
-      onBlur,
-    };
-    return this.createInput(inputProps);
+  private checkInputValidity(type: string, value: string, loginInput?: InputElement): void {
+    const data = { [type]: value };
+    const validText = validate(data, type);
+    const input = loginInput || (this.getChild(`${type}Input`) as InputElement);
+    input.setIsValid(!validText);
+    if (validText) input.setErrorMessage(validText);
   }
 
-  private createEmailInput(): InputElement {
+  private createLoginInput(initValue: string | null): InputElement {
     const onBlur = (event: Event): void => {
       const { value } = event.target as HTMLInputElement;
-      const data = { email: value };
-      const validText = validate(data, 'email');
-      const input = this.getChild('emailInput') as InputElement;
-      input.setIsValid(!validText);
-      if (validText) input.setErrorMessage(validText);
+      this.checkInputValidity('login', value);
     };
+    const value = initValue || '';
     const inputProps = {
       attributes: { class: 'form__row' },
-      inputAttributes: { name: 'email', placeholder: 'Email', type: 'email' },
+      inputAttributes: { name: 'login', type: 'text', placeholder: 'Login', value },
       onBlur,
     };
-    return this.createInput(inputProps);
+    const loginInput = this.createInput(inputProps);
+
+    if (initValue) {
+      this.checkInputValidity('login', initValue, loginInput);
+    }
+
+    return loginInput;
   }
 
-  private createFirstNameInput(): InputElement {
+  private createEmailInput(initValue: string | null): InputElement {
     const onBlur = (event: Event): void => {
       const { value } = event.target as HTMLInputElement;
-      const data = { firstName: value };
-      const validText = validate(data, 'firstName');
-      const input = this.getChild('firstNameInput') as InputElement;
-      input.setIsValid(!validText);
-      if (validText) input.setErrorMessage(validText);
+      this.checkInputValidity('email', value);
     };
+    const value = initValue || '';
     const inputProps = {
       attributes: { class: 'form__row' },
-      inputAttributes: { name: 'first_name', type: 'text', placeholder: 'First Name' },
+      inputAttributes: {
+        name: 'email',
+        placeholder: 'Email',
+        type: 'email',
+        value: value || '',
+      },
       onBlur,
     };
-    return this.createInput(inputProps);
+    const emailInput = this.createInput(inputProps);
+
+    if (initValue) {
+      this.checkInputValidity('email', initValue, emailInput);
+    }
+
+    return emailInput;
   }
 
-  private createSecondNameInput(): InputElement {
+  private createFirstNameInput(initValue: string | null): InputElement {
     const onBlur = (event: Event): void => {
       const { value } = event.target as HTMLInputElement;
-      const data = { secondName: value };
-      const validText = validate(data, 'secondName');
-      const input = this.getChild('secondNameInput') as InputElement;
-      input.setIsValid(!validText);
-      if (validText) input.setErrorMessage(validText);
+      this.checkInputValidity('firstName', value);
     };
+    const value = initValue || '';
     const inputProps = {
       attributes: { class: 'form__row' },
-      inputAttributes: { name: 'second_name', type: 'text', placeholder: 'Second Name' },
+      inputAttributes: {
+        name: 'first_name',
+        type: 'text',
+        placeholder: 'First Name',
+        value: value || '',
+      },
       onBlur,
     };
-    return this.createInput(inputProps);
+    const firstNameInput = this.createInput(inputProps);
+
+    if (initValue) {
+      this.checkInputValidity('firstName', initValue, firstNameInput);
+    }
+
+    return firstNameInput;
   }
 
-  private createChatNameInput(): InputElement {
+  private createSecondNameInput(initValue: string | null): InputElement {
     const onBlur = (event: Event): void => {
       const { value } = event.target as HTMLInputElement;
-      const data = { chatName: value };
-      const validText = validate(data, 'chatName');
-      const input = this.getChild('chatNameInput') as InputElement;
-      input.setIsValid(!validText);
-      if (validText) input.setErrorMessage(validText);
+      this.checkInputValidity('secondName', value);
     };
+    const value = initValue || '';
     const inputProps = {
       attributes: { class: 'form__row' },
-      inputAttributes: { name: 'chat_name', type: 'text', placeholder: 'Chat Name' },
+      inputAttributes: {
+        name: 'second_name',
+        type: 'text',
+        placeholder: 'Second Name',
+        value: value || '',
+      },
       onBlur,
     };
-    return this.createInput(inputProps);
+    const secondNameInput = this.createInput(inputProps);
+
+    if (initValue) {
+      this.checkInputValidity('secondName', initValue, secondNameInput);
+    }
+
+    return secondNameInput;
   }
 
-  private createPhoneInput(): InputElement {
+  private createChatNameInput(initValue: string | null): InputElement {
     const onBlur = (event: Event): void => {
       const { value } = event.target as HTMLInputElement;
-      const data = { phone: value };
-      const validText = validate(data, 'phone');
-      const input = this.getChild('phoneInput') as InputElement;
-      input.setIsValid(!validText);
-      if (validText) input.setErrorMessage(validText);
+      this.checkInputValidity('chatName', value);
     };
+    const value = initValue || '';
     const inputProps = {
       attributes: { class: 'form__row' },
-      inputAttributes: { name: 'phone', type: 'tel', placeholder: 'Phone number' },
+      inputAttributes: {
+        name: 'display_name',
+        type: 'text',
+        placeholder: 'Chat Name',
+        value: value || '',
+      },
       onBlur,
     };
-    return this.createInput(inputProps);
+    const chatNameInput = this.createInput(inputProps);
+
+    if (initValue) {
+      this.checkInputValidity('chatName', initValue, chatNameInput);
+    }
+
+    return chatNameInput;
+  }
+
+  private createPhoneInput(initValue: string | null): InputElement {
+    const onBlur = (event: Event): void => {
+      const { value } = event.target as HTMLInputElement;
+      this.checkInputValidity('phone', value);
+    };
+    const value = initValue || '';
+    const inputProps = {
+      attributes: { class: 'form__row' },
+      inputAttributes: {
+        name: 'phone',
+        type: 'tel',
+        placeholder: 'Phone number',
+        value: value || '',
+      },
+      onBlur,
+    };
+    const phoneInput = this.createInput(inputProps);
+
+    if (initValue) {
+      this.checkInputValidity('phone', initValue, phoneInput);
+    }
+
+    return phoneInput;
   }
 
   private createSubmitButton(): Button {
@@ -196,6 +270,15 @@ class ProfileEdit extends Block {
       reader.readAsDataURL(file);
       this.file = file;
       target.value = '';
+
+      const form = this.element as HTMLFormElement;
+      const formData = new FormData(form);
+
+      if (this.file) {
+        formData.append('avatar', this.file);
+      }
+
+      console.log(formData);
     }
   }
 
@@ -260,19 +343,21 @@ class ProfileEdit extends Block {
 
     const formData = new FormData(form);
 
-    if (this.file) {
-      formData.append('avatar', this.file);
-    }
+    const data: UpdateUserDTO = {
+      login: formData.get('login')?.toString() || '',
+      email: formData.get('email')?.toString() || '',
+      firstName: formData.get('first_name')?.toString() || '',
+      secondName: formData.get('second_name')?.toString() || '',
+      chatName: formData.get('display_name')?.toString() || '',
+      phone: formData.get('phone')?.toString() || '',
+    };
 
-    const data: Record<string, unknown> = {};
-    formData.forEach((value, key) => {
-      data[key] = value;
-    });
+    console.log(data);
 
-    // console.log(data);
+    const apiData = mapUserProfileData(data);
+    console.log(apiData);
 
-    this.resetUpload();
-    form.reset();
+    UserService.updateProfile(apiData);
   }
 
   public render(): DocumentFragment {
@@ -280,4 +365,12 @@ class ProfileEdit extends Block {
   }
 }
 
-export default ProfileEdit;
+// export default ProfileEdit;
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const mapStateToProps = ({ isLoading, user, profileUpdateError }: IStore) => ({
+  isLoading,
+  user,
+  profileUpdateError,
+});
+
+export default connect(mapStateToProps)(ProfileEdit);

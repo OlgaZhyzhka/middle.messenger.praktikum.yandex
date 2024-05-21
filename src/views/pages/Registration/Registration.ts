@@ -9,8 +9,8 @@ import tpl from './tpl.ts';
 
 class Registration extends BasePage {
   constructor(props: Props) {
-    super({
-      ...props,
+    super(props);
+    this.setProps({
       spinner: new Spinner({}),
       title: 'Connect easily with your family and friends over countries',
       registrationForm: new RegistrationForm({

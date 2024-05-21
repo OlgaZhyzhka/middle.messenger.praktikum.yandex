@@ -135,8 +135,6 @@ class LoginForm extends Block {
     };
 
     AuthService.login(data);
-
-    console.log(data);
   }
 
   public render(): DocumentFragment {

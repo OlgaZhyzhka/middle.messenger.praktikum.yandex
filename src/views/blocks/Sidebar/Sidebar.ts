@@ -1,7 +1,10 @@
 import Block from '@/core/Block';
 import AuthService from '@/services/AuthService';
-import { currentUser } from '@/utils/constants';
+import connect from '@/helpers/connect.ts';
+import { IStore } from '@/store/index.ts';
 import { ROUTES } from '@/utils/enums';
+import { UserDTO } from '@/utils/interfaces';
+import { holder } from '@/utils/constants';
 import { Logo } from '@/views/components/Logo';
 import { Avatar } from '@/views/components/Avatar';
 import { RouterLink } from '@/views/components/RouterLink';
@@ -12,13 +15,15 @@ import tpl from './tpl';
 
 class Sidebar extends Block {
   constructor(props: SidebarProps) {
-    super(props, 'aside');
+    super(props, 'aside'); 
+
+    const { avatar, login } = props.user as UserDTO;
 
     if (props.isMessenger) {
       this.setProps({
         attributes: { class: 'sidebar panel' },
         logo: new Logo({}),
-        userAvatar: new Avatar({ src: currentUser.avatar, title: currentUser.login, size: 'sm' }),
+        userAvatar: new Avatar({ src: avatar || holder, title: login, size: 'sm' }),
         linkToProfile: new RouterLink(
           {
             attributes: { class: 'sidebar__link' },
@@ -53,4 +58,10 @@ class Sidebar extends Block {
   }
 }
 
-export default Sidebar;
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const mapStateToProps = ({ isLoading, user }: IStore) => ({
+  isLoading,
+  user,
+});
+
+export default connect(mapStateToProps)(Sidebar);

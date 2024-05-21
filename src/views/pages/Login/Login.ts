@@ -9,11 +9,11 @@ import tpl from './tpl.ts';
 
 class Login extends BasePage {
   constructor(props: Props) {
-    super({
-      ...props,
+    super(props);
+    this.setProps({
       spinner: new Spinner({}),
       title: 'Welcome back!',
-      loginForm: new LoginForm({ }),
+      loginForm: new LoginForm({}),
     });
   }
 

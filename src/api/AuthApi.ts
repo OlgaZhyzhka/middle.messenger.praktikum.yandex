@@ -13,7 +13,7 @@ class AuthAPI extends BaseAPI {
       throw new Error(ERRORS_MESSAGES.USER_REQUIRED);
     }
 
-    const response = (await this.HTTP.post('/signin', { data: user, withCredentials: true }));
+    const response = await this.HTTP.post('/signin', { data: user, withCredentials: true });
     return response as ApiResponse;
   }
 
@@ -24,17 +24,17 @@ class AuthAPI extends BaseAPI {
 
     console.log(user);
 
-    const response = (await this.HTTP.post('/signup', { data: user, withCredentials: true }));
+    const response = await this.HTTP.post('/signup', { data: user, withCredentials: true });
     return response as ApiResponse;
   }
 
   public async logout(): Promise<ApiResponse> {
-    const response = (await this.HTTP.post('/logout'));
+    const response = await this.HTTP.post('/logout');
     return response as ApiResponse;
   }
 
   public async getUser(): Promise<ApiResponse> {
-    const response = (await this.HTTP.get('/user'));
+    const response = await this.HTTP.get('/user');
     return response as ApiResponse;
   }
 }

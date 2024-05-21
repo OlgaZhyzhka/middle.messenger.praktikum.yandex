@@ -14,26 +14,43 @@ export default class AuthService {
     router.go(ROUTES.Messenger);
   }
 
+  private static async authUser(): Promise<void> {
+    const response = await authApi.getUser();
+    const { status, ...userData } = response;
+
+    if (!response) {
+      throw new Error('Failed to retrieve user data after registration');
+    }
+
+    if (isAPIError(response)) {
+      throw new Error(response.reason);
+    }
+
+    if (status === HTTP_CODES.OK) {
+      store.set({ user: userData as UserDTO, isAuthenticated: true, loginError: null, signUpError: null});
+      this.goToMessenger();
+    }
+  }
+
   public static async login(data: SignInRequest): Promise<void> {
     try {
       store.set({ isLoading: true });
       const response = await authApi.signIn(data);
-      const { status, data: responseData } = response;
+      const { status } = response;
 
-      if (isAPIError(responseData)) {
-        if (responseData.reason !== 'User already in system' && status !== 200) {
-          throw new Error(responseData.reason);
+      if (isAPIError(response)) {
+        if (response.reason !== 'User already in system' && status !== 200) {
+          throw new Error(response.reason);
         }
       }
 
-      store.set({ isAuthenticated: true });
-      this.goToMessenger();
+      this.authUser();
     } catch (error: unknown) {
       console.error(error);
       const errorMessage = handleApiError(error);
       store.set({ loginError: errorMessage });
     } finally {
-      store.set({ isLoading: false });
+      store.set({ isLoading: false});
     }
   }
 
@@ -41,28 +58,15 @@ export default class AuthService {
     try {
       store.set({ isLoading: true });
       const response = await authApi.signUp(data);
-      const { status, data: responseData } = response;
+      const { status } = response;
 
-      if (isAPIError(responseData)) {
-        if (responseData.reason !== ERRORS_MESSAGES.USER_IN_SYSTEM && status !== HTTP_CODES.OK) {
-          throw new Error(responseData.reason);
+      if (isAPIError(response)) {
+        if (response.reason !== ERRORS_MESSAGES.USER_IN_SYSTEM && status !== HTTP_CODES.OK) {
+          throw new Error(response.reason);
         }
       }
 
-      const userResponse = (await authApi.getUser());
-
-      const { data: userResponseData } = userResponse;
-
-      if (!userResponse) {
-        throw new Error('Failed to retrieve user data after registration');
-      }
-
-      if (isAPIError(userResponseData)) {
-        throw new Error(userResponseData.reason);
-      }
-
-      store.set({ user: userResponseData as UserDTO, isAuthenticated: true });
-      this.goToMessenger();
+      this.authUser();
     } catch (error: unknown) {
       console.error(error);
       const errorMessage = handleApiError(error);
@@ -75,13 +79,13 @@ export default class AuthService {
   public static async logout(): Promise<void> {
     try {
       const response = await authApi.logout();
-      const { status, data: responseData } = response;
+      const { status } = response;
 
-      if (isAPIError(responseData)) {
-        throw new Error(responseData.reason);
+      if (isAPIError(response)) {
+        throw new Error(response.reason);
       }
 
-      if (status === 200) {
+      if (status === HTTP_CODES.OK) {
         store.set({ user: null, isAuthenticated: false });
         router.go(ROUTES.Home);
       } else {

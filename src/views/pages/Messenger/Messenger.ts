@@ -7,8 +7,8 @@ import tpl from './tpl.ts';
 
 class Messenger extends Block {
   constructor(props: Props) {
-    super({
-      ...props,
+    super(props);
+    this.setProps({
       attributes: { class: 'page page_inner' },
       sidebar: new Sidebar({
         isMessenger: true,
