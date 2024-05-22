@@ -31,6 +31,11 @@ export interface UpdateProfileData {
   phone?: string;
 }
 
+export interface UpdatePasswordDTO extends PlainObject<string> {
+  oldPassword: string;
+  newPassword: string;
+}
+
 export interface UserDTO extends PlainObject<string> {
   id: string;
   first_name: string;
@@ -51,11 +56,6 @@ export interface UpdateUserDTO extends Omit<UserDTO, 'avatar' | 'id'> {}
 export interface SignInRequest extends PlainObject<string> {
   login: string;
   password: string;
-}
-
-export interface UpdatePassword extends PlainObject<string> {
-  oldPassword: string;
-  newPassword: string;
 }
 
 export interface ApiError {

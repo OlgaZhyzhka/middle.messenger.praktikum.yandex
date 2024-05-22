@@ -16,9 +16,9 @@ class Upload extends Block {
         attributes: { class: 'upload__input', id: props.uploadId, type: 'file', accept: 'image/*', hidden: true },
         onChange: (event: Event): void => props.onChange?.(event),
       }),
-      // uploadPreview: new Block({
-      //   attributes: { class: 'upload__preview' },
-      // }),
+      uploadPreview: new Block({
+        attributes: { class: 'upload__preview' },
+      }),
       uploadIcon: new Icon({ iconName: 'upload', size: 'md', attributes: { class: 'upload__icon' } }),
     });
   }

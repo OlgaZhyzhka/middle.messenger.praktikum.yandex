@@ -1,4 +1,4 @@
-import { ApiResponse, UpdatePassword, UpdateUserDTO } from '@/utils/interfaces';
+import { ApiResponse, UpdatePasswordDTO, UpdateUserDTO } from '@/utils/interfaces';
 import BaseAPI from './BaseApi';
 
 class UserAPI extends BaseAPI {
@@ -11,7 +11,7 @@ class UserAPI extends BaseAPI {
     return response as ApiResponse;
   }
 
-  public async updatePassword(passwords: UpdatePassword): Promise<ApiResponse> {
+  public async updatePassword(passwords: UpdatePasswordDTO): Promise<ApiResponse> {
     const response = await this.HTTP.put('/password', { data: passwords, withCredentials: true });
     return response as ApiResponse;
   }

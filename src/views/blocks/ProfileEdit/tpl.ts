@@ -1,4 +1,4 @@
-const tpl = `{{{ uploadAvatar }}}
+const tpl = `<div class="profile__image">{{{ avatar }}}{{{ uploadAvatar }}}</div>
 <hr class="divider" />
 {{#if isLoading}}
 <div class="profile__loader">

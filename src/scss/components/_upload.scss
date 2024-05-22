@@ -1,7 +1,6 @@
 :root {
   --upload-bg: rgb(237 242 246 / 50%);
   --upload-border-color: var(--grey);
-  --upload-size: 130px;
 }
 
 .upload {
@@ -28,10 +27,6 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-  }
-
-  &__icon {
-    // width: 36px;
   }
 
   &__button {

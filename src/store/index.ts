@@ -14,6 +14,7 @@ export interface IStore {
   loginError?: string | null;
   signUpError?: string | null;
   profileUpdateError?: string | null;
+  isUpdatePassword?: boolean;
 }
 
 class Store extends EventBus {
@@ -54,6 +55,7 @@ const defaultState: PlainObject = {
   signUpError: null,
   profileUpdateError: null,
   isAuthenticated: false,
+  isUpdatePassword: false,
 };
 
 export const store = Store.getInstance(defaultState);

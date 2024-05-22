@@ -1,7 +1,8 @@
-import BASE_URL from '@/api/http/BaseUrl';
 import { queryStringify } from '@/helpers/queryStringify';
 import { ERRORS_MESSAGES, HTTP_CODES, METHODS } from '@/utils/enums';
 import { HTTPMethod, Options } from '@/utils/types';
+
+import { BASE_URL } from './APIUrl';
 
 export default class HTTPTransport {
   protected endpoint: string;

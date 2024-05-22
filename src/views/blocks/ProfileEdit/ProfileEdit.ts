@@ -1,15 +1,18 @@
 import Block, { Props } from '@/core/Block';
-import { IStore } from '@/store/index.ts';
+import { RESOURCE_URL } from '@/api/http/APIUrl';
 import UserService from '@/services/UserService';
+import { IStore } from '@/store/index.ts';
 import connect from '@/helpers/connect.ts';
 import { mapUserProfileData } from '@/helpers/mapData';
 import { validate } from '@/helpers';
-import { UpdateUserDTO, UserDTO } from '@/utils/interfaces';
+import { holder } from '@/utils/constants';
+import { UpdateUserDTO } from '@/utils/interfaces';
 import { Spinner } from '@/views/components/Spinner';
 import { Upload } from '@/views/components/Upload';
 import { Button } from '@/views/components/Button';
 import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
+import { Avatar } from '@/views/components/Avatar';
 
 import tpl from './tpl';
 
@@ -19,39 +22,31 @@ class ProfileEdit extends Block {
   constructor(props: Props) {
     super(props, 'form');
     this.file = null;
-    const {
-      avatar,
-      first_name: firstName,
-      second_name: secondName,
-      phone,
-      email,
-      login,
-      display_name: chatName,
-    } = this.props.user as UserDTO;
-
+    const { avatar, firstName, secondName, phone, email, login, chatName } = this.props;
     this.setProps({
       attributes: { class: 'profile__form form form_horizontal' },
+      avatar: new Avatar({
+        attributes: { class: 'profile__avatar' },
+        src: `${RESOURCE_URL}${avatar || holder}`,
+        size: 'lg',
+      }),
       uploadAvatar: new Upload({
         attributes: { class: 'profile__upload' },
         uploadId: 'avatar',
-        uploadPreview: new Block({
-          attributes: {
-            class: 'profile__preview',
-            style: avatar ? `background-image: url(${avatar})` : '',
-          },
-        }),
         onChange: (event: Event): void => this.handleChange(event),
       }),
-      loginInput: this.createLoginInput(login),
-      emailInput: this.createEmailInput(email),
-      firstNameInput: this.createFirstNameInput(firstName),
-      secondNameInput: this.createSecondNameInput(secondName),
-      chatNameInput: this.createChatNameInput(chatName),
-      phoneInput: this.createPhoneInput(phone),
+      loginInput: this.createLoginInput(login as string | null),
+      emailInput: this.createEmailInput(email as string | null),
+      firstNameInput: this.createFirstNameInput(firstName as string | null),
+      secondNameInput: this.createSecondNameInput(secondName as string | null),
+      chatNameInput: this.createChatNameInput(chatName as string | null),
+      phoneInput: this.createPhoneInput(phone as string | null),
       submitButton: this.createSubmitButton(),
       cancelButton: this.createCancelButton(),
       spinner: new Spinner({}),
     });
+
+    // style: avatar ? `background-image: url(${avatar})` : '',
   }
 
   private createInput({ attributes = {}, inputAttributes = {}, onBlur }: InputProps): InputElement {
@@ -64,10 +59,10 @@ class ProfileEdit extends Block {
     });
   }
 
-  private checkInputValidity(type: string, value: string, loginInput?: InputElement): void {
+  private checkInputValidity(type: string, value: string, inputElement?: InputElement): void {
     const data = { [type]: value };
     const validText = validate(data, type);
-    const input = loginInput || (this.getChild(`${type}Input`) as InputElement);
+    const input = inputElement || (this.getChild(`${type}Input`) as InputElement);
     input.setIsValid(!validText);
     if (validText) input.setErrorMessage(validText);
   }
@@ -278,7 +273,7 @@ class ProfileEdit extends Block {
         formData.append('avatar', this.file);
       }
 
-      console.log(formData);
+      UserService.updateAvatar(this.file);
     }
   }
 
@@ -352,12 +347,12 @@ class ProfileEdit extends Block {
       phone: formData.get('phone')?.toString() || '',
     };
 
-    console.log(data);
-
     const apiData = mapUserProfileData(data);
-    console.log(apiData);
 
     UserService.updateProfile(apiData);
+
+    form.reset();
+    this.resetUpload();
   }
 
   public render(): DocumentFragment {
@@ -365,11 +360,17 @@ class ProfileEdit extends Block {
   }
 }
 
-// export default ProfileEdit;
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const mapStateToProps = ({ isLoading, user, profileUpdateError }: IStore) => ({
   isLoading,
-  user,
+  login: user?.login || '',
+  name: user?.name || '',
+  email: user?.email || '',
+  phone: user?.phone || '',
+  avatar: user?.avatar || '',
+  firstName: user?.first_name || '',
+  secondName: user?.second_name || '',
+  chatName: user?.display_name || '',
   profileUpdateError,
 });
 

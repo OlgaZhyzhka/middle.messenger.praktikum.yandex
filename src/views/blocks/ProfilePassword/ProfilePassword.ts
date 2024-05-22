@@ -1,11 +1,16 @@
 import Block, { Props } from '@/core/Block';
+import { IStore } from '@/store/index.ts';
+import connect from '@/helpers/connect.ts';
 import { validate } from '@/helpers';
+import { UpdatePasswordDTO } from '@/utils/interfaces';
 import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
 import { PasswordInput } from '@/views/blocks/PasswordInput';
+import { Spinner } from '@/views/components/Spinner';
 import { Button } from '@/views/components/Button';
 
 import tpl from './tpl';
+import UserService from '@/services/UserService';
 
 class ProfilePassword extends Block {
   constructor(props: Props) {
@@ -17,6 +22,7 @@ class ProfilePassword extends Block {
       confirmPasswordInput: this.createConfirmPasswordInput(),
       submitButton: this.createSubmitButton(),
       cancelButton: this.createCancelButton(),
+      spinner: new Spinner({}),
     });
   }
 
@@ -138,12 +144,12 @@ class ProfilePassword extends Block {
 
     const formData = new FormData(form);
 
-    const data: Record<string, unknown> = {};
-    formData.forEach((value, key) => {
-      data[key] = value;
-    });
+    const apiData: UpdatePasswordDTO = {
+      oldPassword: formData.get('old_password')?.toString() || '',
+      newPassword: formData.get('password')?.toString() || '',
+    };
 
-    // console.log(data);
+    UserService.updatePassword(apiData);
 
     form.reset();
   }
@@ -159,4 +165,11 @@ class ProfilePassword extends Block {
   }
 }
 
-export default ProfilePassword;
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const mapStateToProps = ({ isLoading, profileUpdateError, isUpdatePassword }: IStore) => ({
+  isLoading,
+  profileUpdateError,
+  isUpdatePassword,
+});
+
+export default connect(mapStateToProps)(ProfilePassword);
