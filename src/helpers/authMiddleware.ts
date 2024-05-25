@@ -1,8 +1,6 @@
 import { store } from '@/store';
-import Router from '@/router/Router';
+import router from '@/router/Router';
 import { ROUTES } from '@/utils/enums';
-
-const router = Router.getInstance();
 
 export const authMiddleware = (pathname: string): boolean => {
   const {isAuthenticated} = store.getState();

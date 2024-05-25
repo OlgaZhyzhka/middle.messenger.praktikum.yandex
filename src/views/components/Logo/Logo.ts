@@ -11,7 +11,8 @@ class Logo extends Block {
 
     this.setProps({
       attributes: { class: 'logo' },
-      logoLink: new RouterLink({
+      logoLink: new RouterLink
+      ({
         children: `
           <img src="${logoData.src}" alt="${logoData.text}" class="logo__image">
           <span class="logo__title">${logoData.text}</span>

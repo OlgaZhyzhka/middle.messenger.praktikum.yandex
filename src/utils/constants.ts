@@ -1,3 +1,7 @@
+export const query = '#app';
+
+export const holder = '/images/logotype-mini.svg';
+
 export const contacts = [
   {
     id: '12121',
@@ -26,18 +30,6 @@ export const contacts = [
 ];
 
 export const contactsMap = new Map(contacts.map((contact) => [contact.id, contact]));
-
-export const holder = '/icons/upload-avatar.svg';
-
-export const currentUser = {
-  firstName: 'Olga',
-  secondName: 'Zhyzhka',
-  avatar: '/images/avatar1.jpg',
-  email: 'olga@gmail.com',
-  phone: '+7 999 999 99 99',
-  login: 'OlgaZH',
-  chatName: 'OlgaZH',
-};
 
 export const logoData = {
   src: '/images/logo.svg',

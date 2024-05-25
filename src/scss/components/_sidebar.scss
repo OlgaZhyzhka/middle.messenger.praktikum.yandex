@@ -26,6 +26,15 @@
     }
   }
 
+  &__title {
+    display: block;
+    max-width: 68px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: .85rem;
+  }
+
   @include create-mq($grid__bp-xl, 'min') {
     height: var(--app-height);
     width: var(--sidebar-size);

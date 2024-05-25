@@ -1,9 +1,8 @@
 import Block from '@/core/Block';
-import Router from '@/router/Router';
+import router from '@/router/Router';
 
 import { RouterLinkProps } from './interfaces/RouterLinkProps';
 
-const router = Router.getInstance();
 
 class RouterLink extends Block {
   constructor(props: RouterLinkProps, tagname = 'a') {

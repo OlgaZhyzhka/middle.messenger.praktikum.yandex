@@ -1,6 +1,6 @@
 import HTTPTransport from '@/api/http/HTTPTransport';
 
-class BaseAPI {
+class BaseApi {
   public HTTP: HTTPTransport;
 
   constructor(path: string) {
@@ -24,4 +24,4 @@ class BaseAPI {
   }
 }
 
-export default BaseAPI;
+export default BaseApi;

@@ -1,10 +1,12 @@
-const tpl = `{{#if isLoading}}
-  <div class="chat__message">Select chat for start.</div>
-{{else}}
+const tpl = `{{#unless activeChatId}}
+<div class="chat__message">Select chat for start.</div>
+{{/unless}}
+{{#if activeChatId}}
 <div class="chat__wrapper">
 {{{ chatHeader }}}
-<div class="chat__body">{{{ chatMessages }}}</div>
+<div class="chat__body">{{{ messages }}}</div>
 {{{ chatInput }}}
 </div>
-{{/if}}{{{ modalAddUser }}}{{{ modalDeleteUser }}}{{{ modalDeleteChat }}}{{{ modalUploadAvatar }}}`;
+{{{ modalAddUser }}}{{{ modalDeleteUser }}}{{{ modalDeleteChat }}}{{{ modalUploadAvatar }}}
+{{/if}}`;
 export default tpl;

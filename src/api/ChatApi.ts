@@ -1,36 +1,50 @@
-import BaseAPI from './BaseApi';
+import { ApiResponse } from '@/utils/interfaces';
 
-class ChatAPI extends BaseAPI {
+import BaseApi from './BaseApi';
+
+class ChatApi extends BaseApi {
   constructor() {
     super('/chats');
   }
 
-  public getChatUsers(id: number): Promise<string> {
-    return this.HTTP.get(`/${id}/users`, { withCredentials: true });
+  public addChat(title: string): Promise<ApiResponse> {
+    return this.HTTP.post('', { data: { title } });
   }
 
-  public updateChatAvatar(avatar: File, id: string): Promise<string> {
-    const data = new FormData();
+  public getChats(): Promise<ApiResponse> {
+    return this.HTTP.get('');
+  }
+
+  public addUsersToChat(chaiId: number, userId: number): Promise<ApiResponse> {
+    return this.HTTP.put('/users', { data: { users: { userId }, chaiId } });
+  }
+
+  public deleteUsersFromChat(chaiId: number, userId: number): Promise<string> {
+    return this.HTTP.delete('/users', { data: { users: { userId }, chaiId } });
+  }
+
+  public getChatUsers(id: number): Promise<ApiResponse> {
+    return this.HTTP.get(`/${id}/users`);
+  }
+
+  public updateChatAvatar(data: FormData, id: string): Promise<ApiResponse> {
+    // const data = new FormData();
     data.append('chatId', id);
-    data.append('avatar', avatar);
-    return this.HTTP.put('/avatar', { data, withCredentials: true });
+    // data.append('avatar', avatar);
+    return this.HTTP.put('/avatar', { data });
   }
 
-  public addUsersToChat(users: number[], id: string): Promise<string> {
-    return this.HTTP.put('/users', { data: { users, id }, withCredentials: true });
-  }
-
-  public deleteUsersFromChat(users: number[], id: string): Promise<string> {
-    return this.HTTP.delete('/users', { data: { users, id }, withCredentials: true });
-  }
-
-  public deleteChat(id?: string): Promise<string> {
+  public deleteChat(id?: string): Promise<ApiResponse> {
     if (!id) {
-      throw new Error('id is required');
+      throw new Error('ChatApi.delete: need chat id');
     }
 
-    return this.HTTP.delete('', { data: { id }, withCredentials: true });
+    return this.HTTP.delete('', { data: { id } });
+  }
+
+  public getToken(chatId: number): Promise<ApiResponse> {
+    return this.HTTP.post(`/token/${chatId}`);
   }
 }
 
-export default ChatAPI;
+export default ChatApi;

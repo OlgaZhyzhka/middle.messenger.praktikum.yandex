@@ -1,12 +1,12 @@
 import Block, { Props } from '@/core/Block';
-import { RESOURCE_URL } from '@/api/http/APIUrl';
+import { RESOURCE_URL } from '@/api/http/ApiUrl';
 import UserService from '@/services/UserService';
 import { IStore } from '@/store/index.ts';
 import connect from '@/helpers/connect.ts';
 import { mapUserProfileData } from '@/helpers/mapData';
 import { validate } from '@/helpers';
 import { holder } from '@/utils/constants';
-import { UpdateUserDTO } from '@/utils/interfaces';
+import { UpdateFormData } from '@/utils/interfaces';
 import { Spinner } from '@/views/components/Spinner';
 import { Upload } from '@/views/components/Upload';
 import { Button } from '@/views/components/Button';
@@ -27,7 +27,7 @@ class ProfileEdit extends Block {
       attributes: { class: 'profile__form form form_horizontal' },
       avatar: new Avatar({
         attributes: { class: 'profile__avatar' },
-        src: `${RESOURCE_URL}${avatar || holder}`,
+        src: avatar ? `${RESOURCE_URL}${avatar}` : holder,
         size: 'lg',
       }),
       uploadAvatar: new Upload({
@@ -45,8 +45,6 @@ class ProfileEdit extends Block {
       cancelButton: this.createCancelButton(),
       spinner: new Spinner({}),
     });
-
-    // style: avatar ? `background-image: url(${avatar})` : '',
   }
 
   private createInput({ attributes = {}, inputAttributes = {}, onBlur }: InputProps): InputElement {
@@ -273,7 +271,7 @@ class ProfileEdit extends Block {
         formData.append('avatar', this.file);
       }
 
-      UserService.updateAvatar(this.file);
+      UserService.updateAvatar(formData);
     }
   }
 
@@ -338,7 +336,7 @@ class ProfileEdit extends Block {
 
     const formData = new FormData(form);
 
-    const data: UpdateUserDTO = {
+    const data: UpdateFormData = {
       login: formData.get('login')?.toString() || '',
       email: formData.get('email')?.toString() || '',
       firstName: formData.get('first_name')?.toString() || '',
@@ -361,17 +359,16 @@ class ProfileEdit extends Block {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const mapStateToProps = ({ isLoading, user, profileUpdateError }: IStore) => ({
+const mapStateToProps = ({ isLoading, user, updateError }: IStore) => ({
   isLoading,
   login: user?.login || '',
-  name: user?.name || '',
   email: user?.email || '',
   phone: user?.phone || '',
   avatar: user?.avatar || '',
   firstName: user?.first_name || '',
   secondName: user?.second_name || '',
   chatName: user?.display_name || '',
-  profileUpdateError,
+  updateError,
 });
 
 export default connect(mapStateToProps)(ProfileEdit);

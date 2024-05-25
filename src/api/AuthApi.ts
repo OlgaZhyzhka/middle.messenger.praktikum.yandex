@@ -1,9 +1,9 @@
-import { ApiResponse, CreateUserDTO, SignInRequest } from '@/utils/interfaces';
+import { ApiResponse, CreateUser, SignInRequest } from '@/utils/interfaces';
 import { ERRORS_MESSAGES } from '@/utils/enums';
 
-import BaseAPI from './BaseApi';
+import BaseApi from './BaseApi';
 
-class AuthAPI extends BaseAPI {
+class AuthAPI extends BaseApi {
   constructor() {
     super('/auth');
   }
@@ -13,18 +13,16 @@ class AuthAPI extends BaseAPI {
       throw new Error(ERRORS_MESSAGES.USER_REQUIRED);
     }
 
-    const response = await this.HTTP.post('/signin', { data: user, withCredentials: true });
+    const response = await this.HTTP.post('/signin', { data: user });
     return response as ApiResponse;
   }
 
-  public async signUp(user?: CreateUserDTO): Promise<ApiResponse> {
+  public async signUp(user?: CreateUser): Promise<ApiResponse> {
     if (!user) {
       throw new Error(ERRORS_MESSAGES.USER_REQUIRED);
     }
 
-    console.log(user);
-
-    const response = await this.HTTP.post('/signup', { data: user, withCredentials: true });
+    const response = await this.HTTP.post('/signup', { data: user });
     return response as ApiResponse;
   }
 

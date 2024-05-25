@@ -1,15 +1,15 @@
 import AuthAPI from '@/api/AuthApi';
-import Router from '@/router/Router';
+import router from '@/router/Router';
 import { store } from '@/store';
-import { CreateUserDTO, SignInRequest, UserDTO } from '@/utils/interfaces';
+import { actions } from '@/store/actions';
+import { CreateUser, SignInRequest, User } from '@/utils/interfaces';
 import { isAPIError } from '@/utils/guards';
 import { ERRORS_MESSAGES, HTTP_CODES, ROUTES } from '@/utils/enums';
-import { handleApiError } from '@/helpers/handleApiError';
+import { handleError } from '@/helpers/handleError';
 
 const authApi = new AuthAPI();
-const router = Router.getInstance();
 
-export default class AuthService {
+class AuthService {
   private static goToMessenger(): void {
     router.go(ROUTES.Messenger);
   }
@@ -27,19 +27,20 @@ export default class AuthService {
     }
 
     if (status === HTTP_CODES.OK) {
-      store.set({ user: userData as UserDTO, isAuthenticated: true, loginError: null, signUpError: null});
+      actions.setUser(userData as User);
+      actions.setAuthenticated(true);
       this.goToMessenger();
     }
   }
 
   public static async login(data: SignInRequest): Promise<void> {
     try {
-      store.set({ isLoading: true });
+      actions.setLoading(true);
       const response = await authApi.signIn(data);
       const { status } = response;
 
       if (isAPIError(response)) {
-        if (response.reason !== 'User already in system' && status !== 200) {
+        if (response.reason !== ERRORS_MESSAGES.USER_IN_SYSTEM && status !== HTTP_CODES.OK) {
           throw new Error(response.reason);
         }
       }
@@ -47,16 +48,16 @@ export default class AuthService {
       this.authUser();
     } catch (error: unknown) {
       console.error(error);
-      const errorMessage = handleApiError(error);
-      store.set({ loginError: errorMessage });
+      const errorMessage = handleError(error);
+      actions.setAuthError(errorMessage);
     } finally {
-      store.set({ isLoading: false});
+      actions.setLoading(false);
     }
   }
 
-  public static async signUp(data: CreateUserDTO): Promise<void> {
+  public static async signUp(data: CreateUser): Promise<void> {
     try {
-      store.set({ isLoading: true });
+      actions.setLoading(true);
       const response = await authApi.signUp(data);
       const { status } = response;
 
@@ -69,8 +70,8 @@ export default class AuthService {
       this.authUser();
     } catch (error: unknown) {
       console.error(error);
-      const errorMessage = handleApiError(error);
-      store.set({ signUpError: errorMessage });
+      const errorMessage = handleError(error);
+      actions.setAuthError(errorMessage);
     } finally {
       store.set({ isLoading: false });
     }
@@ -86,13 +87,19 @@ export default class AuthService {
       }
 
       if (status === HTTP_CODES.OK) {
-        store.set({ user: null, isAuthenticated: false });
+        actions.setUser(null);
+        actions.setLoading(false);
+        actions.setAuthenticated(false);
         router.go(ROUTES.Home);
       } else {
-        throw new Error('Failed to logout');
+        throw new Error(ERRORS_MESSAGES.LOGOUT_FAILED);
       }
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
+      const errorMessage = handleError(error);
+      actions.setAuthError(errorMessage);
     }
   }
 }
+
+export default AuthService;

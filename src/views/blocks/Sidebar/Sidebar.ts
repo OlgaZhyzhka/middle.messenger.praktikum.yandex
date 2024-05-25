@@ -1,5 +1,5 @@
 import Block from '@/core/Block';
-import { RESOURCE_URL } from '@/api/http/APIUrl';
+import { RESOURCE_URL } from '@/api/http/ApiUrl';
 import AuthService from '@/services/AuthService';
 import connect from '@/helpers/connect.ts';
 import { IStore } from '@/store/index.ts';
@@ -22,7 +22,7 @@ class Sidebar extends Block {
       this.setProps({
         attributes: { class: 'sidebar panel' },
         logo: new Logo({}),
-        userAvatar: new Avatar({ src: `${RESOURCE_URL}${avatar || holder}`, title: login, size: 'sm' }),
+        userAvatar: new Avatar({ src: avatar ? `${RESOURCE_URL}${avatar}`: holder, title: login, size: 'sm' }),
         linkToProfile: new RouterLink(
           {
             attributes: { class: 'sidebar__link' },

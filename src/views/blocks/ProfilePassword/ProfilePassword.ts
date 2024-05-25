@@ -2,7 +2,7 @@ import Block, { Props } from '@/core/Block';
 import { IStore } from '@/store/index.ts';
 import connect from '@/helpers/connect.ts';
 import { validate } from '@/helpers';
-import { UpdatePasswordDTO } from '@/utils/interfaces';
+import { UpdatePassword } from '@/utils/interfaces';
 import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
 import { PasswordInput } from '@/views/blocks/PasswordInput';
@@ -144,7 +144,7 @@ class ProfilePassword extends Block {
 
     const formData = new FormData(form);
 
-    const apiData: UpdatePasswordDTO = {
+    const apiData: UpdatePassword = {
       oldPassword: formData.get('old_password')?.toString() || '',
       newPassword: formData.get('password')?.toString() || '',
     };
@@ -166,9 +166,9 @@ class ProfilePassword extends Block {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const mapStateToProps = ({ isLoading, profileUpdateError, isUpdatePassword }: IStore) => ({
+const mapStateToProps = ({ isLoading, updateError, isUpdatePassword }: IStore) => ({
   isLoading,
-  profileUpdateError,
+  updateError,
   isUpdatePassword,
 });
 

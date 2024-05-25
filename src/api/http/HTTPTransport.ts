@@ -1,8 +1,8 @@
 import { queryStringify } from '@/helpers/queryStringify';
 import { ERRORS_MESSAGES, HTTP_CODES, METHODS } from '@/utils/enums';
 import { HTTPMethod, Options } from '@/utils/types';
+import { BASE_URL } from './ApiUrl';
 
-import { BASE_URL } from './APIUrl';
 
 export default class HTTPTransport {
   protected endpoint: string;
@@ -54,7 +54,13 @@ export default class HTTPTransport {
         try {
           if (contentType && contentType.includes('application/json')) {
             const response = JSON.parse(xhr.responseText);
-            responseTransport = { status: xhr.status, ...response };
+
+            if (typeof response === 'object' && response !== null && !Array.isArray(response)) {
+              responseTransport = { status: xhr.status, ...response };
+            } else {
+              responseTransport = { status: xhr.status, response };
+            }
+
           } else {
             const response = xhr.responseText as unknown as TResponse;
             responseTransport = { status: xhr.status, response };

@@ -1,7 +1,7 @@
 import Block from '@/core/Block.ts';
 import { RouteOptionsWithProps } from '@/utils/interfaces.ts';
-import { ROUTES } from '@/utils/enums.ts';
 import { MiddleWare } from '@/utils/types.ts';
+import { query } from '@/utils/constants.ts';
 
 import Route from './Route.ts';
 
@@ -56,7 +56,6 @@ class Router {
     const route = this.getRoute(pathname);
 
     if (!route) {
-      this.go(ROUTES.Error404);
       return;
     }
 
@@ -73,7 +72,6 @@ class Router {
       }
     }
 
-    // route.middleware?.(pathname);
     route.render();
   }
 
@@ -83,7 +81,13 @@ class Router {
   }
 
   private getRoute(pathname: string): Route | undefined {
-    return this.routes.find((route) => route.match(pathname));
+    const currentRoute = this.routes.find((route) => route.match(pathname));
+
+    if (!currentRoute) {
+      return this.routes.find((route) => route.match('*'));
+    }
+
+    return currentRoute;
   }
 
   public back(): void {
@@ -95,4 +99,6 @@ class Router {
   }
 }
 
-export default Router;
+const router = Router.getInstance(query);
+
+export default router;

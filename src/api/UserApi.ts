@@ -1,34 +1,28 @@
-import { ApiResponse, UpdatePasswordDTO, UpdateUserDTO } from '@/utils/interfaces';
-import BaseAPI from './BaseApi';
+import { ApiResponse, UpdatePassword, UpdateUser } from '@/utils/interfaces';
+import BaseApi from './BaseApi';
 
-class UserAPI extends BaseAPI {
+class UserApi extends BaseApi {
   constructor() {
     super('/user');
   }
 
-  public async updateProfile(user: UpdateUserDTO): Promise<ApiResponse> {
-    const response = await this.HTTP.put('/profile', { data: user, withCredentials: true });
+  public async updateProfile(user: UpdateUser): Promise<ApiResponse> {
+    const response = await this.HTTP.put('/profile', { data: user });
     return response as ApiResponse;
   }
 
-  public async updatePassword(passwords: UpdatePasswordDTO): Promise<ApiResponse> {
-    const response = await this.HTTP.put('/password', { data: passwords, withCredentials: true });
+  public async updatePassword(passwords: UpdatePassword): Promise<ApiResponse> {
+    const response = await this.HTTP.put('/password', { data: passwords});
     return response as ApiResponse;
   }
 
-  public updateAvatar(file: File): Promise<ApiResponse> {
-    const data = new FormData();
-    data.append('avatar', file);
-    return this.HTTP.put('/profile/avatar', { data, withCredentials: true });
-  }
-
-  public getUserById(id: string): Promise<ApiResponse> {
-    return this.HTTP.get(`/${id}`, { withCredentials: true });
+  public updateAvatar(data: FormData): Promise<ApiResponse> {
+    return this.HTTP.put('/profile/avatar', { data });
   }
 
   public findUser(login: string): Promise<ApiResponse> {
-    return this.HTTP.post('/search', { data: { login }, withCredentials: true });
+    return this.HTTP.post('/search', { data: { login } });
   }
 }
 
-export default UserAPI;
+export default UserApi;

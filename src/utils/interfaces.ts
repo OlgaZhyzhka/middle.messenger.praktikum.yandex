@@ -1,5 +1,3 @@
-import { PlainObject } from './types';
-
 export interface RouteOptions {
   rootQuery?: string;
   title?: string;
@@ -7,10 +5,6 @@ export interface RouteOptions {
 
 export interface RouteOptionsWithProps extends RouteOptions {
   props?: Record<string, unknown>;
-}
-
-export interface Avatar extends PlainObject {
-  avatar: File;
 }
 
 export interface RegistrationFormData {
@@ -22,6 +16,11 @@ export interface RegistrationFormData {
   phone: string;
 }
 
+export type UpdateFormData = Omit<RegistrationFormData, 'password'> & {
+  chatName: string;
+};
+
+
 export interface UpdateProfileData {
   login?: string;
   email?: string;
@@ -31,13 +30,13 @@ export interface UpdateProfileData {
   phone?: string;
 }
 
-export interface UpdatePasswordDTO extends PlainObject<string> {
+export interface UpdatePassword {
   oldPassword: string;
   newPassword: string;
 }
 
-export interface UserDTO extends PlainObject<string> {
-  id: string;
+export interface User {
+  id: number;
   first_name: string;
   second_name: string;
   login: string;
@@ -47,15 +46,47 @@ export interface UserDTO extends PlainObject<string> {
   avatar: string;
 }
 
-export type CreateUserDTO = Omit<UserDTO, 'avatar' | 'display_name' | 'id'> & {
+export type CreateUser = Omit<User, 'avatar' | 'display_name' | 'id'> & {
   password: string;
 };
 
-export interface UpdateUserDTO extends Omit<UserDTO, 'avatar' | 'id'> {}
+export interface UpdateUser extends Omit<User, 'avatar' | 'id'> {}
 
-export interface SignInRequest extends PlainObject<string> {
+export interface SignInRequest {
   login: string;
   password: string;
+}
+
+export interface MessageFile {
+    id: number;
+    user_id: number;
+    path: string;
+    filename: string;
+    content_type: string;
+    content_size: number;
+    upload_date: string;
+}
+
+export interface Message {
+  chat_id: number;
+  time: string;
+  type: string;
+  user_id: string;
+  content: string;
+  file?: MessageFile;
+}
+
+
+export interface Chat {
+  id: number;
+  title: string;
+  avatar?: string;
+  unread_count?: number;
+  last_message?: {
+    user: User;
+    time: string;
+    content: string;
+  };
 }
 
 export interface ApiError {
@@ -65,6 +96,7 @@ export interface ApiError {
 export interface ApiResponse {
   status: number;
   response?: string | ApiError;
+  token?: string;
 }
 
 export interface SignUpResponse {

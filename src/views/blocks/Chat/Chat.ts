@@ -1,4 +1,6 @@
 import Block, { Props } from '@/core/Block';
+import { IStore } from '@/store';
+import connect from '@/helpers/connect';
 import { ChatHeader } from '@/views/blocks/ChatHeader';
 import { MessagesList } from '@/views/blocks/MessagesList';
 import { ChatInput } from '@/views/blocks/ChatInput';
@@ -11,6 +13,7 @@ import tpl from './tpl';
 class Chat extends Block {
   constructor(props: Props) {
     super(props);
+    console.log(this.props.activeChatId);
     this.setProps({
       attributes: { class: 'chat' },
       chatHeader: this.createChatHeader(),
@@ -119,4 +122,11 @@ class Chat extends Block {
   }
 }
 
-export default Chat;
+// export default Chat;
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const mapStateToProps = ({ messages, activeChatId }: IStore) => ({
+  activeChatId,
+  messages,
+});
+
+export default connect(mapStateToProps)(Chat);

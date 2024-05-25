@@ -1,7 +1,7 @@
 const tpl = `<div class="sidebar__container">
 {{{ logo }}}
 <div class="sidebar__footer">
-{{ login }}
+<span class="sidebar__title">{{ login }}</span>
 {{#if isMessenger}} 
 {{{ userAvatar }}}
 {{{ linkToProfile }}}

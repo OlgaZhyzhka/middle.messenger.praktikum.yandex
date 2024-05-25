@@ -4,8 +4,8 @@ const tpl = `
   {{{ spinner }}}
 {{else}}
 <h1 class="page__title">{{ title }}</h1>
-{{#if signUpError}}
-<h4 class="is-error">{{{signUpError}}}</h4>
+{{#if authError}}
+<h4 class="is-error">{{{authError}}}</h4>
 {{/if}}
 {{{registrationForm}}}
 </div>

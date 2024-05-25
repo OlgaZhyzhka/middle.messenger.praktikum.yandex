@@ -9,7 +9,7 @@
     align-items: center;
   }
 
-   &__title {
+  &__title {
     margin-top: 1.5rem;
     margin-bottom: toRem(50px);
     font-size: 1.5rem;
@@ -17,14 +17,20 @@
 
   &__heading {
     margin-bottom: 1.5rem;
+    text-align: center;
 
     &:first-of-type {
       margin-top: 0;
     }
 
     &_lg {
-      margin-top: toRem(50px);
-      font-size: toRem(95px);
+      margin-top: toRem(24px);
+      font-size: toRem(45px);
+
+      @include create-mq($grid__bp-xl, 'min') {
+        margin-top: toRem(50px);
+        font-size: toRem(95px);
+      }
     }
   }
 

@@ -5,8 +5,8 @@ const tpl = `
 {{else}}
 <img src="{{ imgSrc }}" alt="{{ imgAlt }}">
 <h1 class="page__title">{{ title }}</h1>
-{{#if loginError}}
-<h4 class="is-error">{{{loginError}}}</h4>
+{{#if authError}}
+<h4 class="is-error">{{{authError}}}</h4>
 {{/if}}
 {{{loginForm}}}
 </div>

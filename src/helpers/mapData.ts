@@ -1,6 +1,6 @@
-import { CreateUserDTO, RegistrationFormData, UpdateProfileData, UpdateUserDTO } from '@/utils/interfaces';
+import { CreateUser, RegistrationFormData, UpdateProfileData, UpdateUser } from '@/utils/interfaces';
 
-export const mapSignUpData = (formData: RegistrationFormData): CreateUserDTO => ({
+export const mapSignUpData = (formData: RegistrationFormData): CreateUser => ({
     first_name: formData.firstName || '',
     second_name: formData.secondName || '',
     login: formData.login || '',
@@ -9,7 +9,7 @@ export const mapSignUpData = (formData: RegistrationFormData): CreateUserDTO => 
     phone: formData.phone || '',
   });
 
-  export const mapUserProfileData = (formData: UpdateProfileData): UpdateUserDTO => ({
+  export const mapUserProfileData = (formData: UpdateProfileData): UpdateUser => ({
     first_name: formData.firstName || '',
     second_name: formData.secondName || '',
     display_name: formData.chatName || '',

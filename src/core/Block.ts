@@ -239,7 +239,7 @@ export default class Block {
     this.eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 
-  protected componentWillUnmount(): void {
+  public componentWillUnmount(): void {
     if (this._element instanceof HTMLElement) {
       this._element.remove();
     }

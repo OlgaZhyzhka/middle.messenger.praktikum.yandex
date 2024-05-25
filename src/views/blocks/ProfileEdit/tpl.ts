@@ -15,5 +15,5 @@ const tpl = `<div class="profile__image">{{{ avatar }}}{{{ uploadAvatar }}}</div
 </ul>
 {{/if}}
 <div class="profile__footer">{{{ submitButton }}}{{{ cancelButton }}}</div>
-{{#if profileUpdateError}}<p class="is-error">{{ profileUpdateError }}</p>{{/if}}`;
+{{#if updateError}}<p class="is-error">{{ updateError }}</p>{{/if}}`;
 export default tpl;
