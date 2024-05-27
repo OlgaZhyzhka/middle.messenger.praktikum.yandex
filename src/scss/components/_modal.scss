@@ -55,7 +55,7 @@
     transition: transform var(--transition-duration) var(--transition-easing);
     background: var(--body-bg);
     border-radius: var(--border-radius);
-    box-shadow: 0 2px 35px 14px rgba(13 13 13, 0.1);
+    box-shadow: 0 2px 35px 14px rgb(13 13 13 / 10%);
     color: var(--color-text);
     text-align: center;
     z-index: var(--modal-z-index);

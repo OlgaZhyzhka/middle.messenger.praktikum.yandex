@@ -60,7 +60,7 @@
     }
 
     &::-webkit-scrollbar-track {
-      background-color: rgba(197 197 197, 0.25);
+      background-color: rgb(var(--color-primary) / 25%);
       border-radius: 3px;
     }
   }
