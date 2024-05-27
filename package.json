@@ -55,6 +55,10 @@
   "lint-staged": {
     "src/**/*.ts": [
       "eslint --cache --fix"
+    ],
+    "src/scss/**/*.scss": [
+      "stylelint --fix",
+      "git add"
     ]
   }
 }

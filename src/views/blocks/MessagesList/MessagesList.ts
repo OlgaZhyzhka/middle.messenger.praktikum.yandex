@@ -32,6 +32,12 @@ class MessagesList extends Block {
       this.setProps({
         chatMessages: this.createMessagesList(messageList),
       });
+
+      const messagesElement = this.getContent();
+      const lastMessageElement = messagesElement?.lastChild;
+      if (lastMessageElement instanceof HTMLElement) {
+        lastMessageElement.scrollIntoView({ behavior: 'smooth' });
+      }
     }
 
     return true;
