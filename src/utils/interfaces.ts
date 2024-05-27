@@ -1,4 +1,4 @@
-import { PlainObject } from "./types";
+import { PlainObject } from './types';
 
 export interface RouteOptions {
   rootQuery?: string;

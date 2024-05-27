@@ -82,8 +82,8 @@ export default class WS extends EventBus {
       if (Array.isArray(data)) {
         this.emit(WS_EVENTS.message, data);
       } else if (!['pong', 'user connected'].includes(data?.type)) {
-          this.emit(WS_EVENTS.message, data);
-        }
+        this.emit(WS_EVENTS.message, data);
+      }
     });
   }
 

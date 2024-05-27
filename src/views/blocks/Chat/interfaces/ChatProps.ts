@@ -1,4 +1,4 @@
-import { Props } from "@/core/Block";
+import { Props } from '@/core/Block';
 
 export interface ChatProps extends Props {
   userId: number;

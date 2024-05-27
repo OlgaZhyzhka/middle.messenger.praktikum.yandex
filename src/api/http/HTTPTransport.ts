@@ -3,7 +3,6 @@ import { ERRORS_MESSAGES, HTTP_CODES, METHODS } from '@/utils/enums';
 import { HTTPMethod, Options } from '@/utils/types';
 import { BASE_URL } from './ApiUrl';
 
-
 export default class HTTPTransport {
   protected endpoint: string;
 
@@ -60,7 +59,6 @@ export default class HTTPTransport {
             } else {
               responseTransport = { status: xhr.status, response };
             }
-
           } else {
             const response = xhr.responseText as unknown as TResponse;
             responseTransport = { status: xhr.status, response };

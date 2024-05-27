@@ -14,7 +14,7 @@ class ProfileInfo extends Block {
 
     this.setProps({
       attributes: { class: `${props.attributes?.class || ''} profile__info`.trim() },
-      avatar: new Avatar({ src: avatar ? `${RESOURCE_URL}${avatar }` : holder, size: 'lg' }),
+      avatar: new Avatar({ src: avatar ? `${RESOURCE_URL}${avatar}` : holder, size: 'lg' }),
       email,
       firstName,
       secondName,

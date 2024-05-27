@@ -91,7 +91,7 @@ class ModalUserForm extends Block {
     event.preventDefault();
 
     if (!this.children.loginInput) {
-      return
+      return;
     }
 
     const form = this.element as HTMLFormElement;

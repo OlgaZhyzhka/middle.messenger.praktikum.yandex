@@ -78,7 +78,7 @@ class Actions {
   }
 
   public getMessages(messages: IMessage[]): void {
-    const messageItems = messages.reverse()
+    const messageItems = messages.reverse();
     store.set({ messages: messageItems });
   }
 

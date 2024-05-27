@@ -60,7 +60,7 @@
   }
 
   &__spinner {
-    flex: 1
+    flex: 1;
   }
 
   @include create-mq($grid__bp-md, 'min') {

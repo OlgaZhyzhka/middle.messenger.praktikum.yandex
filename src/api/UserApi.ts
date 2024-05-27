@@ -12,7 +12,7 @@ class UserApi extends BaseApi {
   }
 
   public async updatePassword(passwords: UpdatePassword): Promise<ApiResponse> {
-    const response = await this.HTTP.put('/password', { data: passwords});
+    const response = await this.HTTP.put('/password', { data: passwords });
     return response as ApiResponse;
   }
 

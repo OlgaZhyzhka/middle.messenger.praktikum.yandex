@@ -24,7 +24,6 @@ class Messenger extends Block {
     });
   }
 
-
   private async handleActiveChatChange(chatId: number): Promise<void> {
     if (chatId) {
       try {
@@ -50,7 +49,6 @@ class Messenger extends Block {
       if (this.props.activeChatId) {
         await this.handleActiveChatChange(this.props.activeChatId as number);
       }
-
     } catch (error: unknown) {
       console.error(error);
     }

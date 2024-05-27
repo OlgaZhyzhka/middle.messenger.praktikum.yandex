@@ -13,7 +13,7 @@ class Settings extends Block {
         isMessenger: false,
         isSettings: true,
       }),
-      profile: new Profile({ attributes: { class: 'profile' }}),
+      profile: new Profile({ attributes: { class: 'profile' } }),
     });
   }
 

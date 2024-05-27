@@ -3,7 +3,6 @@ import router from '@/router/Router';
 import routesConfig from '@/router/routesConfig';
 import { store } from '@/store';
 
-
 window.router = router;
 window.store = store;
 

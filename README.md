@@ -42,6 +42,7 @@ Basic Html pages and css styles are are developed. Chat list page in development
 7. Index page contains links to other pages.
 
 ## Current updates
+
 - Implement real-time chat functionality using WebSocket.
 - Add authentication and user registration.
 - Improve UI/UX design.
@@ -54,6 +55,7 @@ Basic Html pages and css styles are are developed. Chat list page in development
 - Implement delete user from chat
 
 ## Remaining tasks
+
 - Optimize render component und update Message page and child components and fix reactivity components.
 - Complete the development of the chat list component with reset chat log and chat list data on change by click.
 - Implement message send on press key Enter.

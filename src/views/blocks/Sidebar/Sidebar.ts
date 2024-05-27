@@ -15,14 +15,14 @@ import tpl from './tpl';
 
 class Sidebar extends Block {
   constructor(props: SidebarProps) {
-    super(props, 'aside'); 
+    super(props, 'aside');
     const { avatar, login } = props;
 
     if (props.isMessenger) {
       this.setProps({
         attributes: { class: 'sidebar panel' },
         logo: new Logo({}),
-        userAvatar: new Avatar({ src: avatar ? `${RESOURCE_URL}${avatar}`: holder, title: login, size: 'sm' }),
+        userAvatar: new Avatar({ src: avatar ? `${RESOURCE_URL}${avatar}` : holder, title: login, size: 'sm' }),
         linkToProfile: new RouterLink(
           {
             attributes: { class: 'sidebar__link' },

@@ -3,7 +3,6 @@ import router from '@/router/Router';
 
 import { RouterLinkProps } from './interfaces/RouterLinkProps';
 
-
 class RouterLink extends Block {
   constructor(props: RouterLinkProps, tagname = 'a') {
     super(props, tagname);

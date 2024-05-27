@@ -32,7 +32,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: .85rem;
+    font-size: 0.85rem;
   }
 
   @include create-mq($grid__bp-xl, 'min') {

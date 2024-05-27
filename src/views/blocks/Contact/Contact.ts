@@ -11,7 +11,7 @@ import tpl from './tpl';
 class Contact extends Block {
   constructor(props: Props) {
     super(props, 'li');
-    const { avatar, title } = props;  
+    const { avatar, title } = props;
     this.setProps({
       avatar: new Avatar({
         attributes: { class: 'contact__avatar' },

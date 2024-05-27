@@ -27,7 +27,7 @@
   &__spinner {
     height: 100%;
   }
-  
+
   @include create-mq($grid__bp-xl, 'min') {
     width: var(--contacts-width);
     height: 100%;

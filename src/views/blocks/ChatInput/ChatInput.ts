@@ -76,7 +76,7 @@ class ChatInput extends Block {
     };
 
     const onKeyDown = (event: KeyboardEvent): void => {
-      console.log(event.key)
+      console.log(event.key);
       if (event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault();
         this.handleSend();
