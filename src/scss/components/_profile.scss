@@ -12,12 +12,12 @@
 
   &__info {
     .list__item {
-      margin-bottom: toRem(24px);
+      margin-bottom: torem(24px);
     }
   }
 
   &__list {
-    column-gap: toRem(50px);
+    column-gap: torem(50px);
 
     @include create-mq($grid__bp-xl, 'min') {
       display: grid;
@@ -25,7 +25,44 @@
     }
   }
 
-  &__image {
+  &__loader {
+    width: 100%;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .title {
+    margin-right: 5px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--light-grey);
+  }
+
+  &__content {
+    margin-top: 1.5rem;
+  }
+
+  &__footer {
+    margin-bottom: torem(40px);
+    display: flex;
+    align-items: center;
+    gap: torem(24px);
+  }
+
+  &__upload {
+    margin-bottom: torem(24px);
+  }
+
+  &__form {
+    margin-bottom: 0;
+  }
+
+  &__spinner {
+    min-height: 200px;
+  }
+
+   &__image {
     position: relative;
     width: var(--upload-size);
     height: var(--upload-size);
@@ -49,42 +86,5 @@
       z-index: var(--z-index-2);
       background-color: rgb(21 21 21 / 25%);
     }
-  }
-
-  &__loader {
-    width: 100%;
-    min-height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .title {
-    margin-right: 5px;
-    font-weight: var(--font-weight-semibold);
-    color: var(--light-grey);
-  }
-
-  &__content {
-    margin-top: 1.5rem;
-  }
-
-  &__footer {
-    margin-bottom: toRem(40px);
-    display: flex;
-    align-items: center;
-    gap: toRem(24px);
-  }
-
-  &__upload {
-    margin-bottom: toRem(24px);
-  }
-
-  &__form {
-    margin-bottom: 0;
-  }
-
-  &__spinner {
-    min-height: 200px;
   }
 }

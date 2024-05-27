@@ -9,10 +9,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: toRem(16px);
+  gap: torem(16px);
   width: var(--upload-size);
   height: var(--upload-size);
-  padding: toRem(18px);
+  padding: torem(18px);
   background-color: var(--upload-bg);
   border: 1px dashed var(--upload-border-color);
   border-radius: var(--border-radius-sm);

@@ -43,16 +43,17 @@ Basic Html pages and css styles are are developed. Chat list page in development
 
 ## Current updates
 
-- Implement real-time chat functionality using WebSocket.
-- Add authentication and user registration.
-- Improve UI/UX design.
-- Implement user profile functionality.
-- Implement message input without file attachment.
-- Implement chat log - messages list
-- Implement add chat
-- Implement delete chat
-- Implement add user to chat
-- Implement delete user from chat
+- Implemented real-time chat functionality using WebSocket.
+- Added authentication and user registration.
+- Improved UI/UX design.
+- Implemented user profile functionality.
+- Implemented message input without file attachment.
+- Implemented chat log - messages list
+- Implemented add chat
+- Implemented delete chat
+- Implemented update avatar for chat
+- Implemented add user to chat
+- Implemented delete user from chat
 
 ## Remaining tasks
 

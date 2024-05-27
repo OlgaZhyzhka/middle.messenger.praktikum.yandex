@@ -10,7 +10,7 @@
   &__date {
     display: block;
     margin: 0 5px 0 auto;
-    font-size: toRem(12px);
+    font-size: torem(12px);
     color: var(--light-grey);
   }
 
@@ -19,11 +19,7 @@
   }
 
   &_base {
-    padding: toRem(10px);
-  }
-
-  &_base {
-    padding: 6px;
+    padding: torem(10px);
   }
 
   &__thumb {
