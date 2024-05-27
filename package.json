@@ -54,8 +54,7 @@
   },
   "lint-staged": {
     "src/**/*.ts": [
-      "eslint --cache --fix",
-      "stylelint --fix"
+      "eslint --cache --fix"
     ]
   }
 }
