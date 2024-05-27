@@ -88,7 +88,6 @@ class AuthService {
 
       if (status === HTTP_CODES.OK) {
         actions.setUser(null);
-        actions.setLoading(false);
         actions.setAuthenticated(false);
         router.go(ROUTES.Home);
       } else {

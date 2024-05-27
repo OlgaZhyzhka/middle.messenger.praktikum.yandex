@@ -1,10 +1,9 @@
-const tpl = `<div class="profile__image">{{{ avatar }}}{{{ uploadAvatar }}}</div>
-<hr class="divider" />
+const tpl = `
 {{#if isLoading}}
-<div class="profile__loader">
   {{{ spinner }}}
-</div>
 {{else}}
+<div class="profile__image">{{{ avatar }}}{{{ uploadAvatar }}}</div>
+<hr class="divider" />
 <ul class="profile__list list">
 <li class="list__item">{{{ emailInput }}}</li>
 <li class="list__item">{{{ firstNameInput }}}</li>
@@ -13,7 +12,8 @@ const tpl = `<div class="profile__image">{{{ avatar }}}{{{ uploadAvatar }}}</div
 <li class="list__item">{{{ phoneInput }}}</li>
 <li class="list__item">{{{ chatNameInput }}}</li>
 </ul>
-{{/if}}
 <div class="profile__footer">{{{ submitButton }}}{{{ cancelButton }}}</div>
-{{#if updateError}}<p class="is-error">{{ updateError }}</p>{{/if}}`;
+{{#if updateError}}<p class="is-error">{{ updateError }}</p>{{/if}}
+{{/if}}
+`;
 export default tpl;

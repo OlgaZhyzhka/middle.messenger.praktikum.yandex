@@ -79,4 +79,12 @@
   &__upload {
     margin-bottom: toRem(24px);
   }
+
+  &__form {
+    margin-bottom: 0;
+  }
+
+  &__spinner {
+    min-height: 200px;
+  }
 }

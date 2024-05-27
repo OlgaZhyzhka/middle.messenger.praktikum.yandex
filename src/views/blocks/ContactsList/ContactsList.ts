@@ -1,5 +1,7 @@
 import Block, { Props } from '@/core/Block';
-import { contacts } from '@/utils/constants';
+import { IStore } from '@/store';
+import connect from '@/helpers/connect';
+import { IChat } from '@/utils/interfaces';
 import { Contact } from '@/views/blocks/Contact';
 
 import tpl from './tpl';
@@ -12,8 +14,21 @@ class ContactsList extends Block {
     });
   }
 
-  private createContacts(): Block[] {
-    return contacts.map((contact) => new Contact({ attributes: { class: 'contacts__item' }, ...contact }));
+  public componentDidUpdate(oldProps: Props, newProps: Props): boolean {
+    if (oldProps.chats !== newProps.chats) {
+      this.setProps({ contacts: this.createContacts() });
+    }
+    return true;
+  }
+
+  private createContacts(): Block[] | undefined {
+    const chats: IChat[] = (this.props.chats as Record<string, []>)?.list;
+
+    if (!chats) {
+      return undefined;
+    }
+
+    return chats.map((chat) => new Contact({ attributes: { class: 'contacts__item' }, ...chat }));
   }
 
   public render(): DocumentFragment {
@@ -21,4 +36,11 @@ class ContactsList extends Block {
   }
 }
 
-export default ContactsList;
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const mapStateToProps = ({ isLoading, chats, activeChatId }: IStore) => ({
+  isLoading,
+  activeChatId,
+  chats: { list: chats },
+});
+
+export default connect(mapStateToProps)(ContactsList);

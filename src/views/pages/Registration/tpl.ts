@@ -1,5 +1,4 @@
-const tpl = `
-<div class="page__container">
+const tpl = `<div class="page__container">
 {{#if isLoading}}
   {{{ spinner }}}
 {{else}}

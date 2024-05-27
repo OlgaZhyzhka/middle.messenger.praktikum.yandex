@@ -1,6 +1,6 @@
 import EventBus from '@/core/EventBus';
 import { cloneDeep } from '@/helpers/cloneDeep';
-import { Chat, Message, User } from '@/utils/interfaces';
+import { ChatUser, IChat, IMessage, User } from '@/utils/interfaces';
 import { PlainObject } from '@/utils/types';
 
 export enum StoreEvents {
@@ -10,14 +10,16 @@ export enum StoreEvents {
 export interface IStore {
   isLoading: boolean;
   user: User | null;
-  isAuthenticated?: boolean;
+  messages: IMessage[];
+  chats: IChat[];
+  chatUsers: ChatUser[];
+  activeChatId: number;
+  isAuthenticated: boolean;
+  isChatListLoading: boolean;
+  isChatLogLoading: boolean;
   authError?: string | null;
   updateError?: string | null;
   isUpdatePassword?: boolean;
-  messages: Message[];
-  activeChatId?: number;
-  activeChatUsers?: User[];
-  chats?: Chat[];
 }
 
 class Store extends EventBus {
@@ -53,13 +55,14 @@ class Store extends EventBus {
 
 const defaultState: PlainObject = {
   isLoading: false,
-  user: null,
-  loginError: null,
-  signUpError: null,
-  profileUpdateError: null,
   isAuthenticated: false,
-  isUpdatePassword: false,
+  isChatListLoading: true,
+  isChatLogLoading: true,
+  user: null,
+  activeChatId: null,
   messages: [],
+  chats: [],
+  chatUsers: [],
 };
 
 export const store = Store.getInstance(defaultState);

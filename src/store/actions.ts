@@ -1,4 +1,4 @@
-import { Chat, Message, User } from '@/utils/interfaces';
+import { ChatUser, IChat, IMessage, User } from '@/utils/interfaces';
 import { store } from '.';
 
 class Actions {
@@ -30,34 +30,50 @@ class Actions {
     store.set({ isLoading });
   }
 
-  public getMessages(): Message[] {
-    return store.getState().messages;
+  public setChatUsers(users: ChatUser[]): void {
+    store.set({ chatUsers: users });
   }
 
-  public setActiveChatUsers(users: User[]): void {
-    store.set({ activeChatUsers: users });
+  public getChatUsers(): ChatUser[] | undefined {
+    return store.getState().chatUsers;
   }
 
   public geActiveChatId(): number | undefined {
     return store.getState().activeChatId;
   }
 
-  public setActiveChat(chatId: number): void {
+  public setActiveChatId(chatId: number): void {
     store.set({ activeChatId: chatId });
   }
 
-  public setChats(chats: Chat[]): void {
+  public setChats(chats: IChat[]): void {
     store.set({ chats });
   }
 
-  public getChats(): Chat[] | undefined{
+  public getChats(): IChat[] | undefined {
     return store.getState().chats;
   }
 
-  public addMessage(message: Message): void {
+  public addMessage(message: IMessage): void {
     const state = store.getState();
     state.messages.push(message);
     store.set({ messages: state.messages });
+  }
+
+  public setMessages(messages: IMessage[]): void {
+    store.set({ messages });
+  }
+
+  public getMessages(messages: IMessage[]): void {
+    store.set({ messages });
+  }
+
+  public setChatListLoading(isLoading: boolean): void {
+    store.set({ isChatListLoading: isLoading });
+  }
+
+  public setChatLogLoading(isLoading: boolean): void {
+    store.set({ isChatLogLoading: isLoading });
   }
 }
 

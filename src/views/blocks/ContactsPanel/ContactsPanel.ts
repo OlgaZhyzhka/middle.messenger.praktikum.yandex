@@ -1,4 +1,5 @@
 import Block, { Props } from '@/core/Block';
+
 import { Search } from '@/views/blocks/Search';
 import { ContactsList } from '@/views/blocks/ContactsList';
 

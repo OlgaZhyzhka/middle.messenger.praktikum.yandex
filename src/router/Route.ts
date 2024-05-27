@@ -38,8 +38,7 @@ class Route {
   }
 
   public leave(): void {
-    // this._block?.hide();
-    this._block?.remove();
+    this._block?.hide();
     this._block = null;
   }
 
@@ -52,16 +51,13 @@ class Route {
       document.title = this._props.title;
     }
 
-    this._block = new this._blockConstructor(this._props.props ? this._props.props : {});
-    renderDOM(this._block, this._props.rootQuery);
+    if (!this._block) {
+      this._block = new this._blockConstructor(this._props.props ? this._props.props : {});
+      renderDOM(this._block, this._props.rootQuery);
+      return;
+    }
 
-    // if (!this._block) {
-    //   this._block = new this._blockConstructor(this._props.props ? this._props.props : {});
-    //   renderDOM(this._block, this._props.rootQuery);
-    //   return;
-    // }
-
-    // this._block.show();
+    this._block.show();
   }
 }
 

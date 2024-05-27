@@ -1,11 +1,12 @@
 import Block, { Props } from '@/core/Block.ts';
 import ChatService from '@/services/ChatService';
+import { IStore } from '@/store';
+import connect from '@/helpers/connect';
 import { Sidebar } from '@/views/blocks/Sidebar';
 import { Chat } from '@/views/blocks/Chat';
 import { ContactsPanel } from '@/views/blocks/ContactsPanel';
 
 import tpl from './tpl.ts';
-import { actions } from '@/store/actions.ts';
 
 class Messenger extends Block {
   constructor(props: Props) {
@@ -16,27 +17,54 @@ class Messenger extends Block {
         isMessenger: true,
         isSettings: false,
       }),
+    });
+  }
+
+  private initializeComponents(): void {
+    if (this.children.contactsPanel || this.children.chat) {
+      return;
+    }
+
+    this.setProps({
       contactsPanel: new ContactsPanel({ attributes: { class: 'contacts panel' } }),
       chat: new Chat({
         attributes: { class: 'chat' },
-        isLoading: false,
       }),
     });
   }
 
-  public async componentDidMount(): Promise<void> {
-    await ChatService.getChats();
-    const chats = actions.getChats();
+  private async handleActiveChatChange(chatId: number): Promise<void> {
+    if (chatId) {
+      try {
+        await ChatService.setActiveChat(chatId);
+      } catch (error: unknown) {
+        console.error(error);
+      }
+    }
+  }
 
-    if (chats?.length === 0) {
-      await ChatService.createChat('Default Chat');
+  public componentDidUpdate(oldProps: Props, newProps: Props): boolean {
+    if (oldProps.activeChatId !== newProps.activeChatId) {
+      this.handleActiveChatChange(newProps.activeChatId as number);
     }
 
-    const activeChatId = actions.geActiveChatId();
-    const userId = actions.getUser()?.id;
-    if (activeChatId && userId) {
-      await ChatService.connectToChat(userId, activeChatId);
-      ChatService.getOldMessages();
+    return true;
+  }
+
+  public async componentDidMount(): Promise<void> {
+    try {
+      await ChatService.getChats();
+
+      if (this.props.activeChatId) {
+        await this.handleActiveChatChange(this.props.activeChatId as number);
+      }
+
+      if (!this.props.isChatListLoading) {
+        this.initializeComponents();
+      }
+
+    } catch (error: unknown) {
+      console.error(error);
     }
   }
 
@@ -45,8 +73,20 @@ class Messenger extends Block {
   }
 
   public render(): DocumentFragment {
+    if (this.props.isChatListLoading) {
+      return this.compile('');
+    }
+
     return this.compile(tpl);
   }
 }
 
-export default Messenger;
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const mapStateToProps = ({ isChatListLoading, isChatLogLoading, user, activeChatId }: IStore) => ({
+  isChatListLoading,
+  isChatLogLoading,
+  userId: user?.id,
+  activeChatId,
+});
+
+export default connect(mapStateToProps)(Messenger);

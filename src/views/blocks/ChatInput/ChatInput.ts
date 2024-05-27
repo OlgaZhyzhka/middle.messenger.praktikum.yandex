@@ -1,13 +1,14 @@
-import Block, { Props } from '@/core/Block';
+import Block from '@/core/Block';
 import { Input } from '@/views/components/Input';
 import { IconButton } from '@/views/components/IconButton';
 import { Dropdown } from '@/views/components/Dropdown';
 import { DropdownItemProps } from '@/views/components/DropdownItem/interfaces/DropdownItemProps';
 
+import { ChatInputProps } from './interfaces/ChatInputProps';
 import tpl from './tpl';
 
 class ChatInput extends Block {
-  constructor(props: Props) {
+  constructor(props: ChatInputProps) {
     super(props);
     const dropdownUpload: DropdownItemProps[] = [
       {
@@ -37,7 +38,6 @@ class ChatInput extends Block {
       chatInput: new Input({
         size: 'sm',
         attributes: { type: 'text', placeholder: 'Type message...', class: 'chat__input' },
-        onInput: (): void => this.handleInput(),
       }),
       dropdown: new Dropdown({
         type: 'bottom',
@@ -53,11 +53,6 @@ class ChatInput extends Block {
         onChange: (event: Event): void => this.handleAttachFile(event),
       }),
     });
-  }
-
-  private handleInput(): void {
-    const input = (this.getChild('chatInput') as Input).element as HTMLInputElement;
-    console.log(input.value);
   }
 
   private handleAttachFile(event: Event): void {
@@ -79,6 +74,12 @@ class ChatInput extends Block {
   }
 
   private handleSend(): void {
+    const input = (this.getChild('chatInput') as Input).element as HTMLInputElement;
+    const message = input.value.trim();
+    if (message) {
+      (this.props as ChatInputProps).onSendMessage(message);
+      input.value = '';
+    }
   }
 
   public render(): DocumentFragment {

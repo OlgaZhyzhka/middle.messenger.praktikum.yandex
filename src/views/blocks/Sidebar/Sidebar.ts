@@ -61,6 +61,7 @@ class Sidebar extends Block {
 const mapStateToProps = ({ user }: IStore) => ({
   avatar: user?.avatar,
   login: user?.login,
+  userId: user?.id,
 });
 
 export default connect(mapStateToProps)(Sidebar);

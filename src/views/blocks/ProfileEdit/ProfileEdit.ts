@@ -43,7 +43,9 @@ class ProfileEdit extends Block {
       phoneInput: this.createPhoneInput(phone as string | null),
       submitButton: this.createSubmitButton(),
       cancelButton: this.createCancelButton(),
-      spinner: new Spinner({}),
+      spinner: new Spinner({
+        attributes: { class: 'profile__spinner spinner_local' },
+      }),
     });
   }
 

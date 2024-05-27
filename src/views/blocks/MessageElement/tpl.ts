@@ -1,11 +1,9 @@
-const tpl = `{{#if (eq type 'media')}}
-<div class="media__thumb"><img src="{{mediaUrl}}" alt="" /></div>
-{{else}}
+const tpl = `<div class="message message_base">
   <p class="message__content">{{content}}</p>
-{{/if}}
 <div class="message__footer">
   <span class="message__date">{{time}}</span>
-{{#if isRead}}
+{{#if is_read}}
   {{{ icon }}}
-{{/if}}</div>`;
+{{/if}}
+</div></div>`;
 export default tpl;

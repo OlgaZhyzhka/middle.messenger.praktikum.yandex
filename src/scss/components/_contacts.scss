@@ -24,18 +24,12 @@
     border-top: var(--border-width) solid var(--panel-border-color);
   }
 
-  @include create-mq($grid__bp-md, 'min') {
-    // width: 60%;
-    // left: 50%;
-    // transform: translateX(-50%);
+  &__spinner {
+    height: 100%;
   }
-
+  
   @include create-mq($grid__bp-xl, 'min') {
-    // top: 0;
-    // left: auto;
     width: var(--contacts-width);
     height: 100%;
-    // height: var(--app-height);
-    // transform: none;
   }
 }

@@ -9,15 +9,15 @@ import { Modal } from '@/views/components/Modal';
 import { ModalUploadAvatar } from '@/views/blocks/ModalUploadAvatar';
 
 import tpl from './tpl';
+import ChatService from '@/services/ChatService';
 
 class Chat extends Block {
   constructor(props: Props) {
     super(props);
-    console.log(this.props.activeChatId);
     this.setProps({
       attributes: { class: 'chat' },
       chatHeader: this.createChatHeader(),
-      chatMessages: this.createChatMessages(),
+      chatLog: this.createChatLog(),
       chatInput: this.createChatInput(),
       modalAddUser: new Modal({
         content: new ModalUserForm({
@@ -97,7 +97,6 @@ class Chat extends Block {
   private createChatHeader(): Block {
     return new ChatHeader({
       attributes: { class: 'chat__header' },
-      opponentId: '12121',
       onShowModalAddUser: (): void => this.showModalAddUser(),
       onShowModalDeleteUser: (): void => this.showModalDeleteUser(),
       onShowModalDeleteChat: (): void => this.showModalDeleteChat(),
@@ -105,7 +104,7 @@ class Chat extends Block {
     });
   }
 
-  private createChatMessages(): Block {
+  private createChatLog(): Block {
     return new MessagesList({
       attributes: { class: 'chat__list' },
     });
@@ -114,7 +113,12 @@ class Chat extends Block {
   private createChatInput(): Block {
     return new ChatInput({
       attributes: { class: 'chat__footer' },
+      onSendMessage: (message: string): void => this.handleSendMessage(message),
     });
+  }
+
+  private handleSendMessage(message: string): void {
+    ChatService.sendMessage(message);
   }
 
   public render(): DocumentFragment {
@@ -122,11 +126,9 @@ class Chat extends Block {
   }
 }
 
-// export default Chat;
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const mapStateToProps = ({ messages, activeChatId }: IStore) => ({
+const mapStateToProps = ({ activeChatId }: IStore) => ({
   activeChatId,
-  messages,
 });
 
 export default connect(mapStateToProps)(Chat);

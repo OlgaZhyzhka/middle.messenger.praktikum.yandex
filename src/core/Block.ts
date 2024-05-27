@@ -30,7 +30,7 @@ interface SeparatedProps {
   childItems: ChildItems;
 }
 
-export default class Block {
+class Block {
   public static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -396,3 +396,5 @@ export default class Block {
     element.style.display = 'none';
   }
 }
+
+export default Block;

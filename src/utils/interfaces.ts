@@ -1,3 +1,5 @@
+import { PlainObject } from "./types";
+
 export interface RouteOptions {
   rootQuery?: string;
   title?: string;
@@ -20,7 +22,6 @@ export type UpdateFormData = Omit<RegistrationFormData, 'password'> & {
   chatName: string;
 };
 
-
 export interface UpdateProfileData {
   login?: string;
   email?: string;
@@ -30,7 +31,7 @@ export interface UpdateProfileData {
   phone?: string;
 }
 
-export interface UpdatePassword {
+export interface UpdatePassword extends PlainObject {
   oldPassword: string;
   newPassword: string;
 }
@@ -52,32 +53,37 @@ export type CreateUser = Omit<User, 'avatar' | 'display_name' | 'id'> & {
 
 export interface UpdateUser extends Omit<User, 'avatar' | 'id'> {}
 
-export interface SignInRequest {
+export interface SignInRequest extends PlainObject {
   login: string;
   password: string;
 }
 
-export interface MessageFile {
-    id: number;
-    user_id: number;
-    path: string;
-    filename: string;
-    content_type: string;
-    content_size: number;
-    upload_date: string;
+export interface ChatUser extends Omit<User, 'email' | 'phone'> {
+  role: 'admin';
 }
 
-export interface Message {
+export interface MessageFile {
+  id: number;
+  user_id: number;
+  path: string;
+  filename: string;
+  content_type: string;
+  content_size: number;
+  upload_date: string;
+}
+
+export interface IMessage {
+  id: number;
   chat_id: number;
   time: string;
   type: string;
   user_id: string;
   content: string;
   file?: MessageFile;
+  is_read?: boolean;
 }
 
-
-export interface Chat {
+export interface IChat {
   id: number;
   title: string;
   avatar?: string;

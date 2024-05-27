@@ -22,7 +22,7 @@ class ProfilePassword extends Block {
       confirmPasswordInput: this.createConfirmPasswordInput(),
       submitButton: this.createSubmitButton(),
       cancelButton: this.createCancelButton(),
-      spinner: new Spinner({}),
+      spinner: new Spinner({ attributes: { class: 'profile__spinner spinner_local' } }),
     });
   }
 
