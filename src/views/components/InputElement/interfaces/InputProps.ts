@@ -5,4 +5,5 @@ export interface InputElementProps extends Props {
   inputAttributes?: Record<string, string | boolean>;
   isValid: boolean;
   onBlur?: Callback;
+  onKeyDown?: Callback;
 }

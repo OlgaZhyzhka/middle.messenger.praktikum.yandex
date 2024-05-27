@@ -19,6 +19,7 @@ class InputElement extends Block {
           ...props.inputAttributes,
         },
         onBlur: props.onBlur,
+        onKeyDown: props.onKeyDown,
       }),
     });
   }

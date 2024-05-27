@@ -3,7 +3,7 @@ import { WS_URL } from '@/api/http/ApiUrl';
 import WS from '@/api/ws/WebSocket';
 import { handleError } from '@/helpers/handleError';
 import { actions } from '@/store/actions';
-import { ChatUser, IChat } from '@/utils/interfaces';
+import { ChatUser, DeleteChatResponse, IChat } from '@/utils/interfaces';
 import { HTTP_CODES, WS_EVENTS } from '@/utils/enums';
 
 const chatApi = new ChatApi();
@@ -14,11 +14,22 @@ class ChatService {
   public static async createChat(title: string): Promise<void> {
     try {
       const response = await chatApi.addChat(title);
-      const { status, ...chatData } = response;
+      const { status } = response;
 
       if (status === HTTP_CODES.OK) {
-        actions.setActiveChatId((chatData as IChat).id);
-        console.log('Chat created successfully', chatData);
+        const resp = await chatApi.getChats();
+        const { status: chatsStatus, response: chatsResponse } = resp;
+        if (chatsStatus === HTTP_CODES.OK) {
+          const chatItem = (chatsResponse as IChat[]).find((chat) => chat.title === title);
+
+          if (chatItem) {
+            actions.addChats(chatItem);
+          }
+
+          console.log('Chat created successfully', title);
+        } else {
+          throw new Error('Failed to retrieve chats');
+        }
       } else {
         throw new Error('Failed to create chat');
       }
@@ -36,9 +47,7 @@ class ChatService {
 
       if (status === HTTP_CODES.OK) {
         actions.setChats(response as IChat[]);
-        if ((response as IChat[])?.length === 0) {
-          await ChatService.createChat('Default Chat');
-        }
+        console.log('Chats are received', response);
       } else {
         throw new Error('Failed to retrieve chats');
       }
@@ -47,6 +56,27 @@ class ChatService {
       handleError(error);
     } finally {
       actions.setChatListLoading(false);
+    }
+  }
+
+  public static async deleteChat(chatId: number): Promise<void> {
+    try {
+      const resp = await chatApi.deleteChat(chatId);
+      const { status } = resp;
+      const { result } = resp as unknown as DeleteChatResponse;
+
+      console.log('Chat created successfully', result.title);
+
+      if (status === HTTP_CODES.OK) {
+        actions.deleteChat(chatId);
+        actions.setActiveChatId(null);
+        console.log('Chat deleted successfully');
+      } else {
+        throw new Error('Failed to delete chat');
+      }
+    } catch (error: unknown) {
+      console.error(error);
+      handleError(error);
     }
   }
 
@@ -60,7 +90,6 @@ class ChatService {
       const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
       if (Array.isArray(parsedData)) {
         actions.setMessages(parsedData);
-        actions.setChatLogLoading(false);
         console.log('Old messages are received', parsedData);
       } else {
         actions.addMessage(parsedData);
@@ -88,7 +117,6 @@ class ChatService {
   }
 
   public static getOldMessages(offset: number = 0): void {
-    actions.setChatLogLoading(true);
     if (!this.socket) {
       throw new Error('Socket is not connected');
     }
@@ -103,11 +131,24 @@ class ChatService {
       if (res.status !== HTTP_CODES.OK) {
         throw new Error(`requestErr: ${JSON.stringify(res)}`);
       }
+
       const users = res.response as ChatUser[];
       actions.setChatUsers(users);
     } catch (error: unknown) {
       console.error(error);
       handleError(error);
+    }
+  }
+
+  public static async deleteUserFromChat(userId: number, chatId: number): Promise<void> {
+    try {
+      const response = await chatApi.deleteUsersFromChat(chatId, userId);
+
+      if (response.status !== HTTP_CODES.OK) {
+        throw new Error(`requestErr: ${JSON.stringify(response)}`);
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -120,6 +161,37 @@ class ChatService {
       if (userId) {
         await this.connectToChat(userId, chatId);
       }
+    } catch (error: unknown) {
+      console.error(error);
+      handleError(error);
+    }
+  }
+
+  public static async addUserToChat(userId: number, chatId: number): Promise<void> {
+    try {
+      const res = await chatApi.addUserToChat(userId, chatId);
+
+      if (res.status !== HTTP_CODES.OK) {
+        throw new Error(`requestErr: ${JSON.stringify(res)}`);
+      }
+
+      console.log('User added to chat successfully');
+    } catch (error: unknown) {
+      console.error(error);
+      handleError(error);
+    }
+  }
+
+  public static async updateChatAvatar(file: File, chatId: number): Promise<void> {
+    try {
+      const response = await chatApi.updateChatAvatar(file, chatId);
+      const { status } = response;
+
+      if (status !== HTTP_CODES.OK) {
+        throw new Error(`requestErr: ${JSON.stringify(response)}`);
+      }
+
+      console.log('Avatar updated successfully');
     } catch (error: unknown) {
       console.error(error);
       handleError(error);

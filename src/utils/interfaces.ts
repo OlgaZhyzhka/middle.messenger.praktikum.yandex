@@ -88,6 +88,7 @@ export interface IChat {
   title: string;
   avatar?: string;
   unread_count?: number;
+  created_by?: number;
   last_message?: {
     user: User;
     time: string;
@@ -101,8 +102,19 @@ export interface ApiError {
 
 export interface ApiResponse {
   status: number;
-  response?: string | ApiError;
+  response?: string | ApiError | DeleteChatResponse;
   token?: string;
+  id?: number;
+}
+
+export interface DeleteChatResponse {
+  userId: number;
+  result: {
+    id: number;
+    title: string;
+    avatar: string;
+    created_by: number;
+  };
 }
 
 export interface SignUpResponse {

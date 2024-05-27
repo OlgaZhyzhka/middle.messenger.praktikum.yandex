@@ -38,11 +38,11 @@ class Actions {
     return store.getState().chatUsers;
   }
 
-  public geActiveChatId(): number | undefined {
+  public geActiveChatId(): number | null {
     return store.getState().activeChatId;
   }
 
-  public setActiveChatId(chatId: number): void {
+  public setActiveChatId(chatId: number | null): void {
     store.set({ activeChatId: chatId });
   }
 
@@ -50,8 +50,20 @@ class Actions {
     store.set({ chats });
   }
 
+  public addChats(chat: IChat): void {
+    const state = store.getState();
+    state.chats.push(chat);
+    store.set({ chats: state.chats });
+  }
+
   public getChats(): IChat[] | undefined {
     return store.getState().chats;
+  }
+
+  public deleteChat(chatId: number): void {
+    const state = store.getState();
+    state.chats = state.chats.filter((chat) => chat.id !== chatId);
+    store.set({ chats: state.chats });
   }
 
   public addMessage(message: IMessage): void {
@@ -61,11 +73,13 @@ class Actions {
   }
 
   public setMessages(messages: IMessage[]): void {
-    store.set({ messages });
+    const messageItems = messages.reverse();
+    store.set({ messages: messageItems });
   }
 
   public getMessages(messages: IMessage[]): void {
-    store.set({ messages });
+    const messageItems = messages.reverse()
+    store.set({ messages: messageItems });
   }
 
   public setChatListLoading(isLoading: boolean): void {

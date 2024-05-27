@@ -69,14 +69,14 @@ class UserService {
     }
   }
 
-  public static async findUser(login: string): Promise<void> {
+  public static async findUser(login: string): Promise<User[] | undefined> {
     try {
       store.set({ isLoading: true });
-      const response = await userApi.findUser(login);
-      const { status, ...userData } = response;
+      const res = await userApi.findUser(login);
+      const { status, response } = res;
 
       if (status === HTTP_CODES.OK) {
-        this.updateUserProfile(userData as User);
+        return response as User[];
       }
     } catch (error: unknown) {
       console.error(error);
@@ -85,6 +85,7 @@ class UserService {
     } finally {
       store.set({ isLoading: false });
     }
+    return undefined;
   }
 }
 

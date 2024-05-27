@@ -9,16 +9,15 @@ import tpl from './tpl';
 class MessagesList extends Block {
   constructor(props: Props) {
     super(props, 'ul');
+    const messageList: IMessage[] = (this.props.messages as Record<string, []>)?.list;
     this.setProps({
-      chatMessages: this.createMessagesList(),
+      chatMessages: this.createMessagesList(messageList),
     });
   }
 
-  private createMessagesList(): Block[] | undefined {
-    const messageList: IMessage[] = (this.props.messages as Record<string, []>)?.list;
-
+  private createMessagesList(messageList: IMessage[]): Block[] | null {
     if (!messageList || !messageList.length) {
-      return undefined;
+      return null;
     }
 
     return messageList.map((message) => {
@@ -29,8 +28,9 @@ class MessagesList extends Block {
 
   public componentDidUpdate(oldProps: Props, newProps: Props): boolean {
     if (oldProps.messages !== newProps.messages) {
+      const messageList: IMessage[] = (newProps.messages as Record<string, []>)?.list;
       this.setProps({
-        chatMessages: this.createMessagesList(),
+        chatMessages: this.createMessagesList(messageList),
       });
     }
 
@@ -38,17 +38,12 @@ class MessagesList extends Block {
   }
 
   public render(): DocumentFragment {
-    if (this.props.isChatLogLoading) {
-      return this.compile('');
-    }
-
     return this.compile(tpl);
   }
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const mapStateToProps = ({ isChatLogLoading, user, messages }: IStore) => ({
-  isChatLogLoading,
+const mapStateToProps = ({ user, messages }: IStore) => ({
   userId: user?.id,
   messages: { list: messages },
 });

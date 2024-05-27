@@ -17,21 +17,13 @@ class Messenger extends Block {
         isMessenger: true,
         isSettings: false,
       }),
-    });
-  }
-
-  private initializeComponents(): void {
-    if (this.children.contactsPanel || this.children.chat) {
-      return;
-    }
-
-    this.setProps({
-      contactsPanel: new ContactsPanel({ attributes: { class: 'contacts panel' } }),
       chat: new Chat({
         attributes: { class: 'chat' },
       }),
+      contactsPanel: new ContactsPanel({ attributes: { class: 'contacts panel' } }),
     });
   }
+
 
   private async handleActiveChatChange(chatId: number): Promise<void> {
     if (chatId) {
@@ -59,10 +51,6 @@ class Messenger extends Block {
         await this.handleActiveChatChange(this.props.activeChatId as number);
       }
 
-      if (!this.props.isChatListLoading) {
-        this.initializeComponents();
-      }
-
     } catch (error: unknown) {
       console.error(error);
     }
@@ -73,18 +61,13 @@ class Messenger extends Block {
   }
 
   public render(): DocumentFragment {
-    if (this.props.isChatListLoading) {
-      return this.compile('');
-    }
-
     return this.compile(tpl);
   }
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const mapStateToProps = ({ isChatListLoading, isChatLogLoading, user, activeChatId }: IStore) => ({
+const mapStateToProps = ({ isChatListLoading, user, activeChatId }: IStore) => ({
   isChatListLoading,
-  isChatLogLoading,
   userId: user?.id,
   activeChatId,
 });

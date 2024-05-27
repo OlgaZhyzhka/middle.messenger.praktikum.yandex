@@ -13,7 +13,7 @@ export interface IStore {
   messages: IMessage[];
   chats: IChat[];
   chatUsers: ChatUser[];
-  activeChatId: number;
+  activeChatId: number | null;
   isAuthenticated: boolean;
   isChatListLoading: boolean;
   isChatLogLoading: boolean;
@@ -56,8 +56,8 @@ class Store extends EventBus {
 const defaultState: PlainObject = {
   isLoading: false,
   isAuthenticated: false,
-  isChatListLoading: true,
-  isChatLogLoading: true,
+  isChatListLoading: false,
+  isChatLogLoading: false,
   user: null,
   activeChatId: null,
   messages: [],

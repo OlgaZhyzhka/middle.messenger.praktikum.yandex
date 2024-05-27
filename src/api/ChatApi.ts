@@ -15,31 +15,39 @@ class ChatApi extends BaseApi {
     return this.HTTP.get('');
   }
 
-  public addUsersToChat(chaiId: number, userId: number): Promise<ApiResponse> {
-    return this.HTTP.put('/users', { data: { users: { userId }, chaiId } });
-  }
-
-  public deleteUsersFromChat(chaiId: number, userId: number): Promise<string> {
-    return this.HTTP.delete('/users', { data: { users: { userId }, chaiId } });
+  public getChat(id: number): Promise<ApiResponse> {
+    return this.HTTP.get(`/${id}/common`);
   }
 
   public getChatUsers(id: number): Promise<ApiResponse> {
     return this.HTTP.get(`/${id}/users`);
   }
 
-  public updateChatAvatar(data: FormData, id: string): Promise<ApiResponse> {
-    // const data = new FormData();
-    data.append('chatId', id);
-    // data.append('avatar', avatar);
+  public addUsersToChat(chaiId: number, userId: number): Promise<ApiResponse> {
+    return this.HTTP.put('/users', { data: { users: { userId }, chaiId } });
+  }
+
+  public deleteUsersFromChat(chatId: number, userId: number): Promise<ApiResponse> {
+    return this.HTTP.delete('/users', { data: { users: [userId], chatId } });
+  }
+
+  public addUserToChat(chatId: number, userId: number): Promise<ApiResponse> {
+    return this.HTTP.put('/users', { data: { users: [userId], chatId } });
+  }
+
+  public updateChatAvatar(file: File, chatId: number): Promise<ApiResponse> {
+    const data = new FormData();
+    data.append('chatId', chatId as unknown as string);
+    data.append('avatar', file);
     return this.HTTP.put('/avatar', { data });
   }
 
-  public deleteChat(id?: string): Promise<ApiResponse> {
-    if (!id) {
+  public deleteChat(chatId?: number): Promise<ApiResponse> {
+    if (!chatId) {
       throw new Error('ChatApi.delete: need chat id');
     }
 
-    return this.HTTP.delete('', { data: { id } });
+    return this.HTTP.delete('', { data: { chatId } });
   }
 
   public getToken(chatId: number): Promise<ApiResponse> {

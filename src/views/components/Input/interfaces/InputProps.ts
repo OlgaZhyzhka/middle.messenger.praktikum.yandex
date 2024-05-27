@@ -7,4 +7,5 @@ export interface InputProps extends Props {
   onBlur?: Callback;
   onInput?: Callback;
   onChange?: Callback;
+  onKeyDown?: Callback;
 }

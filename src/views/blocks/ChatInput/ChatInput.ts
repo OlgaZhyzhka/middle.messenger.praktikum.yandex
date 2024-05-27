@@ -1,8 +1,11 @@
 import Block from '@/core/Block';
+import validate from '@/helpers/validators';
 import { Input } from '@/views/components/Input';
 import { IconButton } from '@/views/components/IconButton';
 import { Dropdown } from '@/views/components/Dropdown';
 import { DropdownItemProps } from '@/views/components/DropdownItem/interfaces/DropdownItemProps';
+import { InputElement } from '@/views/components/InputElement';
+import { InputProps } from '@/views/components/Input/interfaces/InputProps';
 
 import { ChatInputProps } from './interfaces/ChatInputProps';
 import tpl from './tpl';
@@ -35,10 +38,7 @@ class ChatInput extends Block {
         iconSize: 'sm',
         onClick: (): void => this.handleSend(),
       }),
-      chatInput: new Input({
-        size: 'sm',
-        attributes: { type: 'text', placeholder: 'Type message...', class: 'chat__input' },
-      }),
+      chatInput: this.createMessageInput(),
       dropdown: new Dropdown({
         type: 'bottom',
         buttonType: 'upload',
@@ -53,6 +53,43 @@ class ChatInput extends Block {
         onChange: (event: Event): void => this.handleAttachFile(event),
       }),
     });
+  }
+
+  private createInput({ onBlur, attributes = {}, inputAttributes = {} }: InputProps): InputElement {
+    return new InputElement({
+      size: 'sm',
+      isValid: false,
+      attributes,
+      inputAttributes,
+      onBlur,
+    });
+  }
+
+  private createMessageInput(): InputElement {
+    const onBlur = (event: Event): void => {
+      const { value } = event.target as HTMLInputElement;
+      const data = { message: value };
+      const validText = validate(data, 'message');
+      const input = this.getChild('chatInput') as InputElement;
+      input.setIsValid(!validText);
+      if (validText) input.setErrorMessage(validText);
+    };
+
+    const onKeyDown = (event: KeyboardEvent): void => {
+      console.log(event.key)
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        this.handleSend();
+      }
+    };
+
+    const inputProps = {
+      size: 'sm',
+      attributes: { type: 'text', placeholder: 'Type message...', class: 'chat__input' },
+      onBlur,
+      onKeyDown,
+    };
+    return this.createInput(inputProps);
   }
 
   private handleAttachFile(event: Event): void {
@@ -73,9 +110,29 @@ class ChatInput extends Block {
     }
   }
 
+  private checkFormValidity(chatInput: InputElement): boolean {
+    let isFormValid = true;
+
+    if (chatInput?.getProps()?.isValid !== true) {
+      chatInput?.setErrorMessage('Invalid message');
+      isFormValid = false;
+    }
+
+    return isFormValid;
+  }
+
   private handleSend(): void {
-    const input = (this.getChild('chatInput') as Input).element as HTMLInputElement;
+    const chatInput = this.getChild('chatInput') as InputElement;
+    const isFormValid = this.checkFormValidity(chatInput);
+
+    if (!isFormValid) {
+      console.error('Invalid input value');
+      return;
+    }
+
+    const input = chatInput.getInputElement();
     const message = input.value.trim();
+
     if (message) {
       (this.props as ChatInputProps).onSendMessage(message);
       input.value = '';

@@ -3,8 +3,9 @@ const tpl = `{{#if title}}
 {{/if}}
 {{#if subTitle}} 
 <p>{{ subTitle }}</p> 
+{{else}}
+{{{ titleInput }}}
 {{/if}}
-{{{ loginInput }}}
 <div class="form__footer">
 {{{ submitButton }}}
 {{{ cancelButton }}}

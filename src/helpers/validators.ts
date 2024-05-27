@@ -7,6 +7,7 @@ const errorMessages = {
   phone: 'Phone number must contain only numbers and be at least 11 digits long. It can start with a plus sign.',
   name: 'Invalid name.',
   message: 'Message is required.',
+  title: 'Chat name is required.',
 };
 
 const validateLogin = (login: string): boolean => {
@@ -59,6 +60,8 @@ const validate = (value: Record<string, string>, type: string): string | null =>
       return validateName(value.chatName) ? null : errorMessages.name;
     case 'message':
       return validateMessage(value.message) ? null : errorMessages.message;
+    case 'title':
+      return validateMessage(value.title) ? null : errorMessages.title;
     default:
       return null;
   }

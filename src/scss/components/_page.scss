@@ -57,10 +57,10 @@
 
   &__section {
     position: relative;
+  }
 
-    // @include create-mq($grid__bp-xl, 'min') {
-    //   flex: 1;
-    // }
+  &__spinner {
+    flex: 1
   }
 
   @include create-mq($grid__bp-md, 'min') {

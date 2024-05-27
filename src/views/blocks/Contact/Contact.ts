@@ -11,9 +11,8 @@ import tpl from './tpl';
 class Contact extends Block {
   constructor(props: Props) {
     super(props, 'li');
-    const { avatar, title } = props;
+    const { avatar, title } = props;  
     this.setProps({
-      attributes: { class: `${props.attributes?.class || ''} contact` },
       avatar: new Avatar({
         attributes: { class: 'contact__avatar' },
         src: avatar ? `${RESOURCE_URL}${avatar}` : holder,
@@ -30,6 +29,7 @@ class Contact extends Block {
   private handleClick(event: Event): void {
     event.preventDefault();
     actions.setActiveChatId(this.props.id as number);
+    this.updateActiveClass();
   }
 
   private updateActiveClass(): void {

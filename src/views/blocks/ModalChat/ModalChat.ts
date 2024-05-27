@@ -1,18 +1,18 @@
 import Block, { Props } from '@/core/Block';
-import { validate } from '@/helpers';
 import { Callback } from '@/utils/types';
 import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
 import { Button } from '@/views/components/Button';
 
 import tpl from './tpl';
+import validate from '@/helpers/validators';
 
-class ModalUserForm extends Block {
+class ModalChat extends Block {
   constructor(props: Props) {
     super(props, 'form');
     this.setProps({
       attributes: { class: 'form form_horizontal' },
-      loginInput: this.createLoginInput(),
+      titleInput: this.createTitleInput(),
       submitButton: this.createSubmitButton(),
       cancelButton: this.createCancelButton(),
     });
@@ -28,30 +28,30 @@ class ModalUserForm extends Block {
     });
   }
 
-  private createLoginInput(): InputElement {
+  private createTitleInput(): InputElement {
     const onBlur = (event: Event): void => {
       const { value } = event.target as HTMLInputElement;
-      const data = { login: value };
-      const validText = validate(data, 'login');
-      const input = this.getChild('loginInput') as InputElement;
+      const data = { title: value };
+      const validText = validate(data, 'title');
+      const input = this.getChild('titleInput') as InputElement;
       input.setIsValid(!validText);
       if (validText) input.setErrorMessage(validText);
     };
     const inputProps = {
       attributes: { class: 'form__row' },
-      inputAttributes: { name: 'login', type: 'text', placeholder: 'Login' },
+      inputAttributes: { name: 'title', type: 'text', placeholder: 'Chat name' },
       onBlur,
     };
     return this.createInput(inputProps);
   }
 
   private checkFormValidity(): boolean {
-    const loginInput = this.getChild('loginInput') as InputElement;
+    const titleInput = this.getChild('titleInput') as InputElement;
 
     let isFormValid = true;
 
-    if (loginInput?.getProps()?.isValid !== true) {
-      loginInput?.setErrorMessage('Invalid login');
+    if (titleInput?.getProps()?.isValid !== true) {
+      titleInput?.setErrorMessage('Required chat name');
       isFormValid = false;
     }
 
@@ -89,11 +89,6 @@ class ModalUserForm extends Block {
 
   private handleSubmit(event: Event): void {
     event.preventDefault();
-
-    if (!this.children.loginInput) {
-      return
-    }
-
     const form = this.element as HTMLFormElement;
 
     if (!form) {
@@ -111,7 +106,7 @@ class ModalUserForm extends Block {
     const formData = new FormData(form);
 
     const data: Record<string, unknown> = {
-      login: formData.get('login') || '',
+      title: formData.get('title') || '',
     };
 
     (this.props.onSubmit as Callback)?.(data);
@@ -124,4 +119,4 @@ class ModalUserForm extends Block {
   }
 }
 
-export default ModalUserForm;
+export default ModalChat;

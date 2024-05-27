@@ -17,6 +17,7 @@ class Input extends Block {
         blur: props.onBlur || ((): void => {}),
         input: props.onInput || ((): void => {}),
         change: props.onChange || ((): void => {}),
+        keydown: props.onKeyDown || ((): void => {}),
       },
     });
   }

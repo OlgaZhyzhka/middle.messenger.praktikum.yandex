@@ -35,6 +35,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: var(--grey);
+
+    .title {
+      margin-top: 10px;
+      display: block;
+      text-align: center;
+      line-height: 1;
+    }
   }
 
   &__body {
@@ -66,6 +73,15 @@
 
   &__input {
     flex: 1;
+
+    .input {
+      width: 100%;
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--color-primary);
+      }
+    }
   }
 
   &__button {
@@ -74,6 +90,13 @@
     .icon_send {
       background-color: var(--color-primary);
     }
+  }
+
+  &__add-button {
+    position: absolute;
+    right: 45px;
+    top: 8px;
+    z-index: var(--z-index-1);
   }
 
   &__item {
