@@ -21,7 +21,7 @@ interface Children {
 }
 
 interface ChildItems {
-  [key: string]: Block[];
+  [key: string]: Block[] | null;
 }
 
 interface SeparatedProps {
@@ -93,7 +93,9 @@ class Block {
   private _registerEvents(): void {
     this.eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     this.eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-    this.eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+    this.eventBus.on(Block.EVENTS.FLOW_CDU, (oldProps: unknown, newProps: unknown) => {
+      this._componentDidUpdate(oldProps as Props, newProps as Props);
+    });
     this.eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
@@ -126,7 +128,6 @@ class Block {
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target, prop: string, value): boolean => {
-        // console.log(`Setting prop ${prop} to`, value);
         if (!isEqual(target[prop], value)) {
           target[prop] = value;
           this._isUpdated = true;
@@ -138,8 +139,7 @@ class Block {
 
     const childrenProxy = new Proxy(children, {
       get: (target, prop: string): unknown => {
-        /* eslint-disable @typescript-eslint/no-explicit-any */
-        const value = target[prop] as any;
+        const value = target[prop] as unknown;
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target, prop: string, value): boolean => {
@@ -154,8 +154,7 @@ class Block {
 
     const childItemsProxy = new Proxy(childItems, {
       get: (target, prop: string): unknown => {
-        /* eslint-disable @typescript-eslint/no-explicit-any */
-        const value = target[prop] as any;
+        const value = target[prop] as unknown;
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target, prop: string, value): boolean => {
@@ -205,8 +204,6 @@ class Block {
 
     const { attributes } = this.props;
     this._setAttribute(attributes);
-
-    // console.log('Render element');
   }
 
   public render(): DocumentFragment {
@@ -225,7 +222,7 @@ class Block {
       }
     });
     Object.values(this.childItems).forEach((items) => {
-      items.forEach((item) => {
+      items?.forEach((item) => {
         if (item instanceof Block) {
           item.dispatchComponentDidMount();
         }
@@ -242,12 +239,13 @@ class Block {
   public componentWillUnmount(): void {
     if (this._element instanceof HTMLElement) {
       this._element.remove();
+      this._removeEvents();
     }
 
     this._element = null;
   }
 
-  public remove(): void {
+  public destroy(): void {
     this.componentWillUnmount();
   }
 
@@ -330,7 +328,7 @@ class Block {
     }
   };
 
-  public compile(template: any, props?: Props): DocumentFragment {
+  public compile(template: unknown, props?: Props): DocumentFragment {
     const propsToUse = typeof props === 'undefined' ? this.props : props;
 
     const propsAndStubs = { ...propsToUse };
@@ -367,7 +365,7 @@ class Block {
 
       const itemsContent = document.createElement('template');
 
-      items.forEach((item) => {
+      items?.forEach((item) => {
         if (item instanceof Block) {
           const content = item.getContent();
 

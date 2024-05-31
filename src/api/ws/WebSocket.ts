@@ -78,11 +78,19 @@ export default class WS extends EventBus {
     });
 
     socket.addEventListener('message', (message) => {
-      const data = JSON.parse(message.data);
-      if (Array.isArray(data)) {
-        this.emit(WS_EVENTS.message, data);
-      } else if (!['pong', 'user connected'].includes(data?.type)) {
-        this.emit(WS_EVENTS.message, data);
+      try {
+        const data = JSON.parse(message.data);
+        if (Array.isArray(data)) {
+          this.emit(WS_EVENTS.message, data);
+          //  if (data.length > 0) {
+          //  } else {
+          //    console.log('No messages in chat');
+          //  }
+        } else if (!['pong', 'user connected'].includes(data?.type)) {
+          this.emit(WS_EVENTS.message, data);
+        }
+      } catch (error) {
+        console.error('Error JSON parse:', error);
       }
     });
   }

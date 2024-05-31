@@ -2,4 +2,18 @@
   list-style: none;
   margin: 0;
   padding: 0;
+
+  &_user {
+    li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+      gap: 4px;
+      font-size: .875rem;
+    }
+
+    .title {
+      font-weight: 700;
+    }
+  }
 }

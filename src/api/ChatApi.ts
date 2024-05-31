@@ -23,16 +23,12 @@ class ChatApi extends BaseApi {
     return this.HTTP.get(`/${id}/users`);
   }
 
-  public addUsersToChat(chaiId: number, userId: number): Promise<ApiResponse> {
-    return this.HTTP.put('/users', { data: { users: { userId }, chaiId } });
-  }
-
-  public deleteUsersFromChat(chatId: number, userId: number): Promise<ApiResponse> {
-    return this.HTTP.delete('/users', { data: { users: [userId], chatId } });
-  }
-
-  public addUserToChat(chatId: number, userId: number): Promise<ApiResponse> {
+  public addUserToChat(userId: number, chatId: number): Promise<ApiResponse> {
     return this.HTTP.put('/users', { data: { users: [userId], chatId } });
+  }
+
+  public deleteUsersFromChat(userId: number, chatId: number): Promise<ApiResponse> {
+    return this.HTTP.delete('/users', { data: { users: [userId], chatId } });
   }
 
   public updateChatAvatar(file: File, chatId: number): Promise<ApiResponse> {

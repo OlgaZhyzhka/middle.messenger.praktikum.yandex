@@ -1,9 +1,11 @@
 import UserApi from '@/api/UserApi';
 import { store } from '@/store';
-import { handleError } from '@/helpers/handleError';
-import { HTTP_CODES } from '@/utils/enums';
-import { UpdateUser, UpdatePassword, User } from '@/utils/interfaces';
 import { actions } from '@/store/actions';
+import { handleApiError } from '@/helpers/handleApiError';
+import { handleResponseError } from '@/helpers/handleResponseError';
+import { ERRORS_MESSAGES, HTTP_CODES } from '@/utils/enums';
+import { UpdateUser, UpdatePassword, User, ApiResponse, ApiError } from '@/utils/interfaces';
+import { isAPIError } from '@/utils/guards';
 
 const userApi = new UserApi();
 
@@ -17,15 +19,14 @@ class UserService {
     try {
       store.set({ isLoading: true });
       const response = await userApi.updateProfile(data);
+      this.checkResponse(response);
       const { status, ...userData } = response;
-
-      if (status === HTTP_CODES.OK) {
-        this.updateUserProfile(userData as User);
-      }
+      this.updateUserProfile(userData as User);
     } catch (error: unknown) {
+      const errorMessage = handleApiError(error);
       console.error(error);
-      const errorMessage = handleError(error);
       actions.setUpdateError(errorMessage);
+      handleResponseError(error as ApiError);
     } finally {
       store.set({ isLoading: false });
     }
@@ -35,17 +36,15 @@ class UserService {
     try {
       store.set({ isLoading: true });
       const response = await userApi.updatePassword(data);
-      const { status } = response;
-
-      if (status === HTTP_CODES.OK) {
-        actions.setUpdatePassword(true);
-        actions.setUpdateError(null);
-        setTimeout(() => actions.setUpdatePassword(false), 5000);
-      }
+      this.checkResponse(response);
+      actions.setUpdatePassword(true);
+      actions.setUpdateError(null);
+      setTimeout(() => actions.setUpdatePassword(false), 5000);
     } catch (error: unknown) {
-      console.error(error);
-      const errorMessage = handleError(error);
+      const errorMessage = handleApiError(error);
       actions.setUpdateError(errorMessage);
+      console.error(errorMessage);
+      handleResponseError(error as ApiError);
     } finally {
       store.set({ isLoading: false });
     }
@@ -55,15 +54,14 @@ class UserService {
     try {
       store.set({ isLoading: true });
       const response = await userApi.updateAvatar(data);
+      this.checkResponse(response);
       const { status, ...userData } = response;
-
-      if (status === HTTP_CODES.OK) {
-        this.updateUserProfile(userData as User);
-      }
+      this.updateUserProfile(userData as User);
     } catch (error: unknown) {
-      console.error(error);
-      const errorMessage = handleError(error);
+      const errorMessage = handleApiError(error);
+      console.error(errorMessage);
       actions.setUpdateError(errorMessage);
+      handleResponseError(error as ApiError);
     } finally {
       store.set({ isLoading: false });
     }
@@ -72,20 +70,35 @@ class UserService {
   public static async findUser(login: string): Promise<User[] | undefined> {
     try {
       store.set({ isLoading: true });
-      const res = await userApi.findUser(login);
-      const { status, response } = res;
-
-      if (status === HTTP_CODES.OK) {
-        return response as User[];
-      }
+      const response = await userApi.findUser(login);
+      this.checkResponse(response);
+      const { data } = response;
+      return data as User[];
     } catch (error: unknown) {
-      console.error(error);
-      const errorMessage = handleError(error);
+      const errorMessage = handleApiError(error);
+      console.error(errorMessage);
       actions.setUpdateError(errorMessage);
+      handleResponseError(error as ApiError);
     } finally {
       store.set({ isLoading: false });
     }
     return undefined;
+  }
+
+  private static checkResponse(response: ApiResponse | ApiError): void {
+    if (!response) {
+      throw new Error(ERRORS_MESSAGES.RESPONSE_ERROR);
+    }
+
+    const { status } = response;
+
+    if (isAPIError(response)) {
+      throw new Error(response.reason);
+    }
+
+    if (status !== HTTP_CODES.OK) {
+      throw new Error(ERRORS_MESSAGES.USER_UPDATE_ERROR);
+    }
   }
 }
 

@@ -1,12 +1,13 @@
-import Block, { Props } from '@/core/Block';
-
+import Block from '@/core/Block';
+import { Callback } from '@/utils/types';
 import { Search } from '@/views/blocks/Search';
 import { ContactsList } from '@/views/blocks/ContactsList';
 
 import tpl from './tpl';
+import { ContactPanelProps } from './interfaces/ContactPanelProps';
 
-class ContactsPanel extends Block {
-  constructor(props: Props) {
+class ContactPanel extends Block {
+  constructor(props: ContactPanelProps) {
     super(props);
     this.setProps({
       search: this.createSearch(),
@@ -23,6 +24,8 @@ class ContactsPanel extends Block {
   private createContactsList(): Block {
     return new ContactsList({
       attributes: { class: 'contacts__list' },
+      onChatSelect: (chatId: number): void => (this.props.onChatSelect as Callback)(chatId),
+      disconnect: (): void => (this.props.disconnect as Callback)(),
     });
   }
 
@@ -31,4 +34,4 @@ class ContactsPanel extends Block {
   }
 }
 
-export default ContactsPanel;
+export default ContactPanel;

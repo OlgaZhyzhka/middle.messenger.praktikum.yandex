@@ -1,22 +1,25 @@
-import Block, { Props } from '@/core/Block';
+import Block from '@/core/Block';
 import ChatService from '@/services/ChatService';
 import UserService from '@/services/UserService';
 import { IStore } from '@/store';
+import { actions } from '@/store/actions';
 import connect from '@/helpers/connect';
 import { ChatHeader } from '@/views/blocks/ChatHeader';
 import { MessagesList } from '@/views/blocks/MessagesList';
 import { ChatInput } from '@/views/blocks/ChatInput';
-import { ModalUserForm } from '@/views/blocks/ModalUserForm';
+import { ModalUser } from '@/views/blocks/ModalUser';
 import { Modal } from '@/views/components/Modal';
 import { ModalUploadAvatar } from '@/views/blocks/ModalUploadAvatar';
 import { Button } from '@/views/components/Button';
 import { ModalChat } from '@/views/blocks/ModalChat';
 import { ModalConfirm } from '@/views/blocks/ModalConfirm';
+import { ModalInfo } from '@/views/blocks/ModalInfo';
 
+import { ChatProps } from './interfaces/ChatProps';
 import tpl from './tpl';
 
 class Chat extends Block {
-  constructor(props: Props) {
+  constructor(props: ChatProps) {
     super(props);
     this.setProps({
       attributes: { class: 'chat' },
@@ -24,18 +27,25 @@ class Chat extends Block {
       chatLog: this.createChatLog(),
       chatInput: this.createChatInput(),
       chatButton: this.createChatButton(),
+      modalInfo: new Modal({
+        content: new ModalInfo({
+          title: 'Information',
+        }),
+      }),
       modalAddUser: new Modal({
-        content: new ModalUserForm({
+        content: new ModalUser({
           title: 'Add user',
           subTitle: 'Enter user login',
+          users: this.props.chatUsers,
           onSubmit: (data: { login: string }): Promise<void> => this.addUserToChat(data),
           onCancel: (): void => this.handleCloseModal(this.children.modalAddUser as Modal),
         }),
       }),
       modalDeleteUser: new Modal({
-        content: new ModalUserForm({
+        content: new ModalUser({
           title: 'Delete user',
           subTitle: 'Enter user login',
+          users: this.props.chatUsers,
           onSubmit: (data: Record<string, string>): Promise<void> => this.deleteUserFromChat(data),
           onCancel: (): void => this.handleCloseModal(this.children.modalDeleteUser as Modal),
         }),
@@ -63,6 +73,10 @@ class Chat extends Block {
         }),
       }),
     });
+  }
+
+  private showModalInfo(): void {
+    (this.children.modalInfo as Modal)?.open();
   }
 
   private showModalCreateChat(event: Event): void {
@@ -95,17 +109,19 @@ class Chat extends Block {
       const user = await UserService.findUser(data.login);
 
       if (!user?.length) {
-        console.log('User not found');
-        const modalContent = this.children.modalAddUser.getChild('content') as ModalUserForm;
-        modalContent.setProps({ subTitle: 'User not found' });
+        const modalContent = this.children.modalAddUser.getChild('content');
+        modalContent?.setProps({ subTitle: 'User not found' });
         return;
       }
 
-      const userId = user[0].id;
+      const { id, login } = user[0];
 
       try {
-        await ChatService.addUserToChat(this.props.activeChatId as number, userId);
-        console.log('User added to chat successfully');
+        await ChatService.addUserToChat(id, this.props.activeChatId as number);
+        const modalInfoContent = this.children.modalInfo.getChild('content');
+        const chatTitle = actions.getChatById(this.props.activeChatId as number)?.title;
+        modalInfoContent?.setProps({ subTitle: `User ${login} added to chat ${chatTitle} successfully ` });
+        this.showModalInfo();
       } catch (error) {
         console.error('Error:', error);
       } finally {
@@ -131,17 +147,19 @@ class Chat extends Block {
       const user = await UserService.findUser(data.login);
 
       if (!user?.length) {
-        console.log('User not found');
-        const modalContent = this.children.modalDeleteUser.getChild('content') as ModalUserForm;
-        modalContent.setProps({ subTitle: 'User not found' });
+        const modalContent = this.children.modalDeleteUser.getChild('content');
+        modalContent?.setProps({ subTitle: 'User not found' });
         return;
       }
 
-      const userId = user[0].id;
+      const { id, login } = user[0];
 
       try {
-        await ChatService.deleteUserFromChat(this.props.activeChatId as number, userId);
-        console.log('User deleted from chat successfully');
+        await ChatService.deleteUserFromChat(id, this.props.activeChatId as number);
+        const modalInfoContent = this.children.modalInfo.getChild('content');
+        const chatTitle = actions.getChatById(this.props.activeChatId as number)?.title;
+        modalInfoContent?.setProps({ subTitle: `User ${login}  deleted from ${chatTitle} successfully` });
+        this.showModalInfo();
       } catch (error) {
         console.error('Error:', error);
       } finally {
@@ -165,7 +183,6 @@ class Chat extends Block {
 
   private async uploadAvatar(file: File): Promise<void> {
     try {
-      console.log(file);
       const chatId = this.props.activeChatId;
       await ChatService.updateChatAvatar(file, chatId as number);
     } catch (error) {
@@ -219,8 +236,9 @@ class Chat extends Block {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const mapStateToProps = ({ activeChatId }: IStore) => ({
+const mapStateToProps = ({ activeChatId, isChatLogLoading }: IStore) => ({
   activeChatId,
+  isChatLogLoading,
 });
 
 export default connect(mapStateToProps)(Chat);

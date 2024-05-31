@@ -4,19 +4,14 @@ import connect from '@/helpers/connect';
 import { IMessage } from '@/utils/interfaces';
 import { MessageElement } from '@/views/blocks/MessageElement';
 
-import tpl from './tpl';
-
 class MessagesList extends Block {
   constructor(props: Props) {
     super(props, 'ul');
-    const messageList: IMessage[] = (this.props.messages as Record<string, []>)?.list;
-    this.setProps({
-      chatMessages: this.createMessagesList(messageList),
-    });
   }
 
-  private createMessagesList(messageList: IMessage[]): Block[] | null {
-    if (!messageList || !messageList.length) {
+  private createMessagesList(): Block[] | null {
+    const messageList: IMessage[] = (this.props.messages as Record<string, []>)?.list;
+    if (!messageList) {
       return null;
     }
 
@@ -26,30 +21,42 @@ class MessagesList extends Block {
     });
   }
 
+  private scrollToBottom(): void {
+    const messagesElement = this.getContent();
+    const lastMessageElement = messagesElement?.lastChild;
+
+    if (lastMessageElement instanceof HTMLElement) {
+      lastMessageElement.scrollIntoView();
+    }
+  }
+
+  private updateMessages(): void {
+    this.setProps({
+      chatMessages: this.createMessagesList(),
+    });
+    setTimeout(() => {this.scrollToBottom()}, 0);
+  }
+
   public componentDidUpdate(oldProps: Props, newProps: Props): boolean {
     if (oldProps.messages !== newProps.messages) {
-      const messageList: IMessage[] = (newProps.messages as Record<string, []>)?.list;
-      this.setProps({
-        chatMessages: this.createMessagesList(messageList),
-      });
-
-      const messagesElement = this.getContent();
-      const lastMessageElement = messagesElement?.lastChild;
-      if (lastMessageElement instanceof HTMLElement) {
-        lastMessageElement.scrollIntoView({ behavior: 'smooth' });
-      }
+      this.updateMessages();
     }
 
     return true;
   }
 
   public render(): DocumentFragment {
-    return this.compile(tpl);
+    if (this.props.isChatLogLoading) {
+      return this.compile('');
+    }
+
+    return this.compile('{{{ chatMessages }}}');
   }
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const mapStateToProps = ({ user, messages }: IStore) => ({
+const mapStateToProps = ({ isChatLogLoading, user, messages }: IStore) => ({
+  isChatLogLoading,
   userId: user?.id,
   messages: { list: messages },
 });

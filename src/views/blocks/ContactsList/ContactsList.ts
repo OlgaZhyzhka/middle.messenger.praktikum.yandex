@@ -1,24 +1,16 @@
-import Block, { Props } from '@/core/Block';
+import Block from '@/core/Block';
 import { IStore } from '@/store';
+import { actions } from '@/store/actions';
 import connect from '@/helpers/connect';
+import { Callback } from '@/utils/types';
 import { IChat } from '@/utils/interfaces';
 import { Contact } from '@/views/blocks/Contact';
 
-import tpl from './tpl';
+import { ContactsListProps } from './interfaces/ContactsListProps';
 
 class ContactsList extends Block {
-  constructor(props: Props) {
+  constructor(props: ContactsListProps) {
     super(props, 'ul');
-    this.setProps({
-      contacts: this.createContacts(),
-    });
-  }
-
-  public componentDidUpdate(oldProps: Props, newProps: Props): boolean {
-    if (oldProps.chats !== newProps.chats) {
-      this.setProps({ contacts: this.createContacts() });
-    }
-    return true;
   }
 
   private createContacts(): Block[] | undefined {
@@ -28,19 +20,59 @@ class ContactsList extends Block {
       return undefined;
     }
 
-    return chats.map((chat) => new Contact({ attributes: { class: 'contacts__item' }, ...chat }));
+    return chats.map(
+      (chat) =>
+        new Contact({
+          attributes: { class: 'contacts__item' },
+          ...chat,
+          onClick: (chatId: number): Promise<void> => this.handleActiveChatChange(chatId),
+        })
+    );
+  }
+
+  private async handleActiveChatChange(chatId: number): Promise<void> {
+    if (chatId && chatId !== this.props.activeChatId) {
+      (this.props.disconnect as Callback)();
+      actions.setActiveChatId(chatId);
+      this.childItems?.contacts?.forEach((contact) => (contact as Contact).updateActiveClass());
+      (this.props.onChatSelect as Callback)(chatId);
+    }
+  }
+
+  private updateContacts(): void {
+    this.childItems.contacts = this.createContacts() as Block[];
+  }
+
+  public componentDidUpdate(oldProps: ContactsListProps, newProps: ContactsListProps): boolean {
+    if (oldProps.chats !== newProps.chats) {
+      this.updateContacts();
+    }
+
+    return true;
+  }
+
+  public async componentDidMount(): Promise<void> {
+    this.setProps({
+      contacts: this.createContacts(),
+    });
   }
 
   public render(): DocumentFragment {
-    return this.compile(tpl);
+    if (this.props.isChatListLoading) {
+      return this.compile('');
+    }
+    console.log('render contacts list')
+
+    return this.compile('{{{ contacts }}}');
   }
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const mapStateToProps = ({ isLoading, chats, activeChatId }: IStore) => ({
-  isLoading,
+const mapStateToProps = ({ isChatListLoading, chats, chatUsers, activeChatId }: IStore) => ({
+  isChatListLoading,
   activeChatId,
   chats: { list: chats },
+  users: { list: chatUsers },
 });
 
 export default connect(mapStateToProps)(ContactsList);

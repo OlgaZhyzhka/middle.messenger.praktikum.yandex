@@ -1,16 +1,21 @@
 import Block, { Props } from '@/core/Block';
+import { IStore } from '@/store';
+import connect from '@/helpers/connect';
 import { validate } from '@/helpers';
 import { Callback } from '@/utils/types';
+import { ChatUser } from '@/utils/interfaces';
 import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
 import { Button } from '@/views/components/Button';
+import { User } from '@/views/blocks/User';
 
 import tpl from './tpl';
 
-class ModalUserForm extends Block {
+class ModalUser extends Block {
   constructor(props: Props) {
     super(props, 'form');
     this.setProps({
+      userList: this.createUserList(),
       attributes: { class: 'form form_horizontal' },
       loginInput: this.createLoginInput(),
       submitButton: this.createSubmitButton(),
@@ -119,9 +124,42 @@ class ModalUserForm extends Block {
     form.reset();
   }
 
+  private createUserList(): Block[] | undefined {
+    const users: ChatUser[] = (this.props.users as Record<string, []>)?.list;
+
+    if (!users) {
+      return undefined;
+    }
+
+    return users
+      .sort((_, b) => (b.role === 'admin' ? 1 : -1))
+      .map(
+        (user) =>
+          new User({
+            ...user,
+          })
+      );
+  }
+
+  public componentDidUpdate(oldProps: Props, newProps: Props): boolean {
+    if (oldProps.users !== newProps.users) {
+      this.setProps({
+        userList: this.createUserList(),
+      });
+    }
+
+    return true;
+  }
+
   public render(): DocumentFragment {
     return this.compile(tpl);
   }
 }
 
-export default ModalUserForm;
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const mapStateToProps = ({ isChatUserLoading, chatUsers }: IStore) => ({
+  isChatUserLoading,
+  users: { list: chatUsers },
+});
+
+export default connect(mapStateToProps)(ModalUser);

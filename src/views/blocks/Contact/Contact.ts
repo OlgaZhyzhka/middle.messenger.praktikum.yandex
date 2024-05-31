@@ -1,8 +1,7 @@
 import Block, { Props } from '@/core/Block';
 import { actions } from '@/store/actions';
 import { RESOURCE_URL } from '@/api/http/ApiUrl';
-import connect from '@/helpers/connect';
-import { IStore } from '@/store';
+import { Callback } from '@/utils/types';
 import { holder } from '@/utils/constants';
 import { Avatar } from '@/views/components/Avatar';
 
@@ -13,6 +12,7 @@ class Contact extends Block {
     super(props, 'li');
     const { avatar, title } = props;
     this.setProps({
+      attributes: { class: `${this.props.attributes?.class || ''} contact`.trim() },
       avatar: new Avatar({
         attributes: { class: 'contact__avatar' },
         src: avatar ? `${RESOURCE_URL}${avatar}` : holder,
@@ -28,23 +28,20 @@ class Contact extends Block {
 
   private handleClick(event: Event): void {
     event.preventDefault();
-    actions.setActiveChatId(this.props.id as number);
-    this.updateActiveClass();
+    (this.props.onClick as Callback)?.(this.props.id as number);
   }
 
-  private updateActiveClass(): void {
-    const isActive = this.props.id === this.props.activeChatId;
-    const baseClass = this.props.attributes?.class || '';
-    const activeClass = isActive ? 'contact contact_active' : 'contact';
-    this.setProps({ attributes: { class: `${baseClass} ${activeClass}` } });
-  }
+  public updateActiveClass(): void {
+    const isActive = this.props.id === actions.getActiveChatId();
+    const activeClass = 'contact_active';
+    let className = this.props.attributes?.class || '';
+    className = typeof className === 'string' ? className.replace(activeClass, '').trim() : '';
 
-  public componentDidUpdate(oldProps: Props, newProps: Props): boolean {
-    if (oldProps.activeChatId !== newProps.activeChatId) {
-      this.updateActiveClass();
+    if (isActive) {
+      className += ` ${activeClass}`;
     }
 
-    return true;
+    this.setProps({ attributes: { class: `${className}` } });
   }
 
   public render(): DocumentFragment {
@@ -52,9 +49,4 @@ class Contact extends Block {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const mapStateToProps = ({ activeChatId }: IStore) => ({
-  activeChatId,
-});
-
-export default connect(mapStateToProps)(Contact);
+export default Contact;

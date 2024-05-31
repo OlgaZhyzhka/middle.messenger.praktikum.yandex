@@ -5,7 +5,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
     "prebuild": "tsc --noEmit",
     "build": "npm run prebuild && vite build",
     "start": "npm run build && node server.js",
@@ -57,8 +57,7 @@
       "eslint --cache --fix"
     ],
     "src/scss/**/*.scss": [
-      "stylelint --fix",
-      "git add"
+      "stylelint 'src/scss/**/*.scss' --fix"
     ]
   }
 }

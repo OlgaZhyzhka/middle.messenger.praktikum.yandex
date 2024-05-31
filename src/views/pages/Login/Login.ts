@@ -23,9 +23,9 @@ class Login extends BasePage {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const mapStateToProps = ({ isLoading, authError }: IStore) => ({
+const mapStateToProps = ({ isLoading, loginError }: IStore) => ({
   isLoading,
-  authError,
+  loginError,
 });
 
 export default connect(mapStateToProps)(Login);

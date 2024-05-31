@@ -26,9 +26,9 @@ class Registration extends BasePage {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const mapStateToProps = ({ isLoading, authError }: IStore) => ({
+const mapStateToProps = ({ isLoading, signUpError }: IStore) => ({
   isLoading,
-  authError,
+  signUpError,
 });
 
 export default connect(mapStateToProps)(Registration);

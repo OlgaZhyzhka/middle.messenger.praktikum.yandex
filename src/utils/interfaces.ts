@@ -98,11 +98,12 @@ export interface IChat {
 
 export interface ApiError {
   reason?: string;
+  status?: number;
 }
 
 export interface ApiResponse {
   status: number;
-  response?: string | ApiError | DeleteChatResponse;
+  data?: string | PlainObject | unknown;
   token?: string;
   id?: number;
 }
@@ -115,6 +116,11 @@ export interface DeleteChatResponse {
     avatar: string;
     created_by: number;
   };
+}
+
+export interface UpdateChatAvatarResponse {
+  id: number;
+  avatar: string;
 }
 
 export interface SignUpResponse {

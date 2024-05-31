@@ -57,10 +57,10 @@ Basic Html pages and css styles are are developed. Chat list page in development
 
 ## Remaining tasks
 
-- Optimize render component und update Message page and child components and fix reactivity components.
-- Complete the development of the chat list component with reset chat log and chat list data on change by click.
-- Implement message send on press key Enter.
-- Implement search functionality in the chat.
+- Update chat list when add / delete users in this chat
+
 - Add support for file attachments.
+- Implement search functionality in chat list.
+
 - Improve error handling and error messages.
 - Optimize performance and fix bugs.

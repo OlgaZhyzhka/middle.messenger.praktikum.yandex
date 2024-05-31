@@ -73,6 +73,7 @@
   }
 
   &__input {
+    position: relative;
     flex: 1;
 
     .input {
@@ -82,6 +83,11 @@
         outline: none;
         box-shadow: 0 0 0 2px var(--color-primary);
       }
+    }
+
+    .form__error {
+      position: absolute;
+      top: -25px;
     }
   }
 

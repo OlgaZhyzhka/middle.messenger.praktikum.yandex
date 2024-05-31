@@ -17,12 +17,12 @@ export type VARIANT =
 
 export type SHAPE = 'round' | 'circle' | 'rounded' | 'default';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export type Callback = (...args: any[]) => void;
+export type Callback = (...args: unknown[]) => void;
+
+export type EventCallback = (event: Event) => void;
 
 export type MiddleWare = (pathname: string) => boolean;
 
-export type EventCallback = (event: Event) => void;
 
 export type PlainObject<T = unknown> = {
   [k in string]: T;
