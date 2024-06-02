@@ -35,7 +35,7 @@ class ChatInput extends Block {
         items: dropdownUpload,
       }),
       fileInputMedia: new Input({
-        attributes: { class: 'input_file', type: 'file', accept: 'image/*, video/*', id: 'file-input-media' },
+        attributes: { class: 'input_file', type: 'file', accept: 'image/*', id: 'file-input-media' },
         onChange: (event: Event): void => this.handleAttachMedia(event),
       }),
       fileInputFile: new Input({
