@@ -223,11 +223,24 @@ class Chat extends Block {
     return new ChatInput({
       attributes: { class: 'chat__footer' },
       onSendMessage: (message: string): void => this.handleSendMessage(message),
+      onSendFile: (file: File): void => this.handleSendFile(file),
     });
   }
 
   private handleSendMessage(message: string): void {
-    ChatService.sendMessage(message);
+    if (!message) {
+      return;
+    }
+
+    ChatService.sendMessage(message, 'message');
+  }
+
+  private handleSendFile(file: File): void {
+    if (!file) {
+      return;
+    }
+
+    ChatService.sendFile(file);
   }
 
   public render(): DocumentFragment {

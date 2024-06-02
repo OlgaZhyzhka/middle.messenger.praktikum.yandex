@@ -7,6 +7,14 @@ import EventBus from './EventBus';
 
 Handlebars.registerHelper('eq', (a, b) => a === b);
 
+Handlebars.registerHelper('if_eq', function (this: unknown, a, b, opts) {
+  if (a === b) {
+    return opts.fn(this);
+  } 
+    return opts.inverse(this);
+  
+});
+
 export interface Props {
   [key: string]: unknown;
   settings?: {
@@ -89,6 +97,13 @@ class Block {
   public getChild(name: string): Block | undefined {
     return this.children[name];
   }
+
+  public getChildItems(name: string): Block[] | null {
+    return this.childItems[name];
+  }
+  
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public filterContacts(_: string): void {}
 
   private _registerEvents(): void {
     this.eventBus.on(Block.EVENTS.INIT, this._init.bind(this));

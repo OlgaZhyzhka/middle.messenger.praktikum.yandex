@@ -18,6 +18,7 @@ class ContactPanel extends Block {
   private createSearch(): Block {
     return new Search({
       attributes: { class: 'contacts__search' },
+      onSearch: (value: string): void => this.handleSearch(value),
     });
   }
 
@@ -27,6 +28,11 @@ class ContactPanel extends Block {
       onChatSelect: (chatId: number): void => (this.props.onChatSelect as Callback)(chatId),
       disconnect: (): void => (this.props.disconnect as Callback)(),
     });
+  }
+
+  private handleSearch(value: string): void {
+    const contactsList = this.getChild('contactsList');
+    contactsList?.filterContacts(value);
   }
 
   public render(): DocumentFragment {

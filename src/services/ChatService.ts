@@ -174,12 +174,26 @@ class ChatService {
     this.socket.send({ content: offset.toString(), type: 'get old' });
   }
 
-  public static sendMessage(message: string): void {
+  public static sendMessage(message: string, type: string): void {
     if (!this.socket) {
       throw new Error('Socket is not connected');
     }
 
-    this.socket.send({ content: message, type: 'message' });
+    this.socket.send({ content: message, type });
+  }
+
+  public static async sendFile(file: File): Promise<void> {
+    if (!this.socket) {
+      throw new Error('Socket is not connected');
+    }
+
+    const response = await chatApi.sendFile(file);
+    this.checkResponse(response);
+
+    
+    const { status, ...fileData } = response;
+    const message = String(fileData.id);
+    this.sendMessage(message, 'file');
   }
 
   public static disconnect(): void {

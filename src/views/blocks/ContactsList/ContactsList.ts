@@ -43,6 +43,19 @@ class ContactsList extends Block {
     this.childItems.contacts = this.createContacts() as Block[];
   }
 
+  public filterContacts(value: string): void {
+    this.childItems.contacts?.forEach((contact) => {
+      const contactElement = contact.getContent();
+      const contactName = contactElement?.querySelector('.contact__title')?.textContent;
+
+      if (contactName?.toLowerCase().includes(value.toLowerCase())) {
+        contactElement?.classList.remove('visually-hidden');
+      } else {
+        contactElement?.classList.add('visually-hidden');
+      }
+    });
+  }
+
   public componentDidUpdate(oldProps: ContactsListProps, newProps: ContactsListProps): boolean {
     if (oldProps.chats !== newProps.chats) {
       this.updateContacts();
@@ -61,7 +74,6 @@ class ContactsList extends Block {
     if (this.props.isChatListLoading) {
       return this.compile('');
     }
-    console.log('render contacts list')
 
     return this.compile('{{{ contacts }}}');
   }

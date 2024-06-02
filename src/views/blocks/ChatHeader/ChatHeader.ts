@@ -67,8 +67,9 @@ class ChatHeader extends Block {
     if (!chatItem) {
       return;
     }
-
-    const { avatar, title } = chatItem;
+    
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const { avatar, title, created_by } = chatItem;
     this.setProps({
       title,
     });
@@ -77,6 +78,16 @@ class ChatHeader extends Block {
       src: avatar ? `${RESOURCE_URL}${avatar}` : holder,
       alt: title,
     });
+    const currentUser = actions.getUser();
+    if (currentUser?.id === created_by) {
+      this.setProps({
+        showControls: true,
+      });
+    } else {
+      this.setProps({
+        showControls: false,
+      });
+    }
   }
 
   public componentDidUpdate(oldProps: Props, newProps: Props): boolean {

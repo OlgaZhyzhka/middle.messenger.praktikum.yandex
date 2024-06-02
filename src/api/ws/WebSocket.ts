@@ -82,10 +82,6 @@ export default class WS extends EventBus {
         const data = JSON.parse(message.data);
         if (Array.isArray(data)) {
           this.emit(WS_EVENTS.message, data);
-          //  if (data.length > 0) {
-          //  } else {
-          //    console.log('No messages in chat');
-          //  }
         } else if (!['pong', 'user connected'].includes(data?.type)) {
           this.emit(WS_EVENTS.message, data);
         }

@@ -59,7 +59,6 @@ Basic Html pages and css styles are are developed. Chat list page in development
 
 - Update chat list when add / delete users in this chat
 
-- Add support for file attachments.
 - Implement search functionality in chat list.
 
 - Improve error handling and error messages.

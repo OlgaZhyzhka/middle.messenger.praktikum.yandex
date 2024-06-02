@@ -72,6 +72,15 @@ class Actions {
     store.set({
       chats: store.getState().chats.filter((chat) => chat.id !== chatId),
     });
+    store.set({
+      messages: store.getState().messages.filter((message) => message.chat_id !== chatId),
+    });
+
+    const activeChatId = this.getActiveChatId();
+
+    if (activeChatId === chatId) {
+      this.setActiveChatId(null);
+    }
   }
 
   public updateChatAvatar(chatId: number, avatar: string): void {

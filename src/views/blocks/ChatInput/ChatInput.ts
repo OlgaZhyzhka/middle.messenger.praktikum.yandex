@@ -19,16 +19,6 @@ class ChatInput extends Block {
         iconName: 'media',
         inputId: 'file-input-media',
       },
-      {
-        title: 'File',
-        iconName: 'file',
-        inputId: 'file-input-file',
-      },
-      {
-        title: 'Location',
-        iconName: 'location',
-        inputId: 'file-input-location',
-      },
     ];
     this.setProps({
       attributes: { class: 'chat__footer' },
@@ -50,7 +40,7 @@ class ChatInput extends Block {
       }),
       fileInputFile: new Input({
         attributes: { class: 'input_file', type: 'file', style: 'display: none;', id: 'file-input-file' },
-        onChange: (event: Event): void => this.handleAttachFile(event),
+        onChange: (event: Event): void => this.handleAttachMedia(event),
       }),
     });
   }
@@ -98,20 +88,20 @@ class ChatInput extends Block {
     return this.createInput(inputProps);
   }
 
-  private handleAttachFile(event: Event): void {
-    const fileInput = event.target as HTMLInputElement;
-    if (fileInput.files && fileInput.files.length > 0) {
-      const file = fileInput.files[0];
-      console.log('Media file:', file);
-      (this.children.dropdown as Dropdown).closeDropdown();
-    }
-  }
+  // private handleAttachFile(event: Event): void {
+  //   const fileInput = event.target as HTMLInputElement;
+  //   if (fileInput.files && fileInput.files.length > 0) {
+  //     const file = fileInput.files[0];
+  //     console.log('Media file:', file);
+  //     (this.children.dropdown as Dropdown).closeDropdown();
+  //   }
+  // }
 
   private handleAttachMedia(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
-      console.log('Media file:', file);
+      (this.props as ChatInputProps).onSendFile(file);
       (this.children.dropdown as Dropdown).closeDropdown();
     }
   }

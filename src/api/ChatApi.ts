@@ -1,8 +1,11 @@
 import { ApiResponse } from '@/utils/interfaces';
 
 import BaseApi from './BaseApi';
+import HTTPTransport from './http/HTTPTransport';
 
 class ChatApi extends BaseApi {
+  private http: HTTPTransport = new HTTPTransport();
+
   constructor() {
     super('/chats');
   }
@@ -44,6 +47,16 @@ class ChatApi extends BaseApi {
     }
 
     return this.HTTP.delete('', { data: { chatId } });
+  }
+
+  public sendFile(file: File): Promise<ApiResponse> {
+    const data = new FormData();
+    data.append('resource', file);
+    return this.http.post('/resources', { data });
+  }
+
+  public getFile(path: string): Promise<ApiResponse> {
+    return this.HTTP.get(`/resources/${path}`);
   }
 
   public getToken(chatId: number): Promise<ApiResponse> {
