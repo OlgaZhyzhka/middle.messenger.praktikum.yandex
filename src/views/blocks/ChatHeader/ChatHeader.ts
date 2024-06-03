@@ -79,6 +79,7 @@ class ChatHeader extends Block {
       alt: title,
     });
     const currentUser = actions.getUser();
+    
     if (currentUser?.id === created_by) {
       this.setProps({
         showControls: true,

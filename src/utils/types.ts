@@ -23,6 +23,7 @@ export type EventCallback = (event: Event) => void;
 
 export type MiddleWare = (pathname: string) => boolean;
 
+export type Listener = (...args: unknown[]) => void; 
 
 export type PlainObject<T = unknown> = {
   [k in string]: T;

@@ -40,6 +40,10 @@ export default class WS extends EventBus {
         this.off(WS_EVENTS.error, reject);
         resolve();
       });
+      this.on(WS_EVENTS.close, () => {
+        this.off(WS_EVENTS.error, reject);
+        resolve();
+      });
     });
   }
 
@@ -91,7 +95,7 @@ export default class WS extends EventBus {
     });
   }
 
-  public send(data: string | number | object): void {
+  public send(data: string | number | Record<string, string | number>): void {
     if (!this.socket) {
       throw new Error(ERRORS_MESSAGES.WS_NOT_CONNECTED);
     }

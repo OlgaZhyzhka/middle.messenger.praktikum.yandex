@@ -38,12 +38,13 @@ class ChatService {
       this.checkResponse(response);
       const { ...data } = response as unknown as DeleteChatResponse;
       actions.deleteChat(chatId);
-      this.disconnect();
       console.log('Chat deleted successfully', data.result.title);
     } catch (error: unknown) {
       const errorMessage = handleApiError(error);
       console.error(errorMessage);
       handleResponseError(error as ApiError);
+    } finally {
+      this.disconnect(); 
     }
   }
 
@@ -130,11 +131,12 @@ class ChatService {
       const response = await chatApi.deleteUsersFromChat(userId, chatId);
       this.checkResponse(response);
       actions.deleteChatUser(userId);
-      this.disconnect();
     } catch (error: unknown) {
       const errorMessage = handleApiError(error);
       console.error(errorMessage);
       handleResponseError(error as ApiError);
+    } finally {
+      this.disconnect();
     }
   }
 
@@ -190,7 +192,6 @@ class ChatService {
     const response = await chatApi.sendFile(file);
     this.checkResponse(response);
 
-    
     const { status, ...fileData } = response;
     const message = String(fileData.id);
     this.sendMessage(message, 'file');

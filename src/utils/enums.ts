@@ -40,6 +40,7 @@ export enum WS_EVENTS {
   message = 'message',
   error = 'error',
   close = 'close',
+  delete = 'delete',
 }
 
 export const enum ROUTES {

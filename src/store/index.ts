@@ -53,6 +53,7 @@ class Store extends EventBus {
       this.emit(StoreEvents.Updated, prevState, nextState);
     }
   }
+
 }
 
 const defaultState: PlainObject = {

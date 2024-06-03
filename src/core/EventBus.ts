@@ -1,4 +1,4 @@
-type Listener = (...args: unknown[]) => void; 
+import { Listener } from "@/utils/types";
 
 class EventBus {
   public listeners: { [key: string]: Listener[] } = {};
