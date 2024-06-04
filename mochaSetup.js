@@ -1,4 +1,4 @@
-// import 'tsconfig-paths/register';
+import 'tsconfig-paths/register';
 import { JSDOM } from 'jsdom';
 const jsdom = new JSDOM('<body></body>');
 

@@ -101,6 +101,7 @@ class ChatService {
       const userId = actions.getUser()?.id;
 
       if (userId) {
+        this.disconnect();
         await this.connectToChat(userId, chatId);
       }
     } catch (error: unknown) {
@@ -135,8 +136,6 @@ class ChatService {
       const errorMessage = handleApiError(error);
       console.error(errorMessage);
       handleResponseError(error as ApiError);
-    } finally {
-      this.disconnect();
     }
   }
 

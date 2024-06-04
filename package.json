@@ -15,7 +15,7 @@
     "lint:fix": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0 --fix",
     "lint:css": "stylelint 'src/scss/**/*.scss'",
     "lint:css:fix": "npm run lint:css -- --fix",
-    "prepare": "husky install",
+    "prepare": "husky install && chmod ug+x .husky/*",
     "test": "mocha"
   },
   "engines": {

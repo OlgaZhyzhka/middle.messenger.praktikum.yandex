@@ -21,7 +21,6 @@ class Messenger extends Block {
       contactPanel: new ContactPanel({
         attributes: { class: 'contacts panel' },
         onChatSelect: (chatId: number): Promise<void> => this.handleChatSelect(chatId),
-        disconnect: (): void => this.disconnect(),
       }),
     });
   }
@@ -34,10 +33,6 @@ class Messenger extends Block {
         console.error(error);
       }
     }
-  }
-
-  private disconnect(): void {
-    ChatService.disconnect();
   }
 
   public async componentDidMount(): Promise<void> {

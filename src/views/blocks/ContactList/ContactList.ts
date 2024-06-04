@@ -6,10 +6,10 @@ import { Callback } from '@/utils/types';
 import { IChat } from '@/utils/interfaces';
 import { Contact } from '@/views/blocks/Contact';
 
-import { ContactsListProps } from './interfaces/ContactsListProps';
+import { ContactListProps } from './interfaces/ContactListProps';
 
-class ContactsList extends Block {
-  constructor(props: ContactsListProps) {
+class ContactList extends Block {
+  constructor(props: ContactListProps) {
     super(props, 'ul');
   }
 
@@ -44,7 +44,7 @@ class ContactsList extends Block {
 
   public filterContacts(value: string): void {
     this.childItems.contacts?.forEach((contact) => {
-      const contactElement = contact.getContent();
+      const contactElement = contact.element;
       const contactName = contactElement?.querySelector('.contact__title')?.textContent;
 
       if (contactName?.toLowerCase().includes(value.toLowerCase())) {
@@ -55,7 +55,7 @@ class ContactsList extends Block {
     });
   }
 
-  public componentDidUpdate(oldProps: ContactsListProps, newProps: ContactsListProps): boolean {
+  public componentDidUpdate(oldProps: ContactListProps, newProps: ContactListProps): boolean {
     if (oldProps.chats !== newProps.chats) {
       this.updateContacts();
     }
@@ -86,4 +86,4 @@ const mapStateToProps = ({ isChatListLoading, chats, chatUsers, activeChatId }: 
   users: { list: chatUsers },
 });
 
-export default connect(mapStateToProps)(ContactsList);
+export default connect(mapStateToProps)(ContactList);

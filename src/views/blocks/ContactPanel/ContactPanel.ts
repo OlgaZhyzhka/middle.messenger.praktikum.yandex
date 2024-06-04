@@ -26,7 +26,6 @@ class ContactPanel extends Block {
     return new ContactsList({
       attributes: { class: 'contacts__list' },
       onChatSelect: (chatId: number): void => (this.props.onChatSelect as Callback)(chatId),
-      disconnect: (): void => (this.props.disconnect as Callback)(),
     });
   }
 
