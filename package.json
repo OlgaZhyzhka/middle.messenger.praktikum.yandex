@@ -16,7 +16,7 @@
     "lint:css": "stylelint 'src/scss/**/*.scss'",
     "lint:css:fix": "npm run lint:css -- --fix",
     "prepare": "husky install",
-    "test": "mocha"
+    "test": "mocha --no-warnings"
   },
   "engines": {
     "node": ">=18.0.0"
