@@ -9,9 +9,8 @@ import tpl from './tpl';
 
 class ModalChat extends Block {
   constructor(props: Props) {
-    super(props, 'form');
+    super({ ...props, attributes: { class: 'form form_horizontal' } }, 'form');
     this.setProps({
-      attributes: { class: 'form form_horizontal' },
       titleInput: this.createTitleInput(),
       submitButton: this.createSubmitButton(),
       cancelButton: this.createCancelButton(),

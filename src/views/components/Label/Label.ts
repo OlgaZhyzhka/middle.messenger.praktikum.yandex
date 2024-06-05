@@ -4,13 +4,16 @@ import { LabelProps } from './interfaces/LabelProps';
 
 class Label extends Block {
   constructor(props: LabelProps) {
-    super(props, 'label');
-    this.setProps({
-      attributes: {
-        class: `${props.attributes?.class || ''} label`.trim(),
-        for: props.for ? props.for : '',
+    super(
+      {
+        ...props,
+        attributes: {
+          class: `${props.attributes?.class || ''} label`.trim(),
+          for: props.for ? props.for : '',
+        },
       },
-    });
+      'label'
+    );
   }
 
   public render(): DocumentFragment {

@@ -7,14 +7,13 @@ import tpl from './tpl';
 
 class Modal extends Block {
   constructor(props: ModalProps) {
-    super(props);
     const { size = 'sm', isOpen } = props;
 
     const sizeClass = size ? `modal_${size}` : '';
     const openClass = isOpen ? 'modal_open' : '';
     const className = `modal ${sizeClass} ${openClass}`.trim();
-
-    this.setProps({
+    super({
+      ...props,
       attributes: {
         ...props.attributes,
         class: `${props.attributes?.class || ''} ${className}`.trim(),
@@ -39,13 +38,13 @@ class Modal extends Block {
   }
 
   public close(): void {
-    const element = this.getContent();
+    const {element} = this;
     element?.classList.remove('modal_open');
     (this.props.onClose as Callback)?.();
   }
 
   public open(): void {
-    const element = this.getContent();
+    const {element} = this;
     element?.classList.add('modal_open');
     (this.props.onOpen as Callback)?.();
   }

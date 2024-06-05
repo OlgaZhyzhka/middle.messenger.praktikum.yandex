@@ -7,9 +7,8 @@ import tpl from './tpl';
 
 class Logo extends Block {
   constructor(props: Props) {
-    super(props);
-
-    this.setProps({
+    super({
+      ...props,
       attributes: { class: 'logo' },
       logoLink: new RouterLink({
         children: `

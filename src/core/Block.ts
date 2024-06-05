@@ -102,8 +102,8 @@ class Block {
     return this.childItems[name];
   }
   
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public filterContacts(_: string): void {}
+   
+  // public filterContacts(_: string): void {}
 
   private _registerEvents(): void {
     this.eventBus.on(Block.EVENTS.INIT, this._init.bind(this));

@@ -13,10 +13,9 @@ import tpl from './tpl';
 
 class ModalUser extends Block {
   constructor(props: Props) {
-    super(props, 'form');
+    super({ ...props, attributes: { class: 'form form_horizontal' } }, 'form');
     this.setProps({
       userList: this.createUserList(),
-      attributes: { class: 'form form_horizontal' },
       loginInput: this.createLoginInput(),
       submitButton: this.createSubmitButton(),
       cancelButton: this.createCancelButton(),

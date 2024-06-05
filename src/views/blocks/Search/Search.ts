@@ -17,8 +17,8 @@ class Search extends Block {
   private searchActivated = false;
 
   constructor(props: Props) {
-    super(props);
-    this.setProps({
+    super({
+      ...props,
       attributes: { class: 'search' },
       searchAction: new InputAddon({
         placement: 'right',
@@ -61,8 +61,7 @@ class Search extends Block {
 
     if (!this.searchActivated && value) {
       actions.setActiveChatId(null);
-      this.searchActivated = true;
-      console.log('searchActivated', this.searchActivated);
+      // this.searchActivated = true;
     }
 
     this.toggleIcons(value);

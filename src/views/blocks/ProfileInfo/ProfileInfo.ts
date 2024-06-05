@@ -9,10 +9,9 @@ import tpl from './tpl';
 
 class ProfileInfo extends Block {
   constructor(props: Props) {
-    super(props);
-    const { avatar, firstName, secondName, phone, email, login, chatName } = this.props;
-
-    this.setProps({
+    const { avatar, firstName, secondName, phone, email, login, chatName } = props;
+    super({
+      ...props,
       attributes: { class: `${props.attributes?.class || ''} profile__info`.trim() },
       avatar: new Avatar({ src: avatar ? `${RESOURCE_URL}${avatar}` : holder, size: 'lg' }),
       email,

@@ -7,16 +7,13 @@ import tpl from './tpl';
 
 class User extends Block {
   constructor(props: Props) {
-    super(props, 'li');
     const { avatar, login, role } = props;
-    this.setProps({
-      isAdmin: role === 'admin',
+    super({...props,isAdmin: role === 'admin',
       avatar: new Avatar({
         src: avatar ? `${RESOURCE_URL}${avatar}` : holder,
         alt: login,
         size: 'xs',
-      }),
-    });
+      })}, 'li');
   }
 
 

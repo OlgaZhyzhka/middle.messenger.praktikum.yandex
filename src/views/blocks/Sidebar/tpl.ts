@@ -4,11 +4,8 @@ const tpl = `<div class="sidebar__container">
 <span class="sidebar__title">{{ login }}</span>
 {{#if isMessenger}} 
 {{{ userAvatar }}}
-{{{ linkToProfile }}}
 {{/if}} 
-{{#if isSettings}} 
-{{{ linkToLogout }}}
-{{/if}} 
+{{{ link }}}
 </div>
 </div>`;
 export default tpl;

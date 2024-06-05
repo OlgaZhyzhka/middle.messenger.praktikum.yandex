@@ -9,8 +9,8 @@ class PasswordInput extends Block {
   private isPasswordVisible: boolean;
 
   constructor(props: Props) {
-    super(props);
-    this.setProps({
+    super({
+      ...props,
       inputAddon: new InputAddon({
         placement: 'right',
         addon: new IconButton({

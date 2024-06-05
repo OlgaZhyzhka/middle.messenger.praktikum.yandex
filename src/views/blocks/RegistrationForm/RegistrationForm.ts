@@ -14,9 +14,11 @@ import tpl from './tpl';
 
 class RegistrationForm extends Block {
   constructor(props: Props) {
-    super(props, 'form');
+    super(
+      { ...props, attributes: { class: 'form form_horizontal form_auth' }, text: 'Already have an account?' },
+      'form'
+    );
     this.setProps({
-      attributes: { class: 'form form_horizontal form_auth' },
       loginInput: this.createLoginInput(),
       emailInput: this.createEmailInput(),
       firstNameInput: this.createFirstNameInput(),
@@ -26,7 +28,6 @@ class RegistrationForm extends Block {
       confirmPasswordInput: this.createConfirmPasswordInput(),
       submitButton: this.createSubmitButton(),
       navButton: this.createNavButton(),
-      text: 'Already have an account?',
     });
   }
 

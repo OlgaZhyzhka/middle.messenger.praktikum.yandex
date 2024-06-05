@@ -12,7 +12,6 @@ import tpl from './tpl';
 
 class ChatInput extends Block {
   constructor(props: ChatInputProps) {
-    super(props);
     const dropdownUpload: DropdownItemProps[] = [
       {
         title: 'Media',
@@ -20,7 +19,8 @@ class ChatInput extends Block {
         inputId: 'file-input-media',
       },
     ];
-    this.setProps({
+    super({
+      ...props,
       attributes: { class: 'chat__footer' },
       sendButton: new IconButton({
         attributes: { class: 'chat__button' },
@@ -28,11 +28,10 @@ class ChatInput extends Block {
         iconSize: 'sm',
         onClick: (): void => this.handleSend(),
       }),
-      messageInput: this.createMessageInput(),
       dropdown: new Dropdown({
         type: 'bottom',
         buttonType: 'upload',
-        items: dropdownUpload,
+        items: { list: dropdownUpload },
       }),
       fileInputMedia: new Input({
         attributes: { class: 'input_file', type: 'file', accept: 'image/*', id: 'file-input-media' },
@@ -42,6 +41,10 @@ class ChatInput extends Block {
         attributes: { class: 'input_file', type: 'file', style: 'display: none;', id: 'file-input-file' },
         onChange: (event: Event): void => this.handleAttachMedia(event),
       }),
+    });
+    
+    this.setProps({
+      messageInput: this.createMessageInput(),
     });
   }
 
@@ -87,15 +90,6 @@ class ChatInput extends Block {
     };
     return this.createInput(inputProps);
   }
-
-  // private handleAttachFile(event: Event): void {
-  //   const fileInput = event.target as HTMLInputElement;
-  //   if (fileInput.files && fileInput.files.length > 0) {
-  //     const file = fileInput.files[0];
-  //     console.log('Media file:', file);
-  //     (this.children.dropdown as Dropdown).closeDropdown();
-  //   }
-  // }
 
   private handleAttachMedia(event: Event): void {
     const fileInput = event.target as HTMLInputElement;

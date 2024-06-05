@@ -6,8 +6,8 @@ import tpl from './tpl.ts';
 
 class Settings extends Block {
   constructor(props: Props) {
-    super(props);
-    this.setProps({
+    super({
+      ...props,
       attributes: { class: 'page page_inner' },
       sidebar: new Sidebar({
         isMessenger: false,

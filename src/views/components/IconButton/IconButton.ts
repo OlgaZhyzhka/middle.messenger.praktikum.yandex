@@ -6,16 +6,19 @@ import { IconButtonProps } from './interfaces/IconButtonProps';
 class IconButton extends Block {
   constructor(props: IconButtonProps) {
     const { iconSize, iconName } = props;
-    super(props, 'button');
-    this.setProps({
-      attributes: {
-        class: `${props.attributes?.class || ''} button button_icon`,
+    super(
+      {
+        ...props,
+        attributes: {
+          class: `${props.attributes?.class || ''} button button_icon`,
+        },
+        icon: new Icon({ iconName, size: iconSize }),
+        events: {
+          click: props.onClick || ((): void => {}),
+        },
       },
-      icon: new Icon({ iconName, size: iconSize }),
-      events: {
-        click: props.onClick || ((): void => {}),
-      },
-    });
+      'button'
+    );
   }
 
   public getIcon(): Icon {

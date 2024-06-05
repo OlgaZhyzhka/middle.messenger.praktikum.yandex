@@ -22,7 +22,7 @@ class MessagesList extends Block {
   }
 
   private scrollToBottom(): void {
-    const messagesElement = this.getContent();
+    const messagesElement = this.element;
     const lastMessageElement = messagesElement?.lastChild;
 
     if (lastMessageElement instanceof HTMLElement) {

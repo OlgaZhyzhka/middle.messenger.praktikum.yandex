@@ -13,7 +13,7 @@ import tpl from './tpl';
 
 class ChatHeader extends Block {
   constructor(props: Props) {
-    super(props);
+    super({ ...props, attributes: { class: 'chat__header' } });
     const dropdownChatGroupItems: DropdownItemProps[] = [
       {
         title: 'Upload photo',
@@ -46,11 +46,10 @@ class ChatHeader extends Block {
     ];
 
     this.setProps({
-      attributes: { class: 'chat__header' },
       dropdown: new Dropdown({
         type: 'top',
         buttonType: 'option',
-        items: dropdownChatGroupItems,
+        items: {list: dropdownChatGroupItems},
       }),
       avatar: new Avatar({
         attributes: { class: 'chat__header-avatar' },
@@ -67,7 +66,7 @@ class ChatHeader extends Block {
     if (!chatItem) {
       return;
     }
-    
+
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const { avatar, title, created_by } = chatItem;
     this.setProps({
@@ -79,7 +78,7 @@ class ChatHeader extends Block {
       alt: title,
     });
     const currentUser = actions.getUser();
-    
+
     if (currentUser?.id === created_by) {
       this.setProps({
         showControls: true,

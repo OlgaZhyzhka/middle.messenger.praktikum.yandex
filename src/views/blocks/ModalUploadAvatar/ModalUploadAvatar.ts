@@ -9,40 +9,32 @@ class ModalUploadAvatar extends Block {
   private file: File | null = null;
 
   constructor(props: Props) {
-    super(props);
-    this.file = null;
-    this.setProps({
+    super({
+      ...props,
       attributes: { class: 'form form_horizontal' },
       uploadAvatar: new Upload({
         attributes: { class: 'modal__upload' },
         uploadId: 'avatar',
         onChange: (event: Event): void => this.handleChange(event),
       }),
-      submitButton: this.createSubmitButton(),
-      cancelButton: this.createCancelButton(),
+      submitButton: new Button({
+        attributes: { type: 'submit' },
+        type: 'submit',
+        size: 'md',
+        variant: 'primary',
+        shape: 'rounded',
+        children: 'Save',
+        onClick: (event: Event): void => this.handleSubmit(event),
+      }),
+      cancelButton: new Button({
+        size: 'md',
+        variant: 'primary-bordered',
+        shape: 'rounded',
+        children: 'Cancel',
+        onClick: (event: Event): void => this.handleCancel(event),
+      }),
     });
-  }
-
-  private createSubmitButton(): Button {
-    return new Button({
-      attributes: { type: 'submit' },
-      type: 'submit',
-      size: 'md',
-      variant: 'primary',
-      shape: 'rounded',
-      children: 'Save',
-      onClick: (event: Event): void => this.handleSubmit(event),
-    });
-  }
-
-  private createCancelButton(): Button {
-    return new Button({
-      size: 'md',
-      variant: 'primary-bordered',
-      shape: 'rounded',
-      children: 'Cancel',
-      onClick: (event: Event): void => this.handleCancel(event),
-    });
+    this.file = null;
   }
 
   private resetUpload(): void {

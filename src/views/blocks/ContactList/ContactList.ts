@@ -1,6 +1,5 @@
 import Block from '@/core/Block';
 import { IStore } from '@/store';
-import { actions } from '@/store/actions';
 import connect from '@/helpers/connect';
 import { Callback } from '@/utils/types';
 import { IChat } from '@/utils/interfaces';
@@ -32,9 +31,8 @@ class ContactList extends Block {
 
   private async handleActiveChatChange(chatId: number): Promise<void> {
     if (chatId && chatId !== this.props.activeChatId) {
-      actions.setActiveChatId(chatId);
-      this.childItems?.contacts?.forEach((contact) => (contact as Contact).updateActiveClass());
       (this.props.onChatSelect as Callback)(chatId);
+      this.childItems?.contacts?.forEach((contact) => (contact as Contact).updateActiveClass());
     }
   }
 

@@ -7,34 +7,30 @@ import tpl from './tpl';
 
 class DropdownItem extends Block {
   constructor(props: DropdownItemProps) {
-    super(props, 'li');
     const isFileInput = !!props.inputId;
     const { inputId } = props;
     const icon = new Icon({ iconName: props.iconName, size: 'sm' });
-
-    if (isFileInput) {
-      this.setProps({
-        labelUpload: new Label({
-          attributes: { class: 'dropdown__label' },
-          for: inputId,
-          children: [icon, props.title],
-        }),
-      });
-    } else {
-      this.setProps({
-        events: {
-          click: (event) => {
+    const labelUpload = new Label({
+      attributes: { class: 'dropdown__label' },
+      for: inputId,
+      children: [icon, props.title],
+    });
+    super(
+      {
+        ...props,
+        attributes: { class: 'dropdown__item' },
+        labelUpload,
+        isFileInput,
+        events: !isFileInput ? {
+          click: (event): void => {
             props.onToggle?.(event);
             props.onClick?.(event);
           },
-        },
-      });
-    }
-
-    this.setProps({
-      attributes: { class: 'dropdown__item' },
-      children: [icon, props.title],
-    });
+        } : undefined,
+        children: [icon, props.title],
+      },
+      'li'
+    );
   }
 
   public render(): DocumentFragment {

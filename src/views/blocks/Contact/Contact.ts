@@ -9,20 +9,22 @@ import tpl from './tpl';
 
 class Contact extends Block {
   constructor(props: Props) {
-    super(props, 'li');
-    const { avatar, title } = props;
-    this.setProps({
-      attributes: { class: `${this.props.attributes?.class || ''} contact`.trim() },
-      avatar: new Avatar({
-        attributes: { class: 'contact__avatar' },
-        src: avatar ? `${RESOURCE_URL}${avatar}` : holder,
-        alt: title,
-        size: 'sm',
-      }),
-      events: {
-        click: (event: Event): void => this.handleClick(event),
+    super(
+      {
+        ...props,
+        attributes: { class: `${props.attributes?.class || ''} contact`.trim() },
+        avatar: new Avatar({
+          attributes: { class: 'contact__avatar' },
+          src: props.avatar ? `${RESOURCE_URL}${props.avatar}` : holder,
+          alt: props.title,
+          size: 'sm',
+        }),
+        events: {
+          click: (event: Event): void => this.handleClick(event),
+        },
       },
-    });
+      'li'
+    );
     this.updateActiveClass();
   }
 

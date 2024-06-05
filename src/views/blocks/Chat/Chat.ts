@@ -20,13 +20,32 @@ import tpl from './tpl';
 
 class Chat extends Block {
   constructor(props: ChatProps) {
-    super(props);
-    this.setProps({
+    super({
+      ...props,
       attributes: { class: 'chat' },
-      chatHeader: this.createChatHeader(),
-      chatLog: this.createChatLog(),
-      chatInput: this.createChatInput(),
-      chatButton: this.createChatButton(),
+      chatHeader: new ChatHeader({
+        attributes: { class: 'chat__header' },
+        onShowModalAddUser: (): void => this.showModalAddUser(),
+        onShowModalDeleteUser: (): void => this.showModalDeleteUser(),
+        onShowModalDeleteChat: (): void => this.showModalDeleteChat(),
+        onShowModalUploadAvatar: (): void => this.showModalUploadAvatar(),
+      }),
+      chatLog: new MessagesList({
+        attributes: { class: 'chat__list' },
+      }),
+      chatInput: new ChatInput({
+        attributes: { class: 'chat__footer' },
+        onSendMessage: (message: string): void => this.handleSendMessage(message),
+        onSendFile: (file: File): void => this.handleSendFile(file),
+      }),
+      chatButton: new Button({
+        attributes: { type: 'submit', class: 'chat__add-button' },
+        size: 'sm',
+        variant: 'primary-bordered',
+        shape: 'rounded',
+        children: 'Create Chat',
+        onClick: (event: Event): void => this.showModalCreateChat(event),
+      }),
       modalInfo: new Modal({
         content: new ModalInfo({
           title: 'Information',
@@ -36,7 +55,7 @@ class Chat extends Block {
         content: new ModalUser({
           title: 'Add user',
           subTitle: 'Enter user login',
-          users: this.props.chatUsers,
+          users: props.chatUsers,
           onSubmit: (data: { login: string }): Promise<void> => this.addUserToChat(data),
           onCancel: (): void => this.handleCloseModal(this.children.modalAddUser as Modal),
         }),
@@ -45,7 +64,7 @@ class Chat extends Block {
         content: new ModalUser({
           title: 'Delete user',
           subTitle: 'Enter user login',
-          users: this.props.chatUsers,
+          users: props.chatUsers,
           onSubmit: (data: Record<string, string>): Promise<void> => this.deleteUserFromChat(data),
           onCancel: (): void => this.handleCloseModal(this.children.modalDeleteUser as Modal),
         }),
@@ -190,41 +209,6 @@ class Chat extends Block {
     } finally {
       this.handleCloseModal(this.children.modalUploadAvatar as Modal);
     }
-  }
-
-  private createChatButton(): Button {
-    return new Button({
-      attributes: { type: 'submit', class: 'chat__add-button' },
-      size: 'sm',
-      variant: 'primary-bordered',
-      shape: 'rounded',
-      children: 'Create Chat',
-      onClick: (event: Event): void => this.showModalCreateChat(event),
-    });
-  }
-
-  private createChatHeader(): Block {
-    return new ChatHeader({
-      attributes: { class: 'chat__header' },
-      onShowModalAddUser: (): void => this.showModalAddUser(),
-      onShowModalDeleteUser: (): void => this.showModalDeleteUser(),
-      onShowModalDeleteChat: (): void => this.showModalDeleteChat(),
-      onShowModalUploadAvatar: (): void => this.showModalUploadAvatar(),
-    });
-  }
-
-  private createChatLog(): Block {
-    return new MessagesList({
-      attributes: { class: 'chat__list' },
-    });
-  }
-
-  private createChatInput(): Block {
-    return new ChatInput({
-      attributes: { class: 'chat__footer' },
-      onSendMessage: (message: string): void => this.handleSendMessage(message),
-      onSendFile: (file: File): void => this.handleSendFile(file),
-    });
   }
 
   private handleSendMessage(message: string): void {

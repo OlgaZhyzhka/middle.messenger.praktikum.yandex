@@ -1,2 +1,2 @@
-const tpl = `<div class="contacts__container">{{{ search }}}{{{ contactsList }}}</div>`;
+const tpl = `<div class="contacts__container">{{{ search }}}{{{ contactList }}}</div>`;
 export default tpl;

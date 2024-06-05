@@ -4,13 +4,15 @@ import { LinkProps } from './interfaces/LinkProps';
 
 class Link extends Block {
   constructor(props: LinkProps, tagName: string = 'a') {
-    super(props, tagName);
-
-    this.setProps({
-      events: {
-        click: props?.onClick || ((): void => {}),
+    super(
+      {
+        ...props,
+        events: {
+          click: props?.onClick || ((): void => {}),
+        },
       },
-    });
+      tagName
+    );
   }
 
   public render(): DocumentFragment {

@@ -8,14 +8,26 @@ import tpl from './tpl';
 
 class Dropdown extends Block {
   constructor(props: DropdownProps) {
-    super(props);
     const { type } = props;
     const typeClass = type ? `dropdown_${type}` : '';
     const className = `dropdown ${typeClass}`.trim();
-    this.setProps({
+    super({
+      ...props,
       attributes: { class: `${className}`.trim() },
       isOpen: false,
-      dropdownList: props.items.map(
+    });
+  }
+
+  private onToggle(): void {
+    this.setProps({
+      isOpen: !this.props.isOpen,
+    });
+  }
+
+  public componentDidMount(): void {
+    const items = (this.props.items as { list: DropdownItemProps[] })?.list;
+    this.setProps({
+      dropdownList: items?.map(
         (item: DropdownItemProps) =>
           new DropdownItem({
             ...item,
@@ -24,17 +36,13 @@ class Dropdown extends Block {
       ),
       button: new Button({
         attributes: {
-          class: props.buttonType ? `dropdown__button dropdown__button_${props.buttonType}` : 'dropdown__button',
+          class: this.props.buttonType
+            ? `dropdown__button dropdown__button_${this.props.buttonType}`
+            : 'dropdown__button',
         },
         children: `<span></span>`,
         onClick: this.onToggle.bind(this),
       }),
-    });
-  }
-
-  private onToggle(): void {
-    this.setProps({
-      isOpen: !this.props.isOpen,
     });
   }
 

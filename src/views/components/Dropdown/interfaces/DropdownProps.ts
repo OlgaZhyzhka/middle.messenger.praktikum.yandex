@@ -3,5 +3,5 @@ import { DropdownItemProps } from '@/views/components/DropdownItem/interfaces/Dr
 
 export interface DropdownProps extends Props {
   type: string;
-  items: DropdownItemProps[];
+  items: Record<string, DropdownItemProps[]>;
 }
