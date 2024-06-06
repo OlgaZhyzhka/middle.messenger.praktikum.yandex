@@ -1,5 +1,5 @@
 import { ApiError } from '@/utils/interfaces';
-import { router } from '@/router/Router';
+import router from '@/router/Router';
 import { HTTP_CODES, ROUTES } from '@/utils/enums';
 
 export const handleResponseError = (error: ApiError): void => {

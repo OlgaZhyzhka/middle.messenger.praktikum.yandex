@@ -1,4 +1,4 @@
-import 'tsconfig-paths/register';
+// import 'tsconfig-paths/register';
 import { JSDOM } from 'jsdom';
 const jsdom = new JSDOM('<!doctype html><html><body><div id="test-root"></div></body></html>', { url: 'http://localhost/' });
 

@@ -2,12 +2,11 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import Block, { Props } from '@/core/Block';
-import { Router } from './Router';
+import router from './Router';
 
 let TestBlockClass: typeof Block;
 
 describe('Router', () => {
-  let router: Router;
 
   before(() => {
     class TestBlock extends Block {
@@ -24,7 +23,6 @@ describe('Router', () => {
   });
 
   beforeEach(() => {
-    router = Router.getInstance();
     history.replaceState({}, '', '/');
   });
 
