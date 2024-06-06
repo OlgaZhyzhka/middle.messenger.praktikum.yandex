@@ -20,14 +20,17 @@ routesConfig.forEach((route) => {
   );
 });
 
-const isAuth = sessionStorage.getItem('isAuthenticated') === 'true';
 
-if (isAuth) {
-  try {
-    await AuthService.authUser();
-  } catch (error) {
-    console.error(ERRORS_MESSAGES.AUTH_FAILED, error);
+(async (): Promise<void> => {
+  const isAuth = sessionStorage.getItem('isAuthenticated') === 'true';
+
+  if (isAuth) {
+    try {
+      await AuthService.authUser();
+    } catch (error) {
+      console.error(ERRORS_MESSAGES.AUTH_FAILED, error);
+    }
   }
-}
+})();
 
 router.start();
