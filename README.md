@@ -63,5 +63,3 @@ The project is in development - Sprint 4 - Testing for Block, Router, Store.
 - Implemented update chat avatar
 - Implement test for Block, Router, HTTPTransport, LoginPage
 
-## Remaining tasks
-
