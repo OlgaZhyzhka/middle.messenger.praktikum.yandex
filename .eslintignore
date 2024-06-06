@@ -6,3 +6,5 @@ server.js
 vite.config.js
 loader.css.js 
 loader.js
+mochaSetup.js
+
