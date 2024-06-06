@@ -1,5 +1,5 @@
 import { store } from '@/store';
-import router from '@/router/Router';
+import { router } from '@/router/Router';
 import { ROUTES } from '@/utils/enums';
 
 export const authMiddleware = (pathname: string): boolean => {

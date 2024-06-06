@@ -62,5 +62,5 @@ describe('Block', () => {
     /* eslint-disable @typescript-eslint/no-unused-expressions */
     expect(dispatchComponentDidMountStub.calledOnce).to.be.true;
     dispatchComponentDidMountStub.restore();
-  });
+   });
 });

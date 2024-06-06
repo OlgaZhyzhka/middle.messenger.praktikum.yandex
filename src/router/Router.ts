@@ -5,7 +5,7 @@ import { query } from '@/utils/constants.ts';
 
 import Route from './Route.ts';
 
-class Router {
+export class Router {
   private static __instance: Router;
 
   private routes: Route[] = [];
@@ -99,6 +99,4 @@ class Router {
   }
 }
 
-const router = Router.getInstance(query);
-
-export default router;
+export const router = Router.getInstance(query);

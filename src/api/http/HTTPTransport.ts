@@ -6,8 +6,8 @@ import { BASE_URL } from './ApiUrl';
 export default class HTTPTransport {
   protected endpoint: string;
 
-  constructor(baseEndpoint = '') {
-    this.endpoint = `${BASE_URL}${baseEndpoint}`;
+  constructor(baseEndpoint = '', baseUrl = BASE_URL) {
+    this.endpoint = `${baseUrl}${baseEndpoint}`;
   }
 
   public get: HTTPMethod = (url, options = {}) => {

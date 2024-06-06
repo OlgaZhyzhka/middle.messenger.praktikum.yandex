@@ -1,7 +1,7 @@
 import '@/scss/app.scss';
 import AuthService from '@/services/AuthService';
 import { ERRORS_MESSAGES } from '@/utils/enums';
-import router from '@/router/Router';
+import { router } from '@/router/Router';
 import routesConfig from '@/router/routesConfig';
 import { store } from '@/store';
 
