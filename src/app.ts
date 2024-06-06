@@ -20,7 +20,6 @@ routesConfig.forEach((route) => {
   );
 });
 
-
 (async (): Promise<void> => {
   const isAuth = sessionStorage.getItem('isAuthenticated') === 'true';
 
