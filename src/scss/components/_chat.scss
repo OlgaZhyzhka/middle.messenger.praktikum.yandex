@@ -1,11 +1,30 @@
 .chat {
-  position: relative;
-  height: 100%;
+  @include create-mq($grid__bp-md, 'min') {
+    position: relative;
+    height: 100%;
+  }
+
+  &__button-back {
+    margin-right: 10px;
+    
+    @include create-mq($grid__bp-md, 'min') {
+     display: none;
+    }
+  }
 
   &__wrapper {
     height: 100%;
     display: flex;
     flex-direction: column;
+
+    @include create-mq($grid__bp-md - 1, 'max') {
+      position: fixed;
+      top: calc(var(--sidebar-size) + 5px);
+      height: calc(var(--app-height) - var(--sidebar-size) - 15px);
+      width: 100%;
+      background: var(--component-bg);
+      z-index: var(--z-index-3);
+    }
   }
 
   &__footer,
@@ -35,6 +54,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: var(--grey);
+
+    @include create-mq($grid__bp-md - 1, 'max') {
+      display: none;
+    }
 
     .title {
       margin-top: 10px;
@@ -100,10 +123,14 @@
   }
 
   &__add-button {
-    position: absolute;
-    right: 45px;
-    top: 8px;
-    z-index: var(--z-index-1);
+    position: fixed;
+    right: 110px;
+    top: 20px;
+    z-index: var(--modal-z-index);
+
+    @include create-mq($grid__bp-md - 1, 'max') {
+      position: fixed;
+    }
   }
 
   &__item {

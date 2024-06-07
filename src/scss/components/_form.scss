@@ -39,7 +39,7 @@
       width: 100%;
     }
 
-    @include create-mq($grid__bp-md, 'min') {
+    @include create-mq($grid__bp-xs, 'min') {
       width: 370px;
     }
   }

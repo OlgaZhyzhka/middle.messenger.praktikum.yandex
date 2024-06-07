@@ -101,7 +101,7 @@ class ChatService {
       const userId = actions.getUser()?.id;
 
       if (userId) {
-        this.disconnect();
+        this.disconnect();  
         await this.connectToChat(userId, chatId);
       }
     } catch (error: unknown) {

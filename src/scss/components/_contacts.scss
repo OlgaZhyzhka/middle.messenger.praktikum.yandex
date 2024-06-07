@@ -3,14 +3,11 @@
 }
 
 .contacts {
-  // position: fixed;
-  // top: calc(var(--sidebar-size) + 5px);
-  // height: calc(var(--app-height) - var(--sidebar-size) - 15px);
-  width: 100%;
-
   &__container {
-    height: 100%;
-    overflow-y: auto;
+    @include create-mq($grid__bp-md, 'min') {
+      height: 100%;
+      overflow-y: auto;
+    }
   }
 
   &__list {

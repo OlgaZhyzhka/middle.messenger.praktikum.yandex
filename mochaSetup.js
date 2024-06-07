@@ -9,3 +9,4 @@ global.history = jsdom.window.history;
 global.Node = jsdom.window.Node;
 global.MouseEvent = jsdom.window.MouseEvent;
 global.Event = jsdom.window.Event;
+global.FormData = jsdom.window.FormData;

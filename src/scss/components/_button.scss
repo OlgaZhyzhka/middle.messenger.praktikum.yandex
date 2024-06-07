@@ -39,12 +39,19 @@
   }
 
   &_md {
-    min-width: 180px;
     height: var(--input-md);
     padding-left: 1.25rem;
     padding-right: 1.25rem;
     font-size: var(--font-size-base);
     line-height: calc(var(--input-md) - 4px);
+
+    @include create-mq($grid__bp-xs, 'min') {
+      min-width: 140px;
+    }
+
+    @include create-mq($grid__bp-md, 'min') {
+      min-width: 180px;
+    }
   }
 
   &_rounded {

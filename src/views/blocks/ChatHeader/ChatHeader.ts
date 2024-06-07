@@ -8,12 +8,12 @@ import { Callback } from '@/utils/types';
 import { Dropdown } from '@/views/components/Dropdown';
 import { DropdownItemProps } from '@/views/components/DropdownItem/interfaces/DropdownItemProps';
 import { Avatar } from '@/views/components/Avatar';
+import { Button } from '@/views/components/Button';
 
 import tpl from './tpl';
 
 class ChatHeader extends Block {
   constructor(props: Props) {
-    super({ ...props, attributes: { class: 'chat__header' } });
     const dropdownChatGroupItems: DropdownItemProps[] = [
       {
         title: 'Upload photo',
@@ -44,19 +44,33 @@ class ChatHeader extends Block {
         },
       },
     ];
-
-    this.setProps({
+    super({
+      ...props,
+      attributes: { class: 'chat__header' },
       dropdown: new Dropdown({
         type: 'top',
         buttonType: 'option',
-        items: {list: dropdownChatGroupItems},
+        items: { list: dropdownChatGroupItems },
       }),
       avatar: new Avatar({
         attributes: { class: 'chat__header-avatar' },
         size: 'sm',
       }),
+      buttonBack: new Button({
+        attributes: { class: 'chat__button-back' },
+        size: 'sm',
+        variant: 'link',
+        children: 'Back',
+        onClick: (event: Event): void => this.goBack(event),
+      }),
     });
+
     this.setChatHeaderData();
+  }
+
+  private goBack(event: Event): void {
+    event.preventDefault();
+    actions.setActiveChatId(null);
   }
 
   private setChatHeaderData(): void {
