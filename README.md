@@ -6,10 +6,9 @@
 
 ## Deploy
 
-- [Главная страница](https://simple-chat-messenger.netlify.app/index.html)
-- [Страница логина](https://simple-chat-messenger.netlify.app/login.html)
-- [Страница 404](https://simple-chat-messenger.netlify.app/404.html)
-- [Страница 500](https://simple-chat-messenger.netlify.app/500.html)
+- [Главная страница](https://simple-chat-messenger.netlify.app/)
+- [Страница логина](https://simple-chat-messenger.netlify.app/login)
+- [Страница 404](https://simple-chat-messenger.netlify.app/registration)
 
 ## Description
 
@@ -30,6 +29,9 @@ Basic Html pages and css styles are are developed. Chat list page in development
 - Vite
 - Eslint
 - Prettier
+- Stylelint
+- Husky
+- Lint-staged
 
 ## How to run
 
