@@ -4,6 +4,6 @@
   z-index: var(--z-index-3);
 
   @include create-mq($grid__bp-xl, 'min') {
-    border-right: var(--border-width) solid var(--light-grey1);
+    border-right: var(--border-width) solid var(--panel-border-color);
   }
 }

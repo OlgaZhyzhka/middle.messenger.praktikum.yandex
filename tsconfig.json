@@ -22,7 +22,7 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/global.d.ts", "./src/*"]
     }
   },
   "include": ["src"],

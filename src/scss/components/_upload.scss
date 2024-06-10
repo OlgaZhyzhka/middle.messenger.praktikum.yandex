@@ -1,7 +1,6 @@
 :root {
-  --upload-bg: rgb(237 242 246 / 50%);
+  --upload-bg: rgb(0 0 0 / 50%);
   --upload-border-color: var(--grey);
-  --upload-size: 130px;
 }
 
 .upload {
@@ -30,11 +29,7 @@
     background-position: center;
   }
 
-  &__icon {
-    width: 36px;
-  }
-
-  &__label {
+  &__button {
     margin: 0 0 0 auto;
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-semibold);

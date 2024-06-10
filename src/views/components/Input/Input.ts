@@ -1,14 +1,29 @@
 import Block from '@/core/Block';
-import tpl from './tpl';
 
+import { InputProps } from './interfaces/InputProps';
 
 class Input extends Block {
+  constructor(props: InputProps) {
+    const { size } = props;
+
+    const sizeClass = size ? `input_${size}` : '';
+    const className = `input ${sizeClass}`.trim();
+    super(props, 'input');
+    this.setProps({
+      attributes: {
+        class: `${props.attributes?.class || ''} ${className}`.trim(),
+      },
+      events: {
+        blur: props.onBlur || ((): void => {}),
+        input: props.onInput || ((): void => {}),
+        change: props.onChange || ((): void => {}),
+        keydown: props.onKeyDown || ((): void => {}),
+      },
+    });
+  }
 
   public render(): DocumentFragment {
-    const sizeClass = `ui-input_${this.props.size || ''}`;
-    const className = `ui-input ${sizeClass}`;
-    const combinedProps = { ...this.props, className };
-    return this.compile(tpl, combinedProps);
+    return this.compile('');
   }
 }
 

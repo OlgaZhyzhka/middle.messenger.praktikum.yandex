@@ -1,0 +1,90 @@
+.profile {
+  &__card {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include create-mq($grid__bp-lg, 'min') {
+      margin-top: 50px;
+      width: 700px;
+    }
+  }
+
+  &__info {
+    .list__item {
+      margin-bottom: torem(24px);
+    }
+  }
+
+  &__list {
+    column-gap: torem(50px);
+
+    @include create-mq($grid__bp-xl, 'min') {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(150px, 1fr));
+    }
+  }
+
+  &__loader {
+    width: 100%;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .title {
+    margin-right: 5px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--light-grey);
+  }
+
+  &__content {
+    margin-top: 1.5rem;
+  }
+
+  &__footer {
+    margin-bottom: torem(40px);
+    display: flex;
+    align-items: center;
+    gap: torem(24px);
+  }
+
+  &__upload {
+    margin-bottom: torem(24px);
+  }
+
+  &__form {
+    margin-bottom: 0;
+  }
+
+  &__spinner {
+    min-height: 200px;
+  }
+
+   &__image {
+    position: relative;
+    width: var(--upload-size);
+    height: var(--upload-size);
+
+    .profile__avatar,
+    .profile__upload {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--border-radius-sm);
+    }
+
+    .profile__avatar {
+      object-fit: cover;
+      z-index: var(--z-index-1);
+    }
+
+    .profile__upload {
+      background: rgb(0 0 0 / 70%);
+      z-index: var(--z-index-2);
+    }
+  }
+}

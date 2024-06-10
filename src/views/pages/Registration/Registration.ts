@@ -1,16 +1,19 @@
+import { Props } from '@/core/Block.ts';
+import connect from '@/helpers/connect.ts';
+import { IStore } from '@/store/index.ts';
 import { BasePage } from '@/views/pages/BasePage';
-import { Form } from '@/views/blocks/Form';
-import { BasePageProps } from '@/views/pages/BasePage/BasePage.ts';
+import { RegistrationForm } from '@/views/blocks/RegistrationForm/index.ts';
+import Spinner from '@/views/components/Spinner/Spinner.ts';
+
 import tpl from './tpl.ts';
 
-interface RegistrationProps extends BasePageProps {}
-
 class Registration extends BasePage {
-  constructor(props: RegistrationProps) {
-    super({
-      ...props,
-      pageTitle: 'Connect easily with your family and friends over countries',
-      form: new Form({
+  constructor(props: Props) {
+    super(props);
+    this.setProps({
+      spinner: new Spinner({}),
+      title: 'Connect easily with your family and friends over countries',
+      registrationForm: new RegistrationForm({
         attributes: { class: 'form form_horizontal form_auth' },
         type: 'registration',
       }),
@@ -22,4 +25,10 @@ class Registration extends BasePage {
   }
 }
 
-export default Registration;
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const mapStateToProps = ({ isLoading, authError }: IStore) => ({
+  isLoading,
+  authError,
+});
+
+export default connect(mapStateToProps)(Registration);

@@ -1,0 +1,12 @@
+.input-addon {
+  position: absolute;
+  top: 6px;
+
+  &_right {
+    right: 5px;
+
+    .input {
+      padding-right: torem(30px);
+    }
+  }
+}

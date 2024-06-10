@@ -1,16 +1,20 @@
-import Block, { Props } from '@/core/Block';
+import Block from '@/core/Block';
 
-interface ILinkProps extends Props {
-  text: string;
-}
+import { LinkProps } from './interfaces/LinkProps';
 
 class Link extends Block {
-  constructor(props: ILinkProps) {
-    super(props, 'a');
+  constructor(props: LinkProps, tagName: string = 'a') {
+    super(props, tagName);
+
+    this.setProps({
+      events: {
+        click: props?.onClick || ((): void => {}),
+      },
+    });
   }
 
   public render(): DocumentFragment {
-    return this.compile(`{{ text }}`);
+    return this.compile(`{{ children }}`);
   }
 }
 

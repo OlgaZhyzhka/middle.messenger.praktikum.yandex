@@ -3,9 +3,9 @@
 }
 
 .contacts {
-  position: fixed;
-  top: calc(var(--sidebar-size) + 5px);
-  height: calc(var(--app-height) - var(--sidebar-size) - 15px);
+  // position: fixed;
+  // top: calc(var(--sidebar-size) + 5px);
+  // height: calc(var(--app-height) - var(--sidebar-size) - 15px);
   width: 100%;
 
   &__container {
@@ -21,20 +21,15 @@
 
   &__item {
     margin-top: 1px;
-    border-top: var(--border-width) solid var(--light-grey1);
+    border-top: var(--border-width) solid var(--panel-border-color);
   }
 
-  @include create-mq($grid__bp-md, 'min') {
-    width: 60%;
-    left: 50%;
-    transform: translateX(-50%);
+  &__spinner {
+    height: 100%;
   }
 
   @include create-mq($grid__bp-xl, 'min') {
-    top: 0;
-    left: auto;
     width: var(--contacts-width);
-    height: var(--app-height);
-    transform: none;
+    height: 100%;
   }
 }

@@ -1,22 +1,19 @@
-import { Form } from '@/views/blocks/Form';
+import { Props } from '@/core/Block.ts';
+import connect from '@/helpers/connect.ts';
+import { IStore } from '@/store/index.ts';
 import { BasePage } from '@/views/pages/BasePage';
-import { BasePageProps } from '@/views/pages/BasePage/BasePage.ts';
+import LoginForm from '@/views/blocks/LoginForm/LoginForm.ts';
+import Spinner from '@/views/components/Spinner/Spinner.ts';
+
 import tpl from './tpl.ts';
 
-interface LoginProps extends BasePageProps {
-  imgSrc: string;
-  imgAlt: string;
-}
-
 class Login extends BasePage {
-  constructor(props: LoginProps) {
-    super({
-      ...props,
-      pageTitle: 'Welcome back!',
-      form: new Form({
-        attributes: { class: 'form form_horizontal form_auth' },
-        type: 'login',
-      }),
+  constructor(props: Props) {
+    super(props);
+    this.setProps({
+      spinner: new Spinner({}),
+      title: 'Welcome back!',
+      loginForm: new LoginForm({}),
     });
   }
 
@@ -25,4 +22,10 @@ class Login extends BasePage {
   }
 }
 
-export default Login;
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const mapStateToProps = ({ isLoading, authError }: IStore) => ({
+  isLoading,
+  authError,
+});
+
+export default connect(mapStateToProps)(Login);

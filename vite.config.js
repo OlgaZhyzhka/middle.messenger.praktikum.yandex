@@ -2,7 +2,6 @@ import { defineConfig } from 'vite';
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
-
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const srcPath = resolve(__dirname, 'src');
@@ -31,5 +30,10 @@ export default defineConfig({
         additionalData: '@use "@/scss/abstracts/variables";',
       },
     },
+  },
+  define: {
+    // By default, Vite doesn't include shims for NodeJS/
+    // necessary for segment analytics lib to work
+    global: {},
   },
 });

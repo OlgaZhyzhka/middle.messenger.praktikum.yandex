@@ -17,6 +17,7 @@
   --grey: #a4a4a4;
   --light-grey: #adb5bd;
   --light-grey1: #ededed;
+  --light-grey2: #d9dce0;
   --light: #f7f7fc;
 
   --body-bg: var(--white);
@@ -48,6 +49,7 @@
 
   --component-padding: 24px;
   --component-bg: var(--white);
+  --component-bg-hover: #fcfcfc;
   --component-border-radius: var(--border-radius-xs);
   --component-box-shadow: 0 0 30px rgba(170, 170, 170, 0.15), 0 10px 20px rgba(194, 194, 194, 0.15);
   --component-divider: var(--light-grey1);
@@ -75,10 +77,17 @@
   --z-index-2: 10;
   --z-index-3: 15;
 
+  --z-index-spinner: 9999;
+
   --app-height: 100vh;
+
+  --upload-size: 130px;
 
   --sidebar-size: 80px;
   --sidebar-bg: var(--body-bg);
+  --panel-border-color: var(--light-grey1);
+  --header-border-color: var(--light-grey2);
+  --contact-active-bg: var(--light);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -94,9 +103,13 @@
     --border-color: var(--dark1);
 
     --component-bg: #1f161e;
+    --component-bg-hover: #2a1f2a;
     --component-box-shadow: 0 0 30px rgba(30, 30, 30, 0.15), 0 10px 20px rgba(0, 0, 0, 0.15);
     --component-divider: var(--dark2);
 
     --page-bg: var(--dark1);
+    --panel-border-color: rgba(170, 170, 170, 0.15);
+    --header-border-color: var(--dark2);
+    --contact-active-bg: var(--dark-blue);
   }
 }

@@ -1,7 +1,7 @@
-import { Callback } from '@/types/types';
+import { Callback } from '@/utils/types';
 
 class EventBus {
-  private listeners: { [key: string]: Callback[] } = {};
+  public listeners: { [key: string]: Callback[] } = {};
 
   constructor() {
     this.listeners = {};
@@ -26,7 +26,8 @@ class EventBus {
   /* eslint-disable @typescript-eslint/no-explicit-any */
   public emit(event: string, ...args: any[]): void {
     if (!this.listeners[event]) {
-      throw new Error(`Event not found: ${event}`);
+      console.warn(`No listeners for event: ${event}`);
+      return;
     }
 
     this.listeners[event].forEach((listener) => listener(...args));

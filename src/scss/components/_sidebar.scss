@@ -15,7 +15,24 @@
   }
 
   &__link {
+    display: block;
+    margin-top: 5px;
     font-size: torem(14px);
+    color: var(--color-text);
+    text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__title {
+    display: block;
+    max-width: 68px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.85rem;
   }
 
   @include create-mq($grid__bp-xl, 'min') {

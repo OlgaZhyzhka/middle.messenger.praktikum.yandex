@@ -1,4 +1,5 @@
 import { BasePage } from '@/views/pages/BasePage';
+
 import tpl from './tpl.ts';
 
 class Error500 extends BasePage {

@@ -1,0 +1,100 @@
+import Block, { Props } from '@/core/Block';
+import { IStore } from '@/store';
+import { RESOURCE_URL } from '@/api/http/ApiUrl';
+import { actions } from '@/store/actions';
+import connect from '@/helpers/connect';
+import { holder } from '@/utils/constants';
+import { Callback } from '@/utils/types';
+import { Dropdown } from '@/views/components/Dropdown';
+import { DropdownItemProps } from '@/views/components/DropdownItem/interfaces/DropdownItemProps';
+import { Avatar } from '@/views/components/Avatar';
+
+import tpl from './tpl';
+
+class ChatHeader extends Block {
+  constructor(props: Props) {
+    super(props);
+    const dropdownChatGroupItems: DropdownItemProps[] = [
+      {
+        title: 'Upload photo',
+        iconName: 'media',
+        onClick: (): void => {
+          (this.props.onShowModalUploadAvatar as Callback)?.();
+        },
+      },
+      {
+        title: 'Add user',
+        iconName: 'add-user',
+        onClick: (): void => {
+          (this.props.onShowModalAddUser as Callback)?.();
+        },
+      },
+      {
+        title: 'Delete user',
+        iconName: 'delete-user',
+        onClick: (): void => {
+          (this.props.onShowModalDeleteUser as Callback)?.();
+        },
+      },
+      {
+        title: 'Delete chat',
+        iconName: 'delete',
+        onClick: (): void => {
+          (this.props.onShowModalDeleteChat as Callback)?.();
+        },
+      },
+    ];
+
+    this.setProps({
+      attributes: { class: 'chat__header' },
+      dropdown: new Dropdown({
+        type: 'top',
+        buttonType: 'option',
+        items: dropdownChatGroupItems,
+      }),
+      avatar: new Avatar({
+        attributes: { class: 'chat__header-avatar' },
+        size: 'sm',
+      }),
+    });
+    this.setChatHeaderData();
+  }
+
+  private setChatHeaderData(): void {
+    const chats = actions.getChats();
+    const chatItem = chats?.find((chat) => chat.id === this.props.activeChatId);
+
+    if (!chatItem) {
+      return;
+    }
+
+    const { avatar, title } = chatItem;
+    this.setProps({
+      title,
+    });
+    const avatarElement = this.children.avatar as Avatar;
+    avatarElement.setProps({
+      src: avatar ? `${RESOURCE_URL}${avatar}` : holder,
+      alt: title,
+    });
+  }
+
+  public componentDidUpdate(oldProps: Props, newProps: Props): boolean {
+    if (oldProps.activeChatId !== newProps.activeChatId) {
+      this.setChatHeaderData();
+    }
+
+    return true;
+  }
+
+  public render(): DocumentFragment {
+    return this.compile(tpl);
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const mapStateToProps = ({ activeChatId }: IStore) => ({
+  activeChatId,
+});
+
+export default connect(mapStateToProps)(ChatHeader);

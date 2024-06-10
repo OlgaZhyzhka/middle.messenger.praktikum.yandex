@@ -17,6 +17,11 @@ a:hover {
   color: var(--color-link-hover);
 }
 
+hr {
+  border: 0;
+  border-top: 2px solid var(--light-grey1);
+}
+
 @include headings {
   font-family: var(--font-family-base);
   font-weight: var(--font-weight-bold);
@@ -25,6 +30,6 @@ a:hover {
 }
 
 ::selection {
-  background-color: var(--light);
-  color: var(--color-secondary);
+  background-color: var(--color-primary);
+  color: var(--white);
 }

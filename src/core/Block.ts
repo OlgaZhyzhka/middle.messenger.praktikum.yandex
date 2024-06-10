@@ -1,16 +1,19 @@
 import Handlebars from 'handlebars';
 
-import { deepEqual, generateUniqueId } from '@/helpers';
+import { generateUniqueId, isEqual } from '@/helpers';
+import { EventCallback } from '@/utils/types';
 
 import EventBus from './EventBus';
+
+Handlebars.registerHelper('eq', (a, b) => a === b);
 
 export interface Props {
   [key: string]: unknown;
   settings?: {
     withInternalId: boolean;
   };
-  events?: { [key: string]: (event: Event) => void };
-  attributes?: { [key: string]: string };
+  events?: { [key: string]: EventCallback };
+  attributes?: { [key: string]: string | boolean };
 }
 
 interface Children {
@@ -27,8 +30,8 @@ interface SeparatedProps {
   childItems: ChildItems;
 }
 
-export default class Block {
-  protected static EVENTS = {
+class Block {
+  public static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
@@ -43,7 +46,7 @@ export default class Block {
 
   protected eventBus: EventBus;
 
-  private _element: HTMLElement | null = null;
+  protected _element: HTMLElement | null = null;
 
   private _meta: { tagName: string } | null = null;
 
@@ -71,12 +74,20 @@ export default class Block {
     this.eventBus.emit(Block.EVENTS.INIT);
   }
 
-  protected get element(): HTMLElement | null {
+  public get element(): HTMLElement | null {
     return this._element;
   }
 
   protected get id(): string {
     return this._id;
+  }
+
+  public getProps(): Props {
+    return this.props;
+  }
+
+  public getChild(name: string): Block | undefined {
+    return this.children[name];
   }
 
   private _registerEvents(): void {
@@ -115,7 +126,8 @@ export default class Block {
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target, prop: string, value): boolean => {
-        if (!deepEqual(target[prop], value)) {
+        // console.log(`Setting prop ${prop} to`, value);
+        if (!isEqual(target[prop], value)) {
           target[prop] = value;
           this._isUpdated = true;
           this.eventBus.emit(Block.EVENTS.FLOW_CDU);
@@ -131,7 +143,7 @@ export default class Block {
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target, prop: string, value): boolean => {
-        if (!deepEqual(target[prop], value)) {
+        if (!isEqual(target[prop], value)) {
           target[prop] = value;
           this._isUpdated = true;
           this.eventBus.emit(Block.EVENTS.FLOW_CDU);
@@ -147,7 +159,7 @@ export default class Block {
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target, prop: string, value): boolean => {
-        if (!deepEqual(target[prop], value)) {
+        if (!isEqual(target[prop], value)) {
           target[prop] = value;
           this._isUpdated = true;
           this.eventBus.emit(Block.EVENTS.FLOW_CDU);
@@ -193,10 +205,13 @@ export default class Block {
 
     const { attributes } = this.props;
     this._setAttribute(attributes);
+
+    // console.log('Render element');
   }
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  public render(): any {}
+  public render(): DocumentFragment {
+    return document.createDocumentFragment();
+  }
 
   public getContent(): HTMLElement | null {
     return this.element;
@@ -205,22 +220,30 @@ export default class Block {
   private _componentDidMount(): void {
     this.componentDidMount();
     Object.values(this.children).forEach((child) => {
-      child.dispatchComponentDidMount();
+      if (child instanceof Block) {
+        child.dispatchComponentDidMount();
+      }
+    });
+    Object.values(this.childItems).forEach((items) => {
+      items.forEach((item) => {
+        if (item instanceof Block) {
+          item.dispatchComponentDidMount();
+        }
+      });
     });
   }
 
-  protected componentDidMount(oldProps?: Props): void {
-    console.log(`Component ${this._meta?.tagName} mounted with props:`, oldProps);
-  }
+  public componentDidMount(): void {}
 
   public dispatchComponentDidMount(): void {
     this.eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 
-  protected componentWillUnmount(): void {
+  public componentWillUnmount(): void {
     if (this._element instanceof HTMLElement) {
       this._element.remove();
     }
+
     this._element = null;
   }
 
@@ -229,6 +252,10 @@ export default class Block {
   }
 
   private _componentDidUpdate(oldProps: Props, newProps: Props): void {
+    if (!oldProps || !newProps) {
+      return;
+    }
+
     const response = this.componentDidUpdate(oldProps, newProps);
 
     if (response) {
@@ -236,13 +263,23 @@ export default class Block {
     }
   }
 
-  protected componentDidUpdate(oldProps: Props, newProps: Props): boolean {
-    console.log(`Component ${this._meta?.tagName} updated with props:`, oldProps, newProps);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected componentDidUpdate(_oldProps: Props, _newProps: Props): boolean {
     return true;
   }
 
-  private _setAttribute(attributes: Record<string, string> = {}): void {
-    Object.entries(attributes).forEach(([key, value]) => this._element?.setAttribute(key, value));
+  private _setAttribute(attributes: Record<string, string | boolean> = {}): void {
+    Object.entries(attributes).forEach(([key, value]) => this._element?.setAttribute(key, String(value)));
+  }
+
+  public toggleClass(className: Record<string, string>): void {
+    const key = className.class;
+
+    if (this.element?.classList.contains(key)) {
+      this.element?.classList.remove(key);
+    }
+
+    this.element?.classList.add(key);
   }
 
   private _addEvents(): void {
@@ -311,6 +348,7 @@ export default class Block {
 
     Object.values(this.children).forEach((child) => {
       const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+
       if (stub) {
         const content = child.getContent();
 
@@ -322,6 +360,7 @@ export default class Block {
 
     Object.entries(this.childItems).forEach(([key, items]) => {
       const stub = fragment.content.querySelector(`[data-id="${key}"]`);
+
       if (!stub) {
         return;
       }
@@ -348,17 +387,14 @@ export default class Block {
 
   public show(): void {
     const element = this.getContent() as HTMLElement;
-
-    if (element !== null) {
-      element.style.display = 'block';
-    }
+    if (!element) return;
+    element.style.display = 'block';
   }
 
   public hide(): void {
     const element = this.getContent() as HTMLElement;
-
-    if (element !== null) {
-      element.style.display = 'none';
-    }
+    element.style.display = 'none';
   }
 }
+
+export default Block;

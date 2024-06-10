@@ -7,8 +7,6 @@
 ## Deploy
 
 - [Главная страница](https://simple-chat-messenger.netlify.app/)
-- [Страница логина](https://simple-chat-messenger.netlify.app/login)
-- [Страница 404](https://simple-chat-messenger.netlify.app/registration)
 
 ## Description
 
@@ -42,3 +40,27 @@ Basic Html pages and css styles are are developed. Chat list page in development
 5. Run `npm run build` to build the project.
 6. Run `npm run start` to serve the project in production mode and open `http://localhost:3000/` in your browser.
 7. Index page contains links to other pages.
+
+## Current updates
+
+- Implemented real-time chat functionality using WebSocket.
+- Added authentication and user registration.
+- Improved UI/UX design.
+- Implemented user profile functionality.
+- Implemented message input without file attachment.
+- Implemented chat log - messages list
+- Implemented add chat
+- Implemented delete chat
+- Implemented update avatar for chat
+- Implemented add user to chat
+- Implemented delete user from chat
+
+## Remaining tasks
+
+- Optimize render component und update Message page and child components and fix reactivity components.
+- Complete the development of the chat list component with reset chat log and chat list data on change by click.
+- Implement message send on press key Enter.
+- Implement search functionality in the chat.
+- Add support for file attachments.
+- Improve error handling and error messages.
+- Optimize performance and fix bugs.
