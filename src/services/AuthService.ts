@@ -2,34 +2,32 @@ import AuthAPI from '@/api/AuthApi';
 import router from '@/router/Router';
 import { store } from '@/store';
 import { actions } from '@/store/actions';
-import { CreateUser, SignInRequest, User } from '@/utils/interfaces';
+import { ApiError, ApiResponse, CreateUser, SignInRequest, User } from '@/utils/interfaces';
 import { isAPIError } from '@/utils/guards';
 import { ERRORS_MESSAGES, HTTP_CODES, ROUTES } from '@/utils/enums';
-import { handleError } from '@/helpers/handleError';
+import { handleApiError } from '@/helpers/handleApiError';
+import { handleResponseError } from '@/helpers/handleResponseError';
 
 const authApi = new AuthAPI();
 
 class AuthService {
-  private static goToMessenger(): void {
-    router.go(ROUTES.Messenger);
-  }
-
-  private static async authUser(): Promise<void> {
-    const response = await authApi.getUser();
-    const { status, ...userData } = response;
-
-    if (!response) {
-      throw new Error('Failed to retrieve user data after registration');
-    }
-
-    if (isAPIError(response)) {
-      throw new Error(response.reason);
-    }
-
-    if (status === HTTP_CODES.OK) {
-      actions.setUser(userData as User);
+  public static async authUser(): Promise<void> {
+    try {
+      const response = await authApi.getUser();
+      this.checkResponse(response);
+      const { status, ...data } = response;
+      actions.setUser(data as User);
       actions.setAuthenticated(true);
-      this.goToMessenger();
+      actions.setLoginError(null);
+      actions.setSignUpError(null);
+      sessionStorage.setItem('isAuthenticated', 'true');
+    } catch (error: unknown) {
+      const errorMessage = handleApiError(error);
+      console.error(errorMessage);
+      actions.setAuthenticated(false);
+      actions.setUser(null);
+      sessionStorage.removeItem('isAuthenticated');
+      handleResponseError(error as ApiError);
     }
   }
 
@@ -37,19 +35,13 @@ class AuthService {
     try {
       actions.setLoading(true);
       const response = await authApi.signIn(data);
-      const { status } = response;
-
-      if (isAPIError(response)) {
-        if (response.reason !== ERRORS_MESSAGES.USER_IN_SYSTEM && status !== HTTP_CODES.OK) {
-          throw new Error(response.reason);
-        }
-      }
-
-      this.authUser();
+      this.checkResponse(response);
+      await this.redirectToMessenger();
     } catch (error: unknown) {
-      console.error(error);
-      const errorMessage = handleError(error);
-      actions.setAuthError(errorMessage);
+      const errorMessage = handleApiError(error);
+      console.error(errorMessage);
+      actions.setLoginError(errorMessage);
+      handleResponseError(error as ApiError);
     } finally {
       actions.setLoading(false);
     }
@@ -59,44 +51,59 @@ class AuthService {
     try {
       actions.setLoading(true);
       const response = await authApi.signUp(data);
-      const { status } = response;
-
-      if (isAPIError(response)) {
-        if (response.reason !== ERRORS_MESSAGES.USER_IN_SYSTEM && status !== HTTP_CODES.OK) {
-          throw new Error(response.reason);
-        }
-      }
-
-      this.authUser();
+      this.checkResponse(response);
+      await this.redirectToMessenger();
     } catch (error: unknown) {
-      console.error(error);
-      const errorMessage = handleError(error);
-      actions.setAuthError(errorMessage);
+      const errorMessage = handleApiError(error);
+      console.error(errorMessage);
+      actions.setSignUpError(errorMessage);
+      handleResponseError(error as ApiError);
     } finally {
       store.set({ isLoading: false });
+    }
+  }
+
+  private static async redirectToMessenger(): Promise<void> {
+    try {
+      await this.authUser();
+      router.go(ROUTES.Messenger);
+    } catch (error) {
+      console.error(ERRORS_MESSAGES.AUTH_FAILED, error);
     }
   }
 
   public static async logout(): Promise<void> {
     try {
       const response = await authApi.logout();
-      const { status } = response;
-
-      if (isAPIError(response)) {
-        throw new Error(response.reason);
-      }
-
-      if (status === HTTP_CODES.OK) {
-        actions.setUser(null);
-        actions.setAuthenticated(false);
-        router.go(ROUTES.Home);
-      } else {
-        throw new Error(ERRORS_MESSAGES.LOGOUT_FAILED);
-      }
+      this.checkResponse(response);
+      actions.setUser(null);
+      actions.setAuthenticated(false);
+      sessionStorage.removeItem('isAuthenticated');
+      router.go(ROUTES.Home);
     } catch (error: unknown) {
-      console.error(error);
-      const errorMessage = handleError(error);
-      actions.setAuthError(errorMessage);
+      const errorMessage = handleApiError(error);
+      console.error(errorMessage);
+      handleResponseError(error as ApiError);
+    }
+  }
+
+  private static checkResponse(response: ApiResponse | ApiError): void {
+    if (!response) {
+      throw new Error(ERRORS_MESSAGES.RESPONSE_ERROR);
+    }
+
+    const { status } = response;
+
+    if (isAPIError(response)) {
+      if (response.reason === ERRORS_MESSAGES.USER_IN_SYSTEM && status !== HTTP_CODES.OK) {
+        return
+      }
+
+      throw new Error(response.reason);
+    }
+
+    if (status !== HTTP_CODES.OK) {
+      throw new Error(`requestErr: ${JSON.stringify(response)}`);
     }
   }
 }

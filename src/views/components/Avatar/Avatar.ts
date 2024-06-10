@@ -5,14 +5,15 @@ import tpl from './tpl';
 
 class Avatar extends Block {
   constructor(props: AvatarProps) {
-    super(props);
-    const { size } = this.props;
+    const { size } = props;
     const sizeClass = size ? `avatar_${size}` : '';
     const className = `avatar ${sizeClass}`;
-    this.setProps({
+
+    super({
+      ...props,
       attributes: {
-        ...this.props.attributes,
-        class: `${this.props.attributes?.class || ''} ${className}`.trim(),
+        ...props.attributes,
+        class: `${props.attributes?.class || ''} ${className}`.trim(),
       },
       events: {
         click: props.onClick || ((): void => {}),

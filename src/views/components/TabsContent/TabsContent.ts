@@ -5,11 +5,7 @@ import tpl from './tpl';
 
 class TabsContent extends Block {
   constructor(props: TabsContentProps) {
-    super(props);
-    this.setProps({
-      attributes: { class: 'tabs__content' },
-      content: props.content,
-    });
+    super({ ...props, attributes: { class: 'tabs__content' }, content: props.content });
   }
 
   public render(): DocumentFragment {

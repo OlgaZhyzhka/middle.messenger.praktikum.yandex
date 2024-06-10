@@ -9,10 +9,10 @@ import tpl from './tpl.ts';
 
 class Registration extends BasePage {
   constructor(props: Props) {
-    super(props);
-    this.setProps({
-      spinner: new Spinner({}),
+    super({
+      ...props,
       title: 'Connect easily with your family and friends over countries',
+      spinner: new Spinner({}),
       registrationForm: new RegistrationForm({
         attributes: { class: 'form form_horizontal form_auth' },
         type: 'registration',
@@ -26,9 +26,9 @@ class Registration extends BasePage {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const mapStateToProps = ({ isLoading, authError }: IStore) => ({
+const mapStateToProps = ({ isLoading, signUpError }: IStore) => ({
   isLoading,
-  authError,
+  signUpError,
 });
 
 export default connect(mapStateToProps)(Registration);

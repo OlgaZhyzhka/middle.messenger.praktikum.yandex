@@ -15,11 +15,13 @@ export interface IStore {
   chatUsers: ChatUser[];
   activeChatId: number | null;
   isAuthenticated: boolean;
-  isChatListLoading: boolean;
-  isChatLogLoading: boolean;
-  authError?: string | null;
-  updateError?: string | null;
+  isChatListLoading?: boolean;
+  isChatLogLoading?: boolean;
+  isChatUserLoading?: boolean;
   isUpdatePassword?: boolean;
+  loginError?: string | null;
+  signUpError?: string | null;
+  updateError?: string | null;
 }
 
 class Store extends EventBus {
@@ -51,13 +53,17 @@ class Store extends EventBus {
       this.emit(StoreEvents.Updated, prevState, nextState);
     }
   }
+
 }
 
 const defaultState: PlainObject = {
   isLoading: false,
   isAuthenticated: false,
-  isChatListLoading: false,
-  isChatLogLoading: false,
+  isChatListLoading: true,
+  isChatLogLoading: true,
+  isChatUserLoading: true,
+  loginError: null,
+  signUpError: null,
   user: null,
   activeChatId: null,
   messages: [],

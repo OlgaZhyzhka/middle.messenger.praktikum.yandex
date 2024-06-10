@@ -8,17 +8,21 @@ import tpl from './tpl';
 
 class TabsNav extends Block {
   constructor(props: TabsNavProps) {
-    super(props, 'ul');
-    this.setProps({
-      attributes: { class: 'tabs__nav' },
-      tabsNav: props.items.map(
-        (item: TabProps) =>
-          new Tab({
-            ...item,
-            onClick: (index): void => (this.props.onClick as Callback)?.(index),
-          })
-      ),
-    });
+    const items = (props.items as { list: TabProps[] })?.list;
+    super(
+      {
+        ...props,
+        attributes: { class: 'tabs__nav' },
+        tabsNav: items.map(
+          (item: TabProps) =>
+            new Tab({
+              ...item,
+              onClick: (index): void => (this.props.onClick as Callback)?.(index),
+            })
+        ),
+      },
+      'ul'
+    );
   }
 
   public highlightTab(activeTabIndex: number): void {

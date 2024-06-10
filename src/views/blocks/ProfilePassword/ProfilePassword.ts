@@ -14,9 +14,8 @@ import UserService from '@/services/UserService';
 
 class ProfilePassword extends Block {
   constructor(props: Props) {
-    super(props, 'form');
+    super({ ...props, attributes: { class: 'profile__form form form_horizontal' } }, 'form');
     this.setProps({
-      attributes: { class: 'profile__form form form_horizontal' },
       oldPasswordInput: this.createOldPasswordInput(),
       passwordInput: this.createPasswordInput(),
       confirmPasswordInput: this.createConfirmPasswordInput(),

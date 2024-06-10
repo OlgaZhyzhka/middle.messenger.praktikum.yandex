@@ -1,4 +1,10 @@
-node_modules
-dist
+/node_modules
+/dist
+/public
+/static
 server.js
 vite.config.js
+loader.css.js 
+loader.js
+mochaSetup.js
+

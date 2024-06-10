@@ -40,6 +40,10 @@ export default class WS extends EventBus {
         this.off(WS_EVENTS.error, reject);
         resolve();
       });
+      this.on(WS_EVENTS.close, () => {
+        this.off(WS_EVENTS.error, reject);
+        resolve();
+      });
     });
   }
 
@@ -78,16 +82,20 @@ export default class WS extends EventBus {
     });
 
     socket.addEventListener('message', (message) => {
-      const data = JSON.parse(message.data);
-      if (Array.isArray(data)) {
-        this.emit(WS_EVENTS.message, data);
-      } else if (!['pong', 'user connected'].includes(data?.type)) {
-        this.emit(WS_EVENTS.message, data);
+      try {
+        const data = JSON.parse(message.data);
+        if (Array.isArray(data)) {
+          this.emit(WS_EVENTS.message, data);
+        } else if (!['pong', 'user connected'].includes(data?.type)) {
+          this.emit(WS_EVENTS.message, data);
+        }
+      } catch (error) {
+        console.error('Error JSON parse:', error);
       }
     });
   }
 
-  public send(data: string | number | object): void {
+  public send(data: string | number | Record<string, string | number>): void {
     if (!this.socket) {
       throw new Error(ERRORS_MESSAGES.WS_NOT_CONNECTED);
     }

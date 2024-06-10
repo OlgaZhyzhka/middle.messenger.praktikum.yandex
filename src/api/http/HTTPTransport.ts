@@ -6,8 +6,8 @@ import { BASE_URL } from './ApiUrl';
 export default class HTTPTransport {
   protected endpoint: string;
 
-  constructor(baseEndpoint = '') {
-    this.endpoint = `${BASE_URL}${baseEndpoint}`;
+  constructor(baseEndpoint = '', baseUrl = BASE_URL) {
+    this.endpoint = `${baseUrl}${baseEndpoint}`;
   }
 
   public get: HTTPMethod = (url, options = {}) => {
@@ -57,11 +57,11 @@ export default class HTTPTransport {
             if (typeof response === 'object' && response !== null && !Array.isArray(response)) {
               responseTransport = { status: xhr.status, ...response };
             } else {
-              responseTransport = { status: xhr.status, response };
+              responseTransport = { status: xhr.status, data: response };
             }
           } else {
             const response = xhr.responseText as unknown as TResponse;
-            responseTransport = { status: xhr.status, response };
+            responseTransport = { status: xhr.status, data: response };
           }
 
           if (xhr.status >= HTTP_CODES.OK && xhr.status < HTTP_CODES.REDIRECT) {

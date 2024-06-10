@@ -91,7 +91,7 @@
   }
 
   &_sm {
-    @include create-mq($grid__bp-sm, 'min') {
+    @include create-mq($grid__bp-xs, 'min') {
       .modal__container {
         width: 420px;
       }

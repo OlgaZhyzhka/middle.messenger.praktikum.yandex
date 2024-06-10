@@ -7,8 +7,8 @@ import tpl from './tpl';
 
 class Upload extends Block {
   constructor(props: UploadProps) {
-    super(props);
-    this.setProps({
+    super({
+      ...props,
       attributes: {
         class: `${props.attributes?.class || ''} upload`.trim(),
       },
@@ -26,8 +26,8 @@ class Upload extends Block {
   public reset(): void {
     const input = this.getChild('inputFile') as Input;
     const preview = this.getChild('uploadPreview') as Block;
-    preview.getContent()?.removeAttribute('style');
-    input.getContent()?.setAttribute('value', '');
+    preview.element?.removeAttribute('style');
+    input.element?.setAttribute('value', '');
   }
 
   public render(): DocumentFragment {

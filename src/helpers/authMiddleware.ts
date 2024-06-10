@@ -3,7 +3,7 @@ import router from '@/router/Router';
 import { ROUTES } from '@/utils/enums';
 
 export const authMiddleware = (pathname: string): boolean => {
-  const { isAuthenticated } = store.getState();
+  const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true' || store.getState().isAuthenticated;
   const requiresAuth = [ROUTES.Home, ROUTES.Messenger, ROUTES.Settings].includes(pathname as ROUTES);
   const isAuthPage = [ROUTES.Login, ROUTES.Registration].includes(pathname as ROUTES);
 

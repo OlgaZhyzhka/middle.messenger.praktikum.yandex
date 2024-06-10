@@ -1,4 +1,6 @@
 import '@/scss/app.scss';
+import AuthService from '@/services/AuthService';
+import { ERRORS_MESSAGES } from '@/utils/enums';
 import router from '@/router/Router';
 import routesConfig from '@/router/routesConfig';
 import { store } from '@/store';
@@ -17,5 +19,17 @@ routesConfig.forEach((route) => {
     route.middleware
   );
 });
+
+(async (): Promise<void> => {
+  const isAuth = sessionStorage.getItem('isAuthenticated') === 'true';
+
+  if (isAuth) {
+    try {
+      await AuthService.authUser();
+    } catch (error) {
+      console.error(ERRORS_MESSAGES.AUTH_FAILED, error);
+    }
+  }
+})();
 
 router.start();

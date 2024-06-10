@@ -9,7 +9,6 @@ import tpl from './tpl';
 
 class ProfileCard extends Block {
   constructor(props: Props) {
-    super(props);
     const tabs: TabProps[] = [
       {
         title: 'Information',
@@ -27,11 +26,14 @@ class ProfileCard extends Block {
         content: null,
       },
     ];
-    this.setProps({
+    super({
+      ...props,
       attributes: { class: `${props.attributes?.class || ''} card`.trim() },
+    });
+    this.setProps({
       tabs: new Tabs({
         attributes: { class: 'profile__tabs' },
-        items: tabs,
+        items: { list: tabs },
         onChange: (index: number): Block => this.changeContent(index),
       }),
     });

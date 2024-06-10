@@ -8,5 +8,7 @@ const tpl = `{{#if title}}
 <div class="form__footer">
 {{{ submitButton }}}
 {{{ cancelButton }}}
-</div>`;
+</div>
+<hr />
+<ul class="list list_user">{{{ userList }}}</ul>`;
 export default tpl;

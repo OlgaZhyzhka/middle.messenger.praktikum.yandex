@@ -9,8 +9,8 @@ class Tabs extends Block {
   private activeTab: number = 0;
 
   constructor(props: TabsProps) {
-    super(props);
-    this.setProps({
+    super({
+      ...props,
       attributes: { class: `${props.attributes?.class || ''} tabs` },
       tabsNav: new TabsNav({
         items: props.items,

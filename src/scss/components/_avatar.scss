@@ -1,4 +1,5 @@
 :root {
+  --avatar-xs: 20px;
   --avatar-sm: 48px;
   --avatar-lg: 130px;
   --border-radius-avatar-sm: 16px;
@@ -24,18 +25,26 @@
     font-size: torem(12px);
   }
 
+  &_xs {
+    .avatar__image {
+      width: var(--avatar-xs);
+      height: var(--avatar-xs);
+      border-radius: var(--border-radius-xs);
+    }
+  }
+
   &_sm {
     .avatar__image {
       width: var(--avatar-sm);
       height: var(--avatar-sm);
-      border-radius: var(--border-radius-avatar-sm);
+      border-radius: var(--border-radius-sm);
     }
   }
 
   &_lg {
     .avatar__image {
       height: var(--avatar-lg);
-      border-radius: var(--border-radius-avatar-lg);
+      border-radius: var(--border-radius-lg);
     }
   }
 }

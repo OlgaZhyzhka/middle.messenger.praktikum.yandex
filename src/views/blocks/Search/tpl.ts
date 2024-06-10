@@ -1,2 +1,4 @@
-const tpl = `{{{ searchInput }}}{{{ searchIcon }}}`;
+const tpl = `{{{ searchInput }}}
+{{{ searchAction }}}
+`;
 export default tpl;

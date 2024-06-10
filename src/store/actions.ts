@@ -14,8 +14,12 @@ class Actions {
     store.set({ isAuthenticated });
   }
 
-  public setAuthError(error: string | null): void {
-    store.set({ authError: error });
+  public setLoginError(error: string | null): void {
+    store.set({ loginError: error });
+  }
+
+  public setSignUpError(error: string | null): void {
+    store.set({ signUpError: error });
   }
 
   public setUpdateError(error: string | null): void {
@@ -38,7 +42,13 @@ class Actions {
     return store.getState().chatUsers;
   }
 
-  public geActiveChatId(): number | null {
+  public deleteChatUser(userId: number): void {
+    store.set({
+      chatUsers: store.getState().chatUsers.filter((user) => user.id !== userId),
+    });
+  }
+
+  public getActiveChatId(): number | null {
     return store.getState().activeChatId;
   }
 
@@ -50,26 +60,39 @@ class Actions {
     store.set({ chats });
   }
 
-  public addChats(chat: IChat): void {
-    const state = store.getState();
-    state.chats.push(chat);
-    store.set({ chats: state.chats });
-  }
-
   public getChats(): IChat[] | undefined {
     return store.getState().chats;
   }
 
+  public getChatById(chatId: number): IChat | undefined {
+    return store.getState().chats.find((chat) => chat.id === chatId);
+  }
+
   public deleteChat(chatId: number): void {
-    const state = store.getState();
-    state.chats = state.chats.filter((chat) => chat.id !== chatId);
-    store.set({ chats: state.chats });
+    store.set({
+      chats: store.getState().chats.filter((chat) => chat.id !== chatId),
+    });
+    store.set({
+      messages: store.getState().messages.filter((message) => message.chat_id !== chatId),
+    });
+
+    const activeChatId = this.getActiveChatId();
+
+    if (activeChatId === chatId) {
+      this.setActiveChatId(null);
+    }
+  }
+
+  public updateChatAvatar(chatId: number, avatar: string): void {
+    store.set({
+      chats: store.getState().chats.map((chat) => (chat.id === chatId ? { ...chat, avatar } : chat)),
+    });
   }
 
   public addMessage(message: IMessage): void {
-    const state = store.getState();
-    state.messages.push(message);
-    store.set({ messages: state.messages });
+    store.set({
+      messages: [...store.getState().messages, message],
+    });
   }
 
   public setMessages(messages: IMessage[]): void {
@@ -82,12 +105,16 @@ class Actions {
     store.set({ messages: messageItems });
   }
 
-  public setChatListLoading(isLoading: boolean): void {
-    store.set({ isChatListLoading: isLoading });
+  public setChatListLoading(isChatListLoading: boolean): void {
+    store.set({ isChatListLoading });
   }
 
-  public setChatLogLoading(isLoading: boolean): void {
-    store.set({ isChatLogLoading: isLoading });
+  public setChatLogLoading(isChatLogLoading: boolean): void {
+    store.set({ isChatLogLoading });
+  }
+
+  public setChatUsersLoading(isChatUserLoading: boolean): void {
+    store.set({ isChatUserLoading });
   }
 }
 

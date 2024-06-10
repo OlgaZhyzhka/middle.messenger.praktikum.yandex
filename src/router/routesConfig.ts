@@ -1,7 +1,6 @@
 import { ROUTES } from '@/utils/enums';
 import { authMiddleware } from '@/helpers/authMiddleware';
 import { Messenger, Login, Registration, Settings, Error404, Error500 } from '@/views/pages';
-import { RouterLink } from '@/views/components/RouterLink';
 
 export const routesConfig = [
   {
@@ -50,6 +49,7 @@ export const routesConfig = [
     component: Error404,
     title: 'Chateo - simple messenger',
     props: {
+      pageTitle: 'Page not found',
       imgSrc: '/images/logotype.svg',
       imgAlt: 'simple chat logo',
     },
@@ -62,13 +62,6 @@ export const routesConfig = [
       pageTitle: 'Server error',
       imgSrc: '/images/logotype.svg',
       imgAlt: 'simple chat logo',
-      link: new RouterLink({
-        size: 'md',
-        variant: 'primary',
-        shape: 'rounded',
-        children: 'Go to home page',
-        to: ROUTES.Home,
-      }),
     },
   },
   {
@@ -79,13 +72,6 @@ export const routesConfig = [
       pageTitle: 'Page not found',
       imgSrc: '/images/logotype.svg',
       imgAlt: 'simple chat logo',
-      link: new RouterLink({
-        size: 'md',
-        variant: 'primary',
-        shape: 'rounded',
-        children: 'Go to home page',
-        to: ROUTES.Home,
-      }),
     },
   },
 ];

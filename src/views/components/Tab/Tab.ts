@@ -6,13 +6,16 @@ import tpl from './tpl';
 
 class Tab extends Block {
   constructor(props: TabProps) {
-    super(props, 'li');
-    this.setProps({
-      attributes: { class: 'tabs__link' },
-      events: {
-        click: (event: Event) => this.onClick(event),
+    super(
+      {
+        ...props,
+        attributes: { class: 'tabs__link' },
+        events: {
+          click: (event: Event) => this.onClick(event),
+        },
       },
-    });
+      'li'
+    );
   }
 
   private onClick(event: Event): void {

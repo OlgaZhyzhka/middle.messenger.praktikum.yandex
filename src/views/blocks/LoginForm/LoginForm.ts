@@ -13,14 +13,12 @@ import tpl from './tpl';
 
 class LoginForm extends Block {
   constructor(props: Props) {
-    super(props, 'form');
+    super({ ...props, attributes: { class: 'form form_horizontal form_auth' }, text: 'Need an account?' }, 'form');
     this.setProps({
-      attributes: { class: 'form form_horizontal form_auth' },
       loginInput: this.createLoginInput(),
       passwordInput: this.createPasswordInput(),
       submitButton: this.createSubmitButton(),
       navButton: this.createNavButton(),
-      text: 'Need an account?',
     });
   }
 

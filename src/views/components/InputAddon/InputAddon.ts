@@ -3,13 +3,12 @@ import { IconButton } from '@/views/components/IconButton';
 
 class InputAddon extends Block {
   constructor(props: Props) {
-    super(props);
-    const { placement } = this.props;
+    const { placement } = props;
     const className = placement ? `input-addon input-addon_${placement}` : 'input-addon';
-
-    this.setProps({
+    super({
+      ...props,
       attributes: {
-        class: `${this.props.attributes?.class || ''} ${className}`.trim(),
+        class: `${props.attributes?.class || ''} ${className}`.trim(),
       },
     });
   }

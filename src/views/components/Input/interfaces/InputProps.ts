@@ -1,11 +1,11 @@
 import { Props } from '@/core/Block';
-import { Callback } from '@/utils/types';
+import { EventCallback } from '@/utils/types';
 
 export interface InputProps extends Props {
   attributes?: Record<string, string | boolean>;
   inputAttributes?: Record<string, string | boolean>;
-  onBlur?: Callback;
-  onInput?: Callback;
-  onChange?: Callback;
-  onKeyDown?: Callback;
+  onBlur?: EventCallback;
+  onInput?: EventCallback;
+  onChange?: EventCallback;
+  onKeyDown?: EventCallback;
 }

@@ -20,11 +20,10 @@ class ProfileEdit extends Block {
   private file: File | null;
 
   constructor(props: Props) {
-    super(props, 'form');
+    super({ ...props, attributes: { class: 'profile__form form form_horizontal' } }, 'form');
     this.file = null;
     const { avatar, firstName, secondName, phone, email, login, chatName } = this.props;
     this.setProps({
-      attributes: { class: 'profile__form form form_horizontal' },
       avatar: new Avatar({
         attributes: { class: 'profile__avatar' },
         src: avatar ? `${RESOURCE_URL}${avatar}` : holder,

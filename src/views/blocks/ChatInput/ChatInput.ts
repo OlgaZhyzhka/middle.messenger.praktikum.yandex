@@ -12,25 +12,15 @@ import tpl from './tpl';
 
 class ChatInput extends Block {
   constructor(props: ChatInputProps) {
-    super(props);
     const dropdownUpload: DropdownItemProps[] = [
       {
         title: 'Media',
         iconName: 'media',
         inputId: 'file-input-media',
       },
-      {
-        title: 'File',
-        iconName: 'file',
-        inputId: 'file-input-file',
-      },
-      {
-        title: 'Location',
-        iconName: 'location',
-        inputId: 'file-input-location',
-      },
     ];
-    this.setProps({
+    super({
+      ...props,
       attributes: { class: 'chat__footer' },
       sendButton: new IconButton({
         attributes: { class: 'chat__button' },
@@ -38,48 +28,57 @@ class ChatInput extends Block {
         iconSize: 'sm',
         onClick: (): void => this.handleSend(),
       }),
-      chatInput: this.createMessageInput(),
       dropdown: new Dropdown({
         type: 'bottom',
         buttonType: 'upload',
-        items: dropdownUpload,
+        items: { list: dropdownUpload },
       }),
       fileInputMedia: new Input({
-        attributes: { class: 'input_file', type: 'file', accept: 'image/*, video/*', id: 'file-input-media' },
+        attributes: { class: 'input_file', type: 'file', accept: 'image/*', id: 'file-input-media' },
         onChange: (event: Event): void => this.handleAttachMedia(event),
       }),
       fileInputFile: new Input({
         attributes: { class: 'input_file', type: 'file', style: 'display: none;', id: 'file-input-file' },
-        onChange: (event: Event): void => this.handleAttachFile(event),
+        onChange: (event: Event): void => this.handleAttachMedia(event),
       }),
+    });
+    
+    this.setProps({
+      messageInput: this.createMessageInput(),
     });
   }
 
-  private createInput({ onBlur, attributes = {}, inputAttributes = {} }: InputProps): InputElement {
+  private checkInputValidity(type: string, value: string, inputElement?: InputElement): void {
+    const data = { [type]: value };
+    const validText = validate(data, type);
+    const input = inputElement || (this.getChild(`${type}Input`) as InputElement);
+    input.setIsValid(!validText);
+    if (validText) input.setErrorMessage(validText);
+  }
+
+  private createInput({ onBlur, onKeyDown, attributes = {}, inputAttributes = {} }: InputProps): InputElement {
     return new InputElement({
       size: 'sm',
       isValid: false,
       attributes,
       inputAttributes,
       onBlur,
+      onKeyDown,
     });
   }
 
   private createMessageInput(): InputElement {
     const onBlur = (event: Event): void => {
       const { value } = event.target as HTMLInputElement;
-      const data = { message: value };
-      const validText = validate(data, 'message');
-      const input = this.getChild('chatInput') as InputElement;
-      input.setIsValid(!validText);
-      if (validText) input.setErrorMessage(validText);
+      this.checkInputValidity('message', value);
     };
 
-    const onKeyDown = (event: KeyboardEvent): void => {
-      console.log(event.key);
-      if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        this.handleSend();
+    const onKeyDown = (event: Event): void => {
+      if (event instanceof KeyboardEvent) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          event.preventDefault();
+          this.handleSend();
+        }
       }
     };
 
@@ -92,29 +91,20 @@ class ChatInput extends Block {
     return this.createInput(inputProps);
   }
 
-  private handleAttachFile(event: Event): void {
-    const fileInput = event.target as HTMLInputElement;
-    if (fileInput.files && fileInput.files.length > 0) {
-      const file = fileInput.files[0];
-      console.log('Media file:', file);
-      (this.children.dropdown as Dropdown).closeDropdown();
-    }
-  }
-
   private handleAttachMedia(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
-      console.log('Media file:', file);
+      (this.props as ChatInputProps).onSendFile(file);
       (this.children.dropdown as Dropdown).closeDropdown();
     }
   }
 
-  private checkFormValidity(chatInput: InputElement): boolean {
+  private checkFormValidity(messageInput: InputElement): boolean {
     let isFormValid = true;
 
-    if (chatInput?.getProps()?.isValid !== true) {
-      chatInput?.setErrorMessage('Invalid message');
+    if (messageInput?.getProps()?.isValid !== true) {
+      messageInput?.setErrorMessage('Invalid message');
       isFormValid = false;
     }
 
@@ -122,16 +112,17 @@ class ChatInput extends Block {
   }
 
   private handleSend(): void {
-    const chatInput = this.getChild('chatInput') as InputElement;
-    const isFormValid = this.checkFormValidity(chatInput);
+    const messageInput = this.getChild('messageInput') as InputElement;
+
+    const input = messageInput.getInputElement();
+    const message = input.value.trim();
+    this.checkInputValidity('message', message);
+    const isFormValid = this.checkFormValidity(messageInput);
 
     if (!isFormValid) {
       console.error('Invalid input value');
       return;
     }
-
-    const input = chatInput.getInputElement();
-    const message = input.value.trim();
 
     if (message) {
       (this.props as ChatInputProps).onSendMessage(message);

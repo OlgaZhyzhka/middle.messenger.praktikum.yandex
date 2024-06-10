@@ -1,8 +1,11 @@
 import { ApiResponse } from '@/utils/interfaces';
 
 import BaseApi from './BaseApi';
+import HTTPTransport from './http/HTTPTransport';
 
 class ChatApi extends BaseApi {
+  private http: HTTPTransport = new HTTPTransport();
+
   constructor() {
     super('/chats');
   }
@@ -23,16 +26,12 @@ class ChatApi extends BaseApi {
     return this.HTTP.get(`/${id}/users`);
   }
 
-  public addUsersToChat(chaiId: number, userId: number): Promise<ApiResponse> {
-    return this.HTTP.put('/users', { data: { users: { userId }, chaiId } });
-  }
-
-  public deleteUsersFromChat(chatId: number, userId: number): Promise<ApiResponse> {
-    return this.HTTP.delete('/users', { data: { users: [userId], chatId } });
-  }
-
-  public addUserToChat(chatId: number, userId: number): Promise<ApiResponse> {
+  public addUserToChat(userId: number, chatId: number): Promise<ApiResponse> {
     return this.HTTP.put('/users', { data: { users: [userId], chatId } });
+  }
+
+  public deleteUsersFromChat(userId: number, chatId: number): Promise<ApiResponse> {
+    return this.HTTP.delete('/users', { data: { users: [userId], chatId } });
   }
 
   public updateChatAvatar(file: File, chatId: number): Promise<ApiResponse> {
@@ -48,6 +47,16 @@ class ChatApi extends BaseApi {
     }
 
     return this.HTTP.delete('', { data: { chatId } });
+  }
+
+  public sendFile(file: File): Promise<ApiResponse> {
+    const data = new FormData();
+    data.append('resource', file);
+    return this.http.post('/resources', { data });
+  }
+
+  public getFile(path: string): Promise<ApiResponse> {
+    return this.HTTP.get(`/resources/${path}`);
   }
 
   public getToken(chatId: number): Promise<ApiResponse> {

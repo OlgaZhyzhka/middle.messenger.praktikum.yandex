@@ -1,17 +1,16 @@
 import Block, { Props } from '@/core/Block';
 import { Callback } from '@/utils/types';
+import validate from '@/helpers/validators';
 import { InputElement } from '@/views/components/InputElement';
 import { InputProps } from '@/views/components/Input/interfaces/InputProps';
 import { Button } from '@/views/components/Button';
 
 import tpl from './tpl';
-import validate from '@/helpers/validators';
 
 class ModalChat extends Block {
   constructor(props: Props) {
-    super(props, 'form');
+    super({ ...props, attributes: { class: 'form form_horizontal' } }, 'form');
     this.setProps({
-      attributes: { class: 'form form_horizontal' },
       titleInput: this.createTitleInput(),
       submitButton: this.createSubmitButton(),
       cancelButton: this.createCancelButton(),

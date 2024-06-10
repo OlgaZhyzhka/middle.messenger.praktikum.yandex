@@ -15,36 +15,30 @@ import tpl from './tpl';
 
 class Sidebar extends Block {
   constructor(props: SidebarProps) {
-    super(props, 'aside');
-    const { avatar, login } = props;
-
-    if (props.isMessenger) {
-      this.setProps({
+    const { avatar, login, isMessenger } = props;
+    super(
+      {
+        ...props,
         attributes: { class: 'sidebar panel' },
         logo: new Logo({}),
         userAvatar: new Avatar({ src: avatar ? `${RESOURCE_URL}${avatar}` : holder, title: login, size: 'sm' }),
-        linkToProfile: new RouterLink(
-          {
-            attributes: { class: 'sidebar__link' },
-            children: 'Settings',
-            to: ROUTES.Settings,
-          },
-          'span'
-        ),
-      });
-    }
-
-    if (props.isSettings) {
-      this.setProps({
-        attributes: { class: 'sidebar panel' },
-        logo: new Logo({}),
-        linkToLogout: new Link({
-          attributes: { class: 'sidebar__link' },
-          children: 'Logout',
-          onClick: (event: Event): void => this.handleLogout(event),
-        }),
-      });
-    }
+        link: isMessenger
+          ? new RouterLink(
+              {
+                attributes: { class: 'sidebar__link' },
+                children: 'Settings',
+                to: ROUTES.Settings,
+              },
+              'span'
+            )
+          : new Link({
+              attributes: { class: 'sidebar__link' },
+              children: 'Logout',
+              onClick: (event: Event): void => this.handleLogout(event),
+            }),
+      },
+      'aside'
+    );
   }
 
   private handleLogout(event: Event): void {

@@ -9,12 +9,7 @@ import tpl from './tpl.ts';
 
 class Login extends BasePage {
   constructor(props: Props) {
-    super(props);
-    this.setProps({
-      spinner: new Spinner({}),
-      title: 'Welcome back!',
-      loginForm: new LoginForm({}),
-    });
+    super({ ...props, title: 'Welcome back!', spinner: new Spinner({}), loginForm: new LoginForm({}) });
   }
 
   public render(): DocumentFragment {
@@ -23,9 +18,9 @@ class Login extends BasePage {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const mapStateToProps = ({ isLoading, authError }: IStore) => ({
+const mapStateToProps = ({ isLoading, loginError }: IStore) => ({
   isLoading,
-  authError,
+  loginError,
 });
 
 export default connect(mapStateToProps)(Login);
