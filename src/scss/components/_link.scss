@@ -1,0 +1,15 @@
+.link {
+  color: var(--color-text);
+  transition: opacity var(--transition-duration) var(--transition-easing);
+  text-decoration: none;
+
+  &:hover {
+    color: inherit;
+    opacity: 0.65;
+  }
+
+  &_icon {
+    display: flex;
+    align-items: center;
+  }
+}

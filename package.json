@@ -1,0 +1,59 @@
+{
+  "name": "messenger",
+  "source": "src/index.html",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "start": "npm run build && node server.js",
+    "formatter": "prettier --write .",
+    "preview": "vite preview",
+    "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0 --fix",
+    "lint:css": "stylelint 'src/scss/**/*.scss'",
+    "lint:css:fix": "npm run lint:css -- --fix",
+    "prepare": "husky install"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.9.0",
+    "eslint-config-airbnb-typescript": "^17.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "handlebars": "^4.7.8",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "nodemon": "^3.0.3",
+    "prettier": "^2.8.8",
+    "sass": "^1.70.0",
+    "stylelint": "^16.2.1",
+    "stylelint-config-standard-scss": "^13.0.0",
+    "stylelint-order": "^6.0.4",
+    "stylelint-scss": "^6.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8",
+    "vite-plugin-handlebars": "^2.0.0",
+    "vite-plugin-static-copy": "^1.0.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "eslint --cache --fix"
+    ],
+    "src/**/*.scss": [
+      "stylelint --fix"
+    ]
+  }
+}

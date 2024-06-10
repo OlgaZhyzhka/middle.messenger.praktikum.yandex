@@ -1,0 +1,20 @@
+<form class="form form_horizontal form_auth">
+  <h1 class="form__title">Welcome back, {{ username }}!</h1>
+  <span class="form__error"></span>
+  <div class="form__row is-error">
+    <input class="ui-input ui-input_sm" type="text" name="login" placeholder="Login" />
+      <span class="form__error">incorrect login</span>
+  </div>
+  <div class="form__row">
+    <div class="form__wrapper">
+      <input class="ui-input ui-input_sm" type="password" name="password" placeholder="Password"/>
+      <span class="button button_icon">{{> components/iconBase class='eye-close' size='sm' }}</span>
+    </div>
+    <span class="form__error"></span>
+  </div>
+  <div class="form__footer">
+    {{> components/button label="Login" class="button button_primary button_md button_rounded"}}
+    <span class="form__text">Don't have an account?</span>
+    <a href="/registration.html" class="button button_primary-bordered button_md button_rounded">Create account</a>
+  </div>
+</form>

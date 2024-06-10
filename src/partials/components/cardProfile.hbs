@@ -1,0 +1,34 @@
+<div class="card card_profile">
+  <div class="card__header">
+    <div class="card__tab">
+    </div>
+  </div>
+  <div class="card__body">
+    <div class="tabs">
+      <div class="tabs__nav">
+        <span class="tabs__link {{#if editMode}}tabs__link_active{{/if}}">Edit profile</span>
+        <span class="tabs__link {{#if changePasswordMode}}tabs__link_active{{/if}}">Change password </span>
+      </div>
+      {{#if editMode}}
+        <div class="tabs__content card__content">
+          {{> components/tabProfileEdit }}
+        </div>
+        {{else if changePasswordMode}}
+          <div class="tabs__content card__content">
+            {{> components/tabProfilePassword }}
+          </div>
+        {{else}}
+          <div class="tabs__content card__content">
+            {{> components/tabProfileInfo
+              avatarSrc="/images/user.jpg"
+              userEmail="maria@gmail.com" 
+              userLogin="MariaMI"
+              userPhone="+7 (909) 123-45-67"
+              userFirstName="Maria"
+              userLastName="Ivanova"
+              userChatName="MariaIvanova"}}
+          </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

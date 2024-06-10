@@ -1,0 +1,8 @@
+.footer {
+  text-align: center;
+
+  &__copyright {
+    font-size: var(--font-size-xs);
+    color: var(--color-text);
+  }
+}
